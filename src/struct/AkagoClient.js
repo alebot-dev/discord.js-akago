@@ -1,11 +1,16 @@
-const { Client } = require('discord.js');
+const { Client, Collection } = require('discord.js');
 const listenerHandler = require('./listeners/listenerHandler.js');
+const commandHandler = require('./commands/commandHandler.js');
 
 module.exports = class AkairoClient extends Client {
     constructor(options = {}, clientOptions) {
         super(clientOptions || options);
 
-        const { ownerID = '', token = '', prefix = '!', listenerDirectory = '' } = options;
+        const { ownerID = '', token = '', prefix = '!', listenerDirectory = '', commandDirectory = '' } = options;
+
+        this.commands = new Collection();
+
+        this.aliases = new Collection();
 
         /**
          * The ID of the owner(s).
@@ -30,10 +35,35 @@ module.exports = class AkairoClient extends Client {
          * @type {String}
          */
         this.listenerDirectory = listenerDirectory;
+
+        /**
+         * Your file path to your commands folder
+         * @type {String}
+         */
+        this.commandDirectory = commandDirectory;
+
+        this.on('message', message => {
+            if (!message.content.startsWith(this.prefix)) return;
+
+            const [commandName, ...args] = message.content.slice(this.prefix.length).trim().split(/ +/g); 
+
+            const command = this.commands.get(commandName)
+                || this.commands.get(this.aliases.get(commandName));
+
+            if (!command) return;
+
+            try {
+                command.execute(message, args);
+            }
+            catch (error) {
+                console.log(`There was an error while executing a command: ${error}`);
+            }
+        });
     }
 
     login() {
         super.login(this.token);
         listenerHandler(this);
+        commandHandler(this);
     }
 };
