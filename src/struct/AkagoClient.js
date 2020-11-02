@@ -8,6 +8,11 @@ module.exports = class AkairoClient extends Client {
 
         const { ownerID = '', token = '', prefix = '!', listenerDirectory = '', commandDirectory = '' } = options;
 
+        if (!ownerID || Array.isArray(ownerID)) throw new TypeError('Akago Client \'ownerID\' option is either missing or not an Array.');
+        if (!token || typeof token !== String) throw new TypeError('Akago Client \'token\' option is either missing or not a string.');
+        if (!listenerDirectory || typeof listenerDirectory !== String) throw new TypeError('Akago Client \'listenerDirectory\' option is either missing or not a string.');
+        if (!commandDirectory || typeof commandDirectory !== String) throw new TypeError('Akago Client \'commandDirectory\' option is either missing or not a string.');
+
         this.commands = new Collection();
 
         this.aliases = new Collection();
