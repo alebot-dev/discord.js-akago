@@ -3,7 +3,7 @@ const path = require('path');
 const glob = promisify(require('glob'));
 
 module.exports = (client) => {
-    return glob(`${path.dirname(require.main.filename)}${path.sep}commands/**/*.js`).then(commands => {
+    return glob(`${path.dirname(require.main.filename)}${client.commandDirectory}/**/*.js`).then(commands => {
         for (const commandFile of commands) {
             const { name } = path.parse(commandFile);
             const File = require(commandFile);

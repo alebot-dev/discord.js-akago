@@ -3,7 +3,7 @@ const path = require('path');
 const glob = promisify(require('glob'));
 
 module.exports = (client) => {
-    glob(`${path.dirname(require.main.filename)}${path.sep}listeners/**/*.js`).then(events => {
+    glob(`${path.dirname(require.main.filename)}${client.listenerDirectory}/**/*.js`).then(events => {
         for (const eventFile of events) {
             const { name } = path.parse(eventFile);
             const File = require(eventFile);
