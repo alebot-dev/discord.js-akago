@@ -5,9 +5,8 @@ module.exports = class TestClient extends AkagoClient {
         super({
             ownerID: ['611466971371929602'],
             token: require('../config.json').token,
+            listenerDirectory: './test/listeners',
         });
-
-        this.on('ready', () => console.log('Yoo this is ready!'));
     }
 
     start() {
