@@ -71,6 +71,13 @@ module.exports = class AkairoClient extends Client {
         });
     }
 
+    isOwner(user) {
+        const id = this.users.resolveID(user);
+        return Array.isArray(this.ownerID)
+            ? this.ownerID.includes(id)
+            : id === this.ownerID;
+    }
+
     login() {
         super.login(this.token);
         listenerHandler(this);
