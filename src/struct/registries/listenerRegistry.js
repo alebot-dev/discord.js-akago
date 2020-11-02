@@ -3,12 +3,12 @@ const path = require('path');
 const glob = promisify(require('glob'));
 
 module.exports = (client) => {
-    glob(`${path.dirname(require.main.filename)}${client.listenerDirectory}/**/*.js`).then(events => {
-        for (const eventFile of events) {
-            const { name } = path.parse(eventFile);
-            const File = require(eventFile);
-            const event = new File(client, name.toLowerCase());
-            event.emitter[event.type](name, (...args) => event.execute(...args));
+    glob(`${path.dirname(require.main.filename)}${client.listenerDirectory}/**/*.js`).then(listeners => {
+        for (const listenerFile of listeners) {
+            const { name } = path.parse(listenerFile);
+            const File = require(listenerFile);
+            const listener = new File(client, name.toLowerCase());
+            listener.emitter[listener.type](name, (...args) => listener.execute(...args));
         }
     });
 };
