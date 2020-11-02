@@ -1,0 +1,7 @@
+# NPM
+node_modules
+.git
+.eslintrc.json
+.gitattributes
+.gitignore
+.prettierrc.json

@@ -20,5 +20,10 @@
   "bugs": {
     "url": "https://github.com/iColtz/AkagoFramework/issues"
   },
-  "homepage": "https://github.com/iColtz/AkagoFramework#readme"
+  "homepage": "https://github.com/iColtz/AkagoFramework#readme",
+  "devDependencies": {
+    "eslint": "^7.12.1",
+    "nodemon": "^2.0.6",
+    "prettier": "^2.1.2"
+  }
 }
