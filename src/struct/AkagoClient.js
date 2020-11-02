@@ -43,9 +43,14 @@ module.exports = class AkairoClient extends Client {
         this.commandDirectory = commandDirectory;
 
         this.on('message', message => {
-            if (!message.content.startsWith(this.prefix)) return;
+            const mentionedPrefix = RegExp(`^<@!?${this.user.id}> `);
 
-            const [commandName, ...args] = message.content.slice(this.prefix.length).trim().split(/ +/g); 
+            const commandPrefix = message.content.match(mentionedPrefix) ?
+                message.content.match(mentionedPrefix)[0] : this.prefix;
+
+            if (!message.content.startsWith(commandPrefix)) return;
+
+            const [commandName, ...args] = message.content.slice(commandPrefix.length).trim().split(/ +/g); 
 
             const command = this.commands.get(commandName)
                 || this.commands.get(this.aliases.get(commandName));
