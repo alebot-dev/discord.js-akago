@@ -71,6 +71,11 @@ module.exports = class AkairoClient extends Client {
         });
     }
 
+    /**
+     * Checks if the user is the ownner of this bot.
+     * @param {UserResolvable} user - User to check 
+     * @returns {boolean}
+     */
     isOwner(user) {
         const id = this.users.resolveID(user);
         return Array.isArray(this.ownerID)
@@ -78,6 +83,9 @@ module.exports = class AkairoClient extends Client {
             : id === this.ownerID;
     }
 
+    /**
+     * Logs the Akago Client in and loads events and commands
+     */
     login() {
         super.login(this.token);
         listenerHandler(this);
