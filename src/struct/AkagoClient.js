@@ -65,5 +65,6 @@ module.exports = class AkairoClient extends Client {
         super.login(this.token);
         listenerHandler(this);
         commandHandler(this);
+        console.log('Yoo the bots ready!');
     }
 };
