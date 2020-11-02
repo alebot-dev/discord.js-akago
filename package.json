@@ -27,6 +27,7 @@
     "prettier": "^2.1.2"
   },
   "dependencies": {
-    "discord.js": "^12.4.1"
+    "discord.js": "^12.4.1",
+    "glob": "^7.1.6"
   }
 }
