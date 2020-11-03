@@ -1,18 +1,17 @@
 const { Client, Collection } = require('discord.js');
-const listenerHandler = require('./registries/listenerRegistry');
-const commandHandler = require('./registries/commandRegistry');
+const listenerRegistry = require('./registries/listenerRegistry');
+const commandRegistry = require('./registries/commandRegistry');
 
 module.exports = class AkairoClient extends Client {
     constructor(options = {}, clientOptions) {
         super(clientOptions || options);
 
-        const { ownerID = '', token = '', prefix = '!', listenerDirectory = '', commandDirectory = '' } = options;
+        const { ownerID = '', token = '', prefix = '!', listenerDirectory = '', commandHandler } = options;
 
         if (!ownerID || !Array.isArray(ownerID)) throw new TypeError('Akago Client \'ownerID\' option is either missing or not an Array.');
         if (!token || typeof token !== 'string') throw new TypeError('Akago Client \'token\' option is either missing or not a string.');
-        if (!listenerDirectory || typeof listenerDirectory !== 'string') throw new TypeError('Akago Client \'listenerDirectory\' option is either missing or not a string.');
-        if (!commandDirectory || typeof commandDirectory !== 'string') throw new TypeError('Akago Client \'commandDirectory\' option is either missing or not a string.');
-
+        if (commandHandler && (!commandHandler.commandDirectory || typeof commandHandler.commandDirectory !== 'string')) throw new TypeError('Akago Client commandHandler does not have a \'commandDirectory\' value or its not a string.');
+        
         this.commands = new Collection();
 
         this.aliases = new Collection();
@@ -45,7 +44,7 @@ module.exports = class AkairoClient extends Client {
          * Your file path to your commands folder
          * @type {String}
          */
-        this.commandDirectory = commandDirectory;
+        this.commandHandler = commandHandler;
 
         this.on('message', message => {
             const mentionedPrefix = RegExp(`^<@!?${this.user.id}> `);
@@ -88,8 +87,8 @@ module.exports = class AkairoClient extends Client {
      */
     login() {
         super.login(this.token);
-        listenerHandler(this);
-        commandHandler(this);
+        listenerRegistry(this);
+        commandRegistry(this);
         console.log('Yoo the bots ready!');
     }
 };

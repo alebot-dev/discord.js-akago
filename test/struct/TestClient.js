@@ -7,7 +7,9 @@ module.exports = class TestClient extends AkagoClient {
             prefix: '!',
             token: require('../config.json').token,
             listenerDirectory: '/listeners',
-            commandDirectory: '/commands',
+            commandHandler: {
+                commandDirectory: '/commmands',
+            },
         });
     }
 
