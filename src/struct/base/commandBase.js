@@ -21,6 +21,16 @@ module.exports = class Command {
          * @type {Array}
          */
         this.aliases = options.aliases || [];
+        /**
+         * Collection of permissions the member requires
+         * @type {Array}
+         */
+        this.memberPermissions = options.memberPermissions || [];
+        /**
+         * Collection of permissions the client requires
+         * @type {Array}
+         */
+        this.clientPermissions = options.clientPermissions || [];
     }
 
 }; 

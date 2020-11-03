@@ -1,4 +1,4 @@
-const { Client, Collection } = require('discord.js');
+const { Client, Collection, Permissions } = require('discord.js');
 const listenerRegistry = require('./registries/listenerRegistry');
 const commandRegistry = require('./registries/commandRegistry');
 
@@ -90,13 +90,37 @@ module.exports = class AkairoClient extends Client {
                 const command = this.commands.get(commandName)
                     || this.commands.get(this.aliases.get(commandName));
     
-                if (!command) return;
-    
-                try {
-                    command.execute(message, args);
-                }
-                catch (error) {
-                    console.log(`There was an error while executing a command: ${error}`);
+                if (command) {
+                    const checkValidPermission = (permArr) => {
+                        if (permArr.some(perm => !(Object.keys(Permissions.FLAGS)).includes(perm))) {
+                            throw new TypeError(`Akago: Command '${commandName}' has invalid client or member permissions.`);
+                        }
+                    };
+
+                    if (command.memberPermissions && command.memberPermissions.length) {
+                        if (!Array.isArray(command.memberPermissions)) throw new TypeError(`Akago: Command '${commandName}' memberPermissions need to be an array`);
+                        checkValidPermission(command.memberPermissions);
+                        if (command.memberPermissions.some(perm => !message.member.hasPermission(perm))) {
+                            const formattedMemberPermissions = command.memberPermissions.map(perm => `**${perm.toLowerCase().replace(/_/g, ' ')}**`).join(', ');
+                            return message.channel.send(`Your missing the ${formattedMemberPermissions} permission(s) you need to execute this command.`);
+                        }
+                    }
+
+                    if (command.clientPermissions && command.clientPermissions.length) {
+                        if (!Array.isArray(command.clientPermissions)) throw new TypeError(`Akago: Command '${commandName}' clientPermissions need to be an array`);
+                        checkValidPermission(command.clientPermissions);
+                        if (command.clientPermissions.some(perm => !message.guild.me.hasPermission(perm))) {
+                            const formattedClientPermissions = command.clientPermissions.map(perm => `**${perm.toLowerCase().replace(/_/g, ' ')}**`).join(', ');
+                            return message.channel.send(`I'm missing the ${formattedClientPermissions} permissions(s) I need to execute this command.`);
+                        }
+                    }
+
+                    try {
+                        command.execute(message, args);
+                    }
+                    catch (error) {
+                        console.log(`There was an error while executing a command: ${error}`);
+                    }
                 }
             });
         }
