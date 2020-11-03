@@ -23,6 +23,11 @@ module.exports = class AkairoClient extends Client {
              * @type {Boolean}
              */
             blockBots = true,
+            /**
+             * Whether or not Akago default message listener should block the client
+             * @type {Boolean}
+             */
+            blockClient = true,
         } = commandHandler.handlerOptions || {};
 
         if (!ownerID || !Array.isArray(ownerID)) throw new TypeError('Akago Client \'ownerID\' option is either missing or not an Array.');
@@ -70,6 +75,7 @@ module.exports = class AkairoClient extends Client {
 
         if (useAkagoMessageListener) {
             this.on('message', message => {
+                if (message.author.id === this.user.id && blockClient) return; 
                 if (message.author.bot && blockBots) return;
         
                 const mentionedPrefix = RegExp(`^<@!?${this.user.id}> `);

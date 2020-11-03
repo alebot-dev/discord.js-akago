@@ -12,6 +12,7 @@ module.exports = class TestClient extends AkagoClient {
                 handlerOptions: {
                     useAkagoMessageListener: true,
                     blockBots: true,
+                    blockClient: true,
                 },
             },
         });
