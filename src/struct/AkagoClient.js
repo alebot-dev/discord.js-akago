@@ -7,11 +7,19 @@ module.exports = class AkairoClient extends Client {
         super(clientOptions || options);
 
         const { ownerID = '', token = '', prefix = '!', listenerDirectory = '', commandHandler } = options;
+        const { 
+            /**
+             * Whether mentioning the bot can be used as a prefix
+             * @type {Boolean}
+             */
+            allowMentionPrefix = true,
+        } = commandHandler.handlerOptions || {};
 
         if (!ownerID || !Array.isArray(ownerID)) throw new TypeError('Akago Client \'ownerID\' option is either missing or not an Array.');
         if (!token || typeof token !== 'string') throw new TypeError('Akago Client \'token\' option is either missing or not a string.');
         if (commandHandler && (!commandHandler.commandDirectory || typeof commandHandler.commandDirectory !== 'string')) throw new TypeError('Akago Client commandHandler does not have a \'commandDirectory\' value or its not a string.');
-        
+        if ((commandHandler && commandHandler.handlerOptions) && typeof allowMentionPrefix !== 'boolean') throw new TypeError('Akago Client commandHandler handlerOptions \'allowMentionPrefix\' needs to be a boolean.');
+
         this.commands = new Collection();
 
         this.aliases = new Collection();
@@ -44,13 +52,13 @@ module.exports = class AkairoClient extends Client {
          * Your file path to your commands folder
          * @type {String}
          */
-        this.commandHandler = commandHandler;
+        this.commandDirectory = commandHandler.commandDirectory;
 
         this.on('message', message => {
             const mentionedPrefix = RegExp(`^<@!?${this.user.id}> `);
 
-            const commandPrefix = message.content.match(mentionedPrefix) ?
-                message.content.match(mentionedPrefix)[0] : this.prefix;
+            const commandPrefix = allowMentionPrefix ? message.content.match(mentionedPrefix) ?
+                message.content.match(mentionedPrefix)[0] : this.prefix : this.prefix;
 
             if (!message.content.startsWith(commandPrefix)) return;
 
