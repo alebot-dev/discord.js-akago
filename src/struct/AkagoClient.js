@@ -28,6 +28,11 @@ module.exports = class AkairoClient extends Client {
              * @type {Boolean}
              */
             blockClient = true,
+            /**
+             * Members who will ignore permission checks
+             * @type {Snowflake|Snowflake[]}
+             */
+            ignorePermissions = [],
         } = commandHandler.handlerOptions || {};
 
         if (!ownerID || !Array.isArray(ownerID)) throw new TypeError('Akago Client \'ownerID\' option is either missing or not an Array.');
@@ -37,6 +42,7 @@ module.exports = class AkairoClient extends Client {
             if (typeof allowMentionPrefix !== 'boolean') throw new TypeError('Akago Client commandHandler handlerOptions \'allowMentionPrefix\' needs to be a boolean.');
             if (typeof useAkagoMessageListener !== 'boolean') throw new TypeError('Akago Client commandHandler handlerOptions \'useAkagoMessageListener\' needs to be a boolean.');
             if (typeof blockBots !== 'boolean') throw new TypeError('Akago Client commandHandler handlerOptions \'blockBots\' needs to be a boolean.');
+            if (!Array.isArray(ignorePermissions) && typeof ignorePermissions !== 'string') throw new TypeError('Akago Client commandHandler handlerOptions \'ignorePermissions\' needs to be either Snowflake|Snowflake[]');
         }
 
         this.commands = new Collection();
@@ -97,7 +103,14 @@ module.exports = class AkairoClient extends Client {
                         }
                     };
 
-                    if (command.memberPermissions && command.memberPermissions.length) {
+                    const ignorePermission = (user) => {
+                        const id = this.users.resolveID(user);
+                        return Array.isArray(ignorePermissions)
+                            ? ignorePermissions.includes(id)
+                            : id === ignorePermissions;
+                    };
+
+                    if ((command.memberPermissions && command.memberPermissions.length) && !ignorePermission(message.author)) {
                         if (!Array.isArray(command.memberPermissions)) throw new TypeError(`Akago: Command '${commandName}' memberPermissions need to be an array`);
                         checkValidPermission(command.memberPermissions);
                         if (command.memberPermissions.some(perm => !message.member.hasPermission(perm))) {
@@ -106,7 +119,7 @@ module.exports = class AkairoClient extends Client {
                         }
                     }
 
-                    if (command.clientPermissions && command.clientPermissions.length) {
+                    if ((command.clientPermissions && command.clientPermissions.length) && !ignorePermission(message.author)) {
                         if (!Array.isArray(command.clientPermissions)) throw new TypeError(`Akago: Command '${commandName}' clientPermissions need to be an array`);
                         checkValidPermission(command.clientPermissions);
                         if (command.clientPermissions.some(perm => !message.guild.me.hasPermission(perm))) {
