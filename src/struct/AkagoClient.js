@@ -13,6 +13,11 @@ module.exports = class AkairoClient extends Client {
              * @type {Boolean}
              */
             allowMentionPrefix = true,
+            /**
+             * Whether or not to use Akago default listeners
+             * @type {Boolean}
+             */
+            useAkagoMessageListener = true,
         } = commandHandler.handlerOptions || {};
 
         if (!ownerID || !Array.isArray(ownerID)) throw new TypeError('Akago Client \'ownerID\' option is either missing or not an Array.');
@@ -54,28 +59,30 @@ module.exports = class AkairoClient extends Client {
          */
         this.commandDirectory = commandHandler.commandDirectory;
 
-        this.on('message', message => {
-            const mentionedPrefix = RegExp(`^<@!?${this.user.id}> `);
-
-            const commandPrefix = allowMentionPrefix ? message.content.match(mentionedPrefix) ?
-                message.content.match(mentionedPrefix)[0] : this.prefix : this.prefix;
-
-            if (!message.content.startsWith(commandPrefix)) return;
-
-            const [commandName, ...args] = message.content.slice(commandPrefix.length).trim().split(/ +/g); 
-
-            const command = this.commands.get(commandName)
-                || this.commands.get(this.aliases.get(commandName));
-
-            if (!command) return;
-
-            try {
-                command.execute(message, args);
-            }
-            catch (error) {
-                console.log(`There was an error while executing a command: ${error}`);
-            }
-        });
+        if (useAkagoMessageListener) {
+            this.on('message', message => {
+                const mentionedPrefix = RegExp(`^<@!?${this.user.id}> `);
+    
+                const commandPrefix = allowMentionPrefix ? message.content.match(mentionedPrefix) ?
+                    message.content.match(mentionedPrefix)[0] : this.prefix : this.prefix;
+    
+                if (!message.content.startsWith(commandPrefix)) return;
+    
+                const [commandName, ...args] = message.content.slice(commandPrefix.length).trim().split(/ +/g); 
+    
+                const command = this.commands.get(commandName)
+                    || this.commands.get(this.aliases.get(commandName));
+    
+                if (!command) return;
+    
+                try {
+                    command.execute(message, args);
+                }
+                catch (error) {
+                    console.log(`There was an error while executing a command: ${error}`);
+                }
+            });
+        }
     }
 
     /**
