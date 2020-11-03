@@ -11,6 +11,7 @@ module.exports = class TestClient extends AkagoClient {
                 commandDirectory: '/commands',
                 handlerOptions: {
                     useAkagoMessageListener: true,
+                    blockBots: true,
                 },
             },
         });

@@ -18,6 +18,11 @@ module.exports = class AkairoClient extends Client {
              * @type {Boolean}
              */
             useAkagoMessageListener = true,
+            /**
+             * Whether or not Akago default message listener should block bots
+             * @type {Boolean}
+             */
+            blockBots = true,
         } = commandHandler.handlerOptions || {};
 
         if (!ownerID || !Array.isArray(ownerID)) throw new TypeError('Akago Client \'ownerID\' option is either missing or not an Array.');
@@ -26,6 +31,7 @@ module.exports = class AkairoClient extends Client {
         if ((commandHandler && commandHandler.handlerOptions)) {
             if (typeof allowMentionPrefix !== 'boolean') throw new TypeError('Akago Client commandHandler handlerOptions \'allowMentionPrefix\' needs to be a boolean.');
             if (typeof useAkagoMessageListener !== 'boolean') throw new TypeError('Akago Client commandHandler handlerOptions \'useAkagoMessageListener\' needs to be a boolean.');
+            if (typeof blockBots !== 'boolean') throw new TypeError('Akago Client commandHandler handlerOptions \'blockBots\' needs to be a boolean.');
         }
 
         this.commands = new Collection();
@@ -64,6 +70,8 @@ module.exports = class AkairoClient extends Client {
 
         if (useAkagoMessageListener) {
             this.on('message', message => {
+                if (message.author.bot && blockBots) return;
+        
                 const mentionedPrefix = RegExp(`^<@!?${this.user.id}> `);
     
                 const commandPrefix = allowMentionPrefix ? message.content.match(mentionedPrefix) ?
