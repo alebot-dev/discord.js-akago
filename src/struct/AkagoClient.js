@@ -10,7 +10,7 @@ module.exports = class AkairoClient extends Client {
         const { allowMentionPrefix = true, blockBots = true, blockClient = true, ignorePermissions = [], ignoreCooldowns = [], defaultCooldown = 3 } = commandHandler.handlerOptions || {};
         const { useAkagoMessageListener = true, akagoLogReady = true } = listenerHandler.handlerOptions || {};
 
-        if (!ownerID || !Array.isArray(ownerID)) throw new TypeError('Akago Client \'ownerID\' option is either missing or not an Array.');
+        if (!ownerID || (typeof ownerID !== 'string' && !Array.isArray(ownerID))) throw new TypeError('Akago Client \'ownerID\' option is either missing or not an Array.');
         if (!token || typeof token !== 'string') throw new TypeError('Akago Client \'token\' option is either missing or not a string.');
         if (commandHandler && (!commandHandler.commandDirectory || typeof commandHandler.commandDirectory !== 'string')) throw new TypeError('Akago Client commandHandler does not have a \'commandDirectory\' value or its not a string.');
         if (!Array.isArray(prefix) && typeof prefix !== 'string') throw new TypeError('Akago Client \'prefix\' option needs to be a string or an array.');
