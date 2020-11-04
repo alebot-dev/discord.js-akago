@@ -10,6 +10,7 @@ module.exports = class TestClient extends AkagoClient {
                 listenerDirectory: '/listeners',
                 handlerOptions: {
                     useAkagoMessageListener: true,
+                    akagoLogReady: false,
                 },
             },
             commandHandler: {

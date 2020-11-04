@@ -47,6 +47,11 @@ module.exports = class AkairoClient extends Client {
              * @type {Boolean}
              */
             useAkagoMessageListener = true,
+            /**
+             * Whether or not to use Akago default ready listener
+             * @type {Boolean}
+             */
+            akagoLogReady = true,
         } = listenerHandler.handlerOptions || {};
 
         if (!ownerID || !Array.isArray(ownerID)) throw new TypeError('Akago Client \'ownerID\' option is either missing or not an Array.');
@@ -54,7 +59,8 @@ module.exports = class AkairoClient extends Client {
         if (commandHandler && (!commandHandler.commandDirectory || typeof commandHandler.commandDirectory !== 'string')) throw new TypeError('Akago Client commandHandler does not have a \'commandDirectory\' value or its not a string.');
         if ((commandHandler && commandHandler.handlerOptions)) {
             if (typeof allowMentionPrefix !== 'boolean') throw new TypeError('Akago Client commandHandler handlerOptions \'allowMentionPrefix\' needs to be a boolean.');
-            if (typeof useAkagoMessageListener !== 'boolean') throw new TypeError('Akago Client commandHandler handlerOptions \'useAkagoMessageListener\' needs to be a boolean.');
+            if (typeof useAkagoMessageListener !== 'boolean') throw new TypeError('Akago Client listenerHandler listenerOptions \'useAkagoMessageListener\' needs to be a boolean.');
+            if (typeof akagoLogReady !== 'boolean') throw new TypeError('Akago Client listenerHandler listenerOptions \'akagoLogReady\' needs to be a boolean');
             if (typeof blockBots !== 'boolean') throw new TypeError('Akago Client commandHandler handlerOptions \'blockBots\' needs to be a boolean.');
             if (typeof defaultCooldown !== 'number') throw new TypeError('Akago Client commandHandler handlerOptions \'defaultCooldown\' needs to be a number.');
             if (!Array.isArray(ignoreCooldowns) && typeof ignoreCooldowns !== 'string') throw new TypeError('Akago Client commandHandler handlerOptions \'ignoreCooldowns\' needs to be either Snowflake|Snowflake[]');
@@ -177,6 +183,12 @@ module.exports = class AkairoClient extends Client {
                 }
             });
         }
+
+        if (akagoLogReady) {
+            this.once('ready', () => {
+                console.log('Yoo the bots ready!');
+            });
+        }
     }
 
     /**
@@ -198,6 +210,5 @@ module.exports = class AkairoClient extends Client {
         super.login(this.token);
         listenerRegistry(this);
         commandRegistry(this);
-        console.log('Yoo the bots ready!');
     }
 };
