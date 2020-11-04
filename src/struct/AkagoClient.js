@@ -1,4 +1,4 @@
-const { Client, Collection, Permissions } = require('discord.js');
+const { Client, Collection } = require('discord.js');
 const listenerRegistry = require('./registries/listenerRegistry');
 const commandRegistry = require('./registries/commandRegistry');
 
@@ -7,52 +7,8 @@ module.exports = class AkairoClient extends Client {
         super(clientOptions || options);
 
         const { ownerID = '', token = '', prefix = '!', listenerHandler, commandHandler } = options;
-        const { 
-            /**
-             * Whether mentioning the bot can be used as a prefix
-             * @type {Boolean}
-             */
-            allowMentionPrefix = true,
-            /**
-             * Whether or not Akago default message listener should block bots
-             * @type {Boolean}
-             */
-            blockBots = true,
-            /**
-             * Whether or not Akago default message listener should block the client
-             * @type {Boolean}
-             */
-            blockClient = true,
-            /**
-             * Members who will ignore permission checks
-             * @type {Snowflake|Snowflake[]}
-             */
-            ignorePermissions = [],
-            /**
-             * Members who will ignore cooldown checks
-             * @type {Snowflake|Snowflake[]}
-             */
-            ignoreCooldowns = [],
-            /**
-             * Default cooldown of commands that don't have specific cooldowns
-             * Use 0 to have no default coodown
-             * @type {Number}
-             */
-            defaultCooldown = 3,
-        } = commandHandler.handlerOptions || {};
-
-        const {
-            /**
-             * Whether or not to use Akago default message listener
-             * @type {Boolean}
-             */
-            useAkagoMessageListener = true,
-            /**
-             * Whether or not to use Akago default ready listener
-             * @type {Boolean}
-             */
-            akagoLogReady = true,
-        } = listenerHandler.handlerOptions || {};
+        const { allowMentionPrefix = true, blockBots = true, blockClient = true, ignorePermissions = [], ignoreCooldowns = [], defaultCooldown = 3 } = commandHandler.handlerOptions || {};
+        const { useAkagoMessageListener = true, akagoLogReady = true } = listenerHandler.handlerOptions || {};
 
         if (!ownerID || !Array.isArray(ownerID)) throw new TypeError('Akago Client \'ownerID\' option is either missing or not an Array.');
         if (!token || typeof token !== 'string') throw new TypeError('Akago Client \'token\' option is either missing or not a string.');
@@ -103,91 +59,53 @@ module.exports = class AkairoClient extends Client {
          */
         this.commandDirectory = commandHandler.commandDirectory;
 
-        if (useAkagoMessageListener) {
-            this.on('message', message => {
-                if (message.author.id === this.user.id && blockClient) return; 
-                if (message.author.bot && blockBots) return;
-        
-                const mentionedPrefix = RegExp(`^<@!?${this.user.id}> `);
-    
-                const commandPrefix = allowMentionPrefix ? message.content.match(mentionedPrefix) ?
-                    message.content.match(mentionedPrefix)[0] : this.prefix : this.prefix;
-    
-                if (!message.content.startsWith(commandPrefix)) return;
-    
-                const [commandName, ...args] = message.content.slice(commandPrefix.length).trim().split(/ +/g); 
-    
-                const command = this.commands.get(commandName)
-                    || this.commands.get(this.aliases.get(commandName));
-    
-                if (command) {
-                    const checkValidPermission = (permArr) => {
-                        if (permArr.some(perm => !(Object.keys(Permissions.FLAGS)).includes(perm))) {
-                            throw new TypeError(`Akago: Command '${commandName}' has invalid client or member permissions.`);
-                        }
-                    };
-
-                    const checkIgnore = (user, array) => {
-                        const { id } = user;
-                        return Array.isArray(array)
-                            ? array.includes(id)
-                            : id === array;
-                    };
-
-                    if (!this.cooldowns.has(command.name)) {
-                        this.cooldowns.set(command.name, new Collection());
-                    }
-                        
-                    const now = Date.now();
-                    const timestamps = this.cooldowns.get(command.name);
-                    const cooldownAmount = (command.cooldown || defaultCooldown) * 1000;
-    
-                    if (timestamps.has(message.author.id)) {
-                        const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
-                    
-                        if (now < expirationTime) {
-                            const timeLeft = (expirationTime - now) / 1000;
-                            return message.channel.send(`Please wait ${timeLeft.toFixed(1)} more second(s) before reusing the **${command.name}** command.`);
-                        }
-                    }
-
-                    if (defaultCooldown > 0 && !checkIgnore(message.author, ignoreCooldowns)) {
-                        timestamps.set(message.author.id, now);
-                        setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
-                    }
-
-                    if ((command.memberPermissions && command.memberPermissions.length) && !checkIgnore(message.author, ignorePermissions)) {
-                        if (!Array.isArray(command.memberPermissions)) throw new TypeError(`Akago: Command '${commandName}' memberPermissions need to be an array`);
-                        checkValidPermission(command.memberPermissions);
-                        if (command.memberPermissions.some(perm => !message.member.hasPermission(perm))) {
-                            const formattedMemberPermissions = command.memberPermissions.map(perm => `**${perm.toLowerCase().replace(/_/g, ' ')}**`).join(', ');
-                            return message.channel.send(`Your missing the ${formattedMemberPermissions} permission(s) you need to execute this command.`);
-                        }
-                    }
-
-                    if (command.clientPermissions && command.clientPermissions.length) {
-                        if (!Array.isArray(command.clientPermissions)) throw new TypeError(`Akago: Command '${commandName}' clientPermissions need to be an array`);
-                        checkValidPermission(command.clientPermissions);
-                        if (command.clientPermissions.some(perm => !message.guild.me.hasPermission(perm))) {
-                            const formattedClientPermissions = command.clientPermissions.map(perm => `**${perm.toLowerCase().replace(/_/g, ' ')}**`).join(', ');
-                            return message.channel.send(`I'm missing the ${formattedClientPermissions} permissions(s) I need to execute this command.`);
-                        }
-                    }
-
-                    try {
-                        command.execute(message, args);
-                    }
-                    catch (error) {
-                        console.log(`There was an error while executing a command: ${error}`);
-                    }
-                }
-            });
+        if (this.commandDirectory) {
+            /**
+             * Whether mentioning the bot can be used as a prefix
+             * @type {Boolean}
+             */
+            this.allowMentionPrefix = allowMentionPrefix;
+            /**
+             * Whether or not Akago default message listener should block bots
+             * @type {Boolean}
+             */
+            this.blockBots = blockBots;
+            /**
+             * Whether or not Akago default message listener should block the client
+             * @type {Boolean}
+             */
+            this.blockClient = blockClient;
+            /**
+             * Members who will ignore permission checks
+             * @type {Snowflake|Snowflake[]}
+             */
+            this.ignorePermissions = ignorePermissions;
+            /**
+             * Members who will ignore cooldown checks
+             * @type {Snowflake|Snowflake[]}
+             */
+            this.ignoreCooldowns = ignoreCooldowns;
+            /**
+             * Default cooldown of commands that don't have specific cooldowns
+             * Use 0 to have no default coodown
+             * @type {Number}
+             */
+            this.defaultCooldown = defaultCooldown;
+            require('./listeners/registry/listenerRegistry.js')(this, `${__dirname}/listeners/message.js`);
         }
 
-        if (akagoLogReady) {
-            this.once('ready', () => {
-                console.log('Yoo the bots ready!');
-            });
+        if (this.listenerDirectory) {
+            /**
+             * Whether or not to use Akago default message listener
+             * @type {Boolean}
+             */
+            this.useAkagoMessageListener = useAkagoMessageListener;
+            /**
+             * Whether or not to use Akago default ready listener
+             * @type {Boolean}
+             */
+            this.akagoLogReady = akagoLogReady;
+            require('./listeners/registry/listenerRegistry.js')(this, `${__dirname}/listeners/ready.js`);
         }
     }
 
