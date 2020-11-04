@@ -34,6 +34,11 @@ module.exports = class AkairoClient extends Client {
              */
             ignorePermissions = [],
             /**
+             * Members who will ignore cooldown checks
+             * @type {Snowflake|Snowflake[]}
+             */
+            ignoreCooldowns = [],
+            /**
              * Default cooldown of commands that don't have specific cooldowns
              * Use 0 to have no default coodown
              * @type {Number}
@@ -49,6 +54,7 @@ module.exports = class AkairoClient extends Client {
             if (typeof useAkagoMessageListener !== 'boolean') throw new TypeError('Akago Client commandHandler handlerOptions \'useAkagoMessageListener\' needs to be a boolean.');
             if (typeof blockBots !== 'boolean') throw new TypeError('Akago Client commandHandler handlerOptions \'blockBots\' needs to be a boolean.');
             if (typeof defaultCooldown !== 'number') throw new TypeError('Akago Client commandHandler handlerOptions \'defaultCooldown\' needs to be a number.');
+            if (!Array.isArray(ignoreCooldowns) && typeof ignoreCooldowns !== 'string') throw new TypeError('Akago Client commandHandler handlerOptions \'ignoreCooldowns\' needs to be either Snowflake|Snowflake[]');
             if (!Array.isArray(ignorePermissions) && typeof ignorePermissions !== 'string') throw new TypeError('Akago Client commandHandler handlerOptions \'ignorePermissions\' needs to be either Snowflake|Snowflake[]');
         }
 
@@ -112,11 +118,11 @@ module.exports = class AkairoClient extends Client {
                         }
                     };
 
-                    const ignorePermission = (user) => {
+                    const checkIgnore = (user, array) => {
                         const id = this.users.resolveID(user);
-                        return Array.isArray(ignorePermissions)
-                            ? ignorePermissions.includes(id)
-                            : id === ignorePermissions;
+                        return Array.isArray(array)
+                            ? array.includes(id)
+                            : id === array;
                     };
 
                     if (!this.cooldowns.has(command.name)) {
@@ -136,12 +142,12 @@ module.exports = class AkairoClient extends Client {
                         }
                     }
 
-                    if (defaultCooldown > 0) {
+                    if (defaultCooldown > 0 && !checkIgnore(message.author, ignoreCooldowns)) {
                         timestamps.set(message.author.id, now);
                         setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
                     }
 
-                    if ((command.memberPermissions && command.memberPermissions.length) && !ignorePermission(message.author)) {
+                    if ((command.memberPermissions && command.memberPermissions.length) && !checkIgnore(message.author, ignorePermissions)) {
                         if (!Array.isArray(command.memberPermissions)) throw new TypeError(`Akago: Command '${commandName}' memberPermissions need to be an array`);
                         checkValidPermission(command.memberPermissions);
                         if (command.memberPermissions.some(perm => !message.member.hasPermission(perm))) {
@@ -150,7 +156,7 @@ module.exports = class AkairoClient extends Client {
                         }
                     }
 
-                    if ((command.clientPermissions && command.clientPermissions.length) && !ignorePermission(message.author)) {
+                    if (command.clientPermissions && command.clientPermissions.length) {
                         if (!Array.isArray(command.clientPermissions)) throw new TypeError(`Akago: Command '${commandName}' clientPermissions need to be an array`);
                         checkValidPermission(command.clientPermissions);
                         if (command.clientPermissions.some(perm => !message.guild.me.hasPermission(perm))) {

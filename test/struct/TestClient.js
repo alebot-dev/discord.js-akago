@@ -14,6 +14,7 @@ module.exports = class TestClient extends AkagoClient {
                     blockBots: true,
                     blockClient: true,
                     defaultCooldown: 3,
+                    ignoreCooldowns: ['611466971371929602'],
                     ignorePermissions: ['611466971371929602'],
                 },
             },
