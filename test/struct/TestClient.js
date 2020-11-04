@@ -16,6 +16,7 @@ module.exports = class TestClient extends AkagoClient {
             commandHandler: {
                 commandDirectory: '/commands',
                 handlerOptions: {
+                    allowMentionPrefix: true,
                     blockBots: true,
                     blockClient: true,
                     defaultCooldown: 3,
