@@ -33,6 +33,12 @@ module.exports = class AkairoClient extends Client {
              * @type {Snowflake|Snowflake[]}
              */
             ignorePermissions = [],
+            /**
+             * Default cooldown of commands that don't have specific cooldowns
+             * Use 0 to have no default coodown
+             * @type {Number}
+             */
+            defaultCooldown = 3,
         } = commandHandler.handlerOptions || {};
 
         if (!ownerID || !Array.isArray(ownerID)) throw new TypeError('Akago Client \'ownerID\' option is either missing or not an Array.');
@@ -42,12 +48,15 @@ module.exports = class AkairoClient extends Client {
             if (typeof allowMentionPrefix !== 'boolean') throw new TypeError('Akago Client commandHandler handlerOptions \'allowMentionPrefix\' needs to be a boolean.');
             if (typeof useAkagoMessageListener !== 'boolean') throw new TypeError('Akago Client commandHandler handlerOptions \'useAkagoMessageListener\' needs to be a boolean.');
             if (typeof blockBots !== 'boolean') throw new TypeError('Akago Client commandHandler handlerOptions \'blockBots\' needs to be a boolean.');
+            if (typeof defaultCooldown !== 'number') throw new TypeError('Akago Client commandHandler handlerOptions \'defaultCooldown\' needs to be a number.');
             if (!Array.isArray(ignorePermissions) && typeof ignorePermissions !== 'string') throw new TypeError('Akago Client commandHandler handlerOptions \'ignorePermissions\' needs to be either Snowflake|Snowflake[]');
         }
 
         this.commands = new Collection();
 
         this.aliases = new Collection();
+
+        this.cooldowns = new Collection();
 
         /**
          * The ID of the owner(s).
@@ -116,7 +125,7 @@ module.exports = class AkairoClient extends Client {
                         
                     const now = Date.now();
                     const timestamps = this.cooldowns.get(command.name);
-                    const cooldownAmount = (command.cooldown || 3) * 1000;
+                    const cooldownAmount = (command.cooldown || defaultCooldown) * 1000;
     
                     if (timestamps.has(message.author.id)) {
                         const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
@@ -127,9 +136,10 @@ module.exports = class AkairoClient extends Client {
                         }
                     }
 
-                    timestamps.set(message.author.id, now);
-                    setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
-                    
+                    if (defaultCooldown > 0) {
+                        timestamps.set(message.author.id, now);
+                        setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
+                    }
 
                     if ((command.memberPermissions && command.memberPermissions.length) && !ignorePermission(message.author)) {
                         if (!Array.isArray(command.memberPermissions)) throw new TypeError(`Akago: Command '${commandName}' memberPermissions need to be an array`);

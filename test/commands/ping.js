@@ -6,6 +6,7 @@ module.exports = class extends CommandBase {
         super(...args, {
             name: 'ping',
             description: 'Pong!',
+            cooldown: 5,
         });
     }
 

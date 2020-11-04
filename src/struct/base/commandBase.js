@@ -22,6 +22,11 @@ module.exports = class Command {
          */
         this.aliases = options.aliases || [];
         /**
+         * The cooldown of a command in seconds
+         * @type {Number}
+         */
+        this.cooldown = options.cooldown || null;
+        /**
          * Collection of permissions the member requires
          * @type {Array}
          */
