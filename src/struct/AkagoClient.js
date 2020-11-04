@@ -119,7 +119,7 @@ module.exports = class AkairoClient extends Client {
                     };
 
                     const checkIgnore = (user, array) => {
-                        const id = this.users.resolveID(user);
+                        const { id } = user;
                         return Array.isArray(array)
                             ? array.includes(id)
                             : id === array;
