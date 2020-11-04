@@ -6,11 +6,15 @@ module.exports = class TestClient extends AkagoClient {
             ownerID: ['611466971371929602'],
             prefix: '!',
             token: require('../config.json').token,
-            listenerDirectory: '/listeners',
+            listenerHandler: {
+                listenerDirectory: '/listeners',
+                handlerOptions: {
+                    useAkagoMessageListener: true,
+                },
+            },
             commandHandler: {
                 commandDirectory: '/commands',
                 handlerOptions: {
-                    useAkagoMessageListener: true,
                     blockBots: true,
                     blockClient: true,
                     defaultCooldown: 3,

@@ -6,18 +6,13 @@ module.exports = class AkairoClient extends Client {
     constructor(options = {}, clientOptions) {
         super(clientOptions || options);
 
-        const { ownerID = '', token = '', prefix = '!', listenerDirectory = '', commandHandler } = options;
+        const { ownerID = '', token = '', prefix = '!', listenerHandler, commandHandler } = options;
         const { 
             /**
              * Whether mentioning the bot can be used as a prefix
              * @type {Boolean}
              */
             allowMentionPrefix = true,
-            /**
-             * Whether or not to use Akago default listeners
-             * @type {Boolean}
-             */
-            useAkagoMessageListener = true,
             /**
              * Whether or not Akago default message listener should block bots
              * @type {Boolean}
@@ -45,6 +40,14 @@ module.exports = class AkairoClient extends Client {
              */
             defaultCooldown = 3,
         } = commandHandler.handlerOptions || {};
+
+        const {
+            /**
+             * Whether or not to use Akago default message listener
+             * @type {Boolean}
+             */
+            useAkagoMessageListener = true,
+        } = listenerHandler.handlerOptions || {};
 
         if (!ownerID || !Array.isArray(ownerID)) throw new TypeError('Akago Client \'ownerID\' option is either missing or not an Array.');
         if (!token || typeof token !== 'string') throw new TypeError('Akago Client \'token\' option is either missing or not a string.');
@@ -86,7 +89,7 @@ module.exports = class AkairoClient extends Client {
          * Your file path to your listeners folder
          * @type {String}
          */
-        this.listenerDirectory = listenerDirectory;
+        this.listenerDirectory = listenerHandler.listenerDirectory;
 
         /**
          * Your file path to your commands folder
