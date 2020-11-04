@@ -96,6 +96,7 @@ module.exports = class AkairoClient extends Client {
              * @type {Number}
              */
             this.defaultCooldown = defaultCooldown;
+            
             require('./listeners/registry/listenerRegistry.js')(this, `${__dirname}/listeners/message.js`);
         }
 
@@ -110,7 +111,8 @@ module.exports = class AkairoClient extends Client {
              * @type {Boolean}
              */
             this.akagoLogReady = akagoLogReady;
-            require('./listeners/registry/listenerRegistry.js')(this, `${__dirname}/listeners/ready.js`);
+            
+            if (akagoLogReady) require('./listeners/registry/listenerRegistry.js')(this, `${__dirname}/listeners/ready.js`);
         }
     }
 
