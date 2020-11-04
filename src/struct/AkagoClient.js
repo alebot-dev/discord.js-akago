@@ -13,14 +13,19 @@ module.exports = class AkairoClient extends Client {
         if (!ownerID || !Array.isArray(ownerID)) throw new TypeError('Akago Client \'ownerID\' option is either missing or not an Array.');
         if (!token || typeof token !== 'string') throw new TypeError('Akago Client \'token\' option is either missing or not a string.');
         if (commandHandler && (!commandHandler.commandDirectory || typeof commandHandler.commandDirectory !== 'string')) throw new TypeError('Akago Client commandHandler does not have a \'commandDirectory\' value or its not a string.');
-        if ((commandHandler && commandHandler.handlerOptions)) {
-            if (typeof allowMentionPrefix !== 'boolean') throw new TypeError('Akago Client commandHandler handlerOptions \'allowMentionPrefix\' needs to be a boolean.');
-            if (typeof useAkagoMessageListener !== 'boolean') throw new TypeError('Akago Client listenerHandler listenerOptions \'useAkagoMessageListener\' needs to be a boolean.');
-            if (typeof akagoLogReady !== 'boolean') throw new TypeError('Akago Client listenerHandler listenerOptions \'akagoLogReady\' needs to be a boolean');
-            if (typeof blockBots !== 'boolean') throw new TypeError('Akago Client commandHandler handlerOptions \'blockBots\' needs to be a boolean.');
-            if (typeof defaultCooldown !== 'number') throw new TypeError('Akago Client commandHandler handlerOptions \'defaultCooldown\' needs to be a number.');
-            if (!Array.isArray(ignoreCooldowns) && typeof ignoreCooldowns !== 'string') throw new TypeError('Akago Client commandHandler handlerOptions \'ignoreCooldowns\' needs to be either Snowflake|Snowflake[]');
-            if (!Array.isArray(ignorePermissions) && typeof ignorePermissions !== 'string') throw new TypeError('Akago Client commandHandler handlerOptions \'ignorePermissions\' needs to be either Snowflake|Snowflake[]');
+
+        if (commandHandler && commandHandler.handlerOptions) {
+            if (typeof allowMentionPrefix !== 'boolean') throw new TypeError('Akago Client commandHandlerOptions \'allowMentionPrefix\' needs to be a boolean.');
+            if (typeof akagoLogReady !== 'boolean') throw new TypeError('Akago Client listenerHandlerOptions \'akagoLogReady\' needs to be a boolean');
+            if (typeof blockBots !== 'boolean') throw new TypeError('Akago Client commandHandlerOptions \'blockBots\' needs to be a boolean.');
+            if (typeof defaultCooldown !== 'number') throw new TypeError('Akago Client commandHandlerOptions \'defaultCooldown\' needs to be a number.');
+            if (!Array.isArray(ignoreCooldowns) && typeof ignoreCooldowns !== 'string') throw new TypeError('Akago Client commandHandlerOptions \'ignoreCooldowns\' needs to be either Snowflake|Snowflake[]');
+            if (!Array.isArray(ignorePermissions) && typeof ignorePermissions !== 'string') throw new TypeError('Akago Client commandHandlerOptions \'ignorePermissions\' needs to be either Snowflake|Snowflake[]');
+        }
+
+        if (listenerHandler && listenerHandler.listenerOptions) {
+            if (typeof useAkagoMessageListener !== 'boolean') throw new TypeError('Akago Client listenerHandlerOptions \'useAkagoMessageListener\' needs to be a boolean.');
+            if (typeof akagoLogReady !== 'boolean') throw new TypeError('Akago Client listenerHandlerOptions \'akagoLogReady\' needs to be a boolean.');
         }
 
         this.commands = new Collection();
