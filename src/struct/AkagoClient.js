@@ -110,6 +110,27 @@ module.exports = class AkairoClient extends Client {
                             : id === ignorePermissions;
                     };
 
+                    if (!this.cooldowns.has(command.name)) {
+                        this.cooldowns.set(command.name, new Collection());
+                    }
+                        
+                    const now = Date.now();
+                    const timestamps = this.cooldowns.get(command.name);
+                    const cooldownAmount = (command.cooldown || 3) * 1000;
+    
+                    if (timestamps.has(message.author.id)) {
+                        const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
+                    
+                        if (now < expirationTime) {
+                            const timeLeft = (expirationTime - now) / 1000;
+                            return message.channel.send(`Please wait ${timeLeft.toFixed(1)} more second(s) before reusing the **${command.name}** command.`);
+                        }
+                    }
+
+                    timestamps.set(message.author.id, now);
+                    setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
+                    
+
                     if ((command.memberPermissions && command.memberPermissions.length) && !ignorePermission(message.author)) {
                         if (!Array.isArray(command.memberPermissions)) throw new TypeError(`Akago: Command '${commandName}' memberPermissions need to be an array`);
                         checkValidPermission(command.memberPermissions);
