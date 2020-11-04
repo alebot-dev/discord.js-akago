@@ -4,7 +4,7 @@ module.exports = class TestClient extends AkagoClient {
     constructor() {
         super({
             ownerID: ['611466971371929602'],
-            prefix: '!',
+            prefix: ['!', '?'],
             token: require('../config.json').token,
             listenerHandler: {
                 listenerDirectory: '/listeners',
