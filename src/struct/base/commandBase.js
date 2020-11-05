@@ -42,6 +42,12 @@ module.exports = class Command {
          */
         this.ownerOnly = options.ownerOnly || false;
         /**
+         * Only allowing commands to be executed in guilds not dms
+         * @type {Boolean}
+         *
+         */
+        this.guildOnly = options.guildOnly || true;
+        /**
          * Collection of permissions the member requires
          * @type {Array}
          */
