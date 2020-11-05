@@ -49,6 +49,11 @@ module.exports = class Command {
          */
         this.guildOnly = options.guildOnly === undefined ? true : options.guildOnly;
         /**
+         * Won't send a message if true and the message channel isn't NSFW
+         * @type {Boolean}
+         */
+        this.nsfw = options.nsfw || false;
+        /**
          * Collection of permissions the member requires
          * @type {Array}
          */
