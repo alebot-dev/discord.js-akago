@@ -81,6 +81,8 @@ module.exports = class extends ListenerBase {
                 }
             }
 
+            if (command.ownerOnly && !this.client.isOwner(message.author)) return message.channel.send('This command can only be executed by the owner(s) of this bot.');
+
             try {
                 command.execute(message, args);
             }
