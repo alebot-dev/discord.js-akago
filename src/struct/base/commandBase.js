@@ -22,6 +22,11 @@ module.exports = class Command {
          */
         this.aliases = options.aliases || [];
         /**
+         * The category for the command
+         * @type {String}
+         */
+        this.category = options.category || null;
+        /**
          * The cooldown of a command in seconds
          * @type {Number}
          */
