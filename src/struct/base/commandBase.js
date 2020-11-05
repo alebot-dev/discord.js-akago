@@ -37,6 +37,11 @@ module.exports = class Command {
          */
         this.cooldown = options.cooldown || null;
         /**
+         * Only allows usr's in the ownerID collection in Akago Client option to use the command
+         * @type {Boolean}
+         */
+        this.ownerOnly = options.ownerOnly || false;
+        /**
          * Collection of permissions the member requires
          * @type {Array}
          */
