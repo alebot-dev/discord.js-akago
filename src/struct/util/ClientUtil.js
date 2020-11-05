@@ -8,4 +8,10 @@ module.exports = class Util {
         return [...new Set(arr)];
     }
 
+    isClass(given) {
+        return typeof given === 'function' &&
+            typeof given.prototype === 'object' &&
+            new String(given).substring(0, 5) === 'class';
+    }
+
 };
