@@ -1,6 +1,7 @@
 const { Client, Collection } = require('discord.js');
 const listenerRegistry = require('./registries/listenerRegistry');
 const commandRegistry = require('./registries/commandRegistry');
+const Util = require('./ClientUtil.js');
 
 module.exports = class AkairoClient extends Client {
     constructor(options = {}, clientOptions) {
@@ -35,6 +36,8 @@ module.exports = class AkairoClient extends Client {
         this.aliases = new Collection();
 
         this.cooldowns = new Collection();
+
+        this.util = new Util(this);
 
         /**
          * The ID of the owner(s).

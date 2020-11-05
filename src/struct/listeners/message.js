@@ -11,6 +11,7 @@ module.exports = class extends ListenerBase {
     }
 
     async execute(message) {
+        require('../commands/registry/commandRegistry')(this.client);
         if (message.author.id === this.client.user.id && this.blockClient) return; 
         if (message.author.bot && this.client.blockBots) return;
         
