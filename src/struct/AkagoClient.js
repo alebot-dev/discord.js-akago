@@ -1,7 +1,7 @@
 const { Client, Collection } = require('discord.js');
 const listenerRegistry = require('./registries/listenerRegistry');
 const commandRegistry = require('./registries/commandRegistry');
-const Util = require('./ClientUtil.js');
+const Util = require('./util/ClientUtil.js');
 
 module.exports = class AkairoClient extends Client {
     constructor(options = {}, clientOptions) {
