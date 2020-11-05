@@ -17,6 +17,11 @@ module.exports = class Command {
          */
         this.description = options.description || null;
         /**
+         * Usage of the command
+         * @type {String}
+         */
+        this.usage = options.usage || null;
+        /**
          * Collection of aliases for the command
          * @type {Array}
          */
