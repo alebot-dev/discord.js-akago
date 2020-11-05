@@ -1,7 +1,6 @@
 module.exports = class Command {
 
     constructor(client, name, options = {}) {
-        console.log(options);
         /**
          * Discord Akago Framework Client
          * @type {Object}
@@ -27,6 +26,11 @@ module.exports = class Command {
          * @type {Array}
          */
         this.aliases = options.aliases || [];
+        /**
+         * Examples of the usage of the command
+         * @type {String|Array}
+         */
+        this.examples = options.examples || null;
         /**
          * The category for the command
          * @type {String}
