@@ -8,7 +8,7 @@ module.exports = class AkairoClient extends Client {
         super(clientOptions || options);
 
         const { ownerID = '', token = '', prefix = '!', listenerHandler, commandHandler } = options;
-        const { allowMentionPrefix = true, blockBots = true, blockClient = true, ignorePermissions = [], ignoreCooldowns = [], defaultCooldown = 3 } = commandHandler.handlerOptions || {};
+        const { allowMentionPrefix = true, blockBots = true, blockClient = true, ignorePermissions = [], ignoreCooldowns = [], defaultCooldown = 3, useAkagoHelpCommand = true } = commandHandler.handlerOptions || {};
         const { useAkagoMessageListener = true, akagoLogReady = true } = listenerHandler.handlerOptions || {};
 
         if (!ownerID || (typeof ownerID !== 'string' && !Array.isArray(ownerID))) throw new TypeError('Akago Client \'ownerID\' option is either missing or not an Array.');
@@ -21,6 +21,7 @@ module.exports = class AkairoClient extends Client {
             if (typeof allowMentionPrefix !== 'boolean') throw new TypeError('Akago Client commandHandlerOptions \'allowMentionPrefix\' needs to be a boolean.');
             if (typeof akagoLogReady !== 'boolean') throw new TypeError('Akago Client listenerHandlerOptions \'akagoLogReady\' needs to be a boolean');
             if (typeof blockBots !== 'boolean') throw new TypeError('Akago Client commandHandlerOptions \'blockBots\' needs to be a boolean.');
+            if (typeof useAkagoHelpCommand !== 'boolean') throw new TypeError('Akago Client commandHandlerOptions \'useAkagiHelpCommand\' needs to be a boolean.');
             if (typeof defaultCooldown !== 'number') throw new TypeError('Akago Client commandHandlerOptions \'defaultCooldown\' needs to be a number.');
             if (!Array.isArray(ignoreCooldowns) && typeof ignoreCooldowns !== 'string') throw new TypeError('Akago Client commandHandlerOptions \'ignoreCooldowns\' needs to be either Snowflake|Snowflake[]');
             if (!Array.isArray(ignorePermissions) && typeof ignorePermissions !== 'string') throw new TypeError('Akago Client commandHandlerOptions \'ignorePermissions\' needs to be either Snowflake|Snowflake[]');
@@ -101,7 +102,13 @@ module.exports = class AkairoClient extends Client {
              * @type {Number}
              */
             this.defaultCooldown = defaultCooldown;
+            /**
+             * Whether or not the client uses Akago default help command
+             * @type {Boolean}
+             */
+            this.useAkagoHelpCommand = useAkagoHelpCommand;
 
+            if (this.useAkagoHelpCommand) require('./commands/registry/commandRegistry')(this, `${__dirname}/commands/help.js`);
             require('./listeners/registry/listenerRegistry.js')(this, `${__dirname}/listeners/message.js`);
         }
 
