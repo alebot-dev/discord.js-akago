@@ -114,7 +114,7 @@ module.exports = class AkairoClient extends Client {
              */
             this.miscCommandCategory = miscCommandCategory;
 
-            if (this.useAkagoHelpCommand) require('./commands/registry/commandRegistry')(this, `${__dirname}/commands/help.js`);
+            if (this.useAkagoHelpCommand) require('./commands/registry/commandRegistry')(this, `${__dirname}/commands/help.js`, defaultCooldown);
             require('./listeners/registry/listenerRegistry.js')(this, `${__dirname}/listeners/message.js`);
         }
 

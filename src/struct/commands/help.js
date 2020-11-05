@@ -1,5 +1,7 @@
 const { CommandBase } = require('../../index.js');
 const { MessageEmbed } = require('discord.js');
+const cooldown = require('../AkagoClient.js');
+console.log(cooldown.defaultCooldown);
 
 module.exports = class extends CommandBase {
     
@@ -7,7 +9,7 @@ module.exports = class extends CommandBase {
         super(...args, {
             name: 'help',
             description: 'Pong!',
-            cooldown: 3,
+            cooldown: 0,
         });
     }
 
