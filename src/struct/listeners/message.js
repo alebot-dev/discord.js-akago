@@ -80,8 +80,9 @@ module.exports = class extends ListenerBase {
                     return message.channel.send(`I'm missing the ${formattedClientPermissions} permissions(s) I need to execute this command.`);
                 }
             }
-
+            
             if (command.ownerOnly && !this.client.isOwner(message.author)) return message.channel.send('This command can only be executed by the owner(s) of this bot.');
+            if (command.guildOnly && message.channel.type === 'dm') return message.channel.send('I can\'t execute this command in DMS make sure you use this in a guild.');
 
             try {
                 command.execute(message, args);
