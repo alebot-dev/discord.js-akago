@@ -1,6 +1,7 @@
 module.exports = class Command {
 
     constructor(client, name, options = {}) {
+        console.log(options);
         /**
          * Discord Akago Framework Client
          * @type {Object}
@@ -46,7 +47,7 @@ module.exports = class Command {
          * @type {Boolean}
          *
          */
-        this.guildOnly = options.guildOnly || true;
+        this.guildOnly = options.guildOnly === undefined ? true : options.guildOnly;
         /**
          * Collection of permissions the member requires
          * @type {Array}
