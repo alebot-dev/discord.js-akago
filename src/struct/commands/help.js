@@ -21,6 +21,7 @@ module.exports = class extends CommandBase {
             embed.setTitle(`\`${command.name} ${command.usage || ''}\``);
             embed.addField('❯ Description', command.description);
             if (command.aliases.length) embed.addField('❯ Aliases', command.aliases.map(alias => `\`${alias}\``).join(' '));
+            if (command.examples) embed.addField('❯ Examples', command.examples.map(example => `\`${example}\``).join('\n'));
         }
         else {
             const categories = this.client.util.removeDuplicates(this.client.commands.map(c => c.category));
