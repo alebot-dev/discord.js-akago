@@ -10,12 +10,12 @@ module.exports = class Listener {
          * Name of the listener
          * @type {String}
          */
-        this.name = name;
+        this.name = typeof options.name === 'string' ? options.name : name;
         /**
          * Type of the listener either on or once
          * @type {String}
          */
-        this.type = options.once ? 'once' : 'on';
+        this.type = typeof options.type === 'boolean' ? options.once ? 'once' : 'on' : 'on';
         /**
          * The listener emitter
          * @type {String}
