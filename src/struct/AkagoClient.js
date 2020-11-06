@@ -148,7 +148,7 @@ module.exports = class AkairoClient extends Client {
     /**
      * Logs the Akago Client in and loads events and commands
      */
-    login() {
+    start() {
         super.login(this.token);
         listenerRegistry(this);
         commandRegistry(this);

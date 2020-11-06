@@ -27,7 +27,7 @@ module.exports = class TestClient extends AkagoClient {
         });
     }
 
-    start() {
-        this.login();
+    login() {
+        this.start();
     }
 };
