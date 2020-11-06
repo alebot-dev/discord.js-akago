@@ -7,14 +7,14 @@ module.exports = class TestClient extends AkagoClient {
             prefix: ['!', '?'],
             token: require('../config.json').token,
             listenerHandler: {
-                listenerDirectory: '/listeners',
+                listenerDirectory: '/test/listener',
                 handlerOptions: {
                     useAkagoMessageListener: true,
                     akagoLogReady: true,
                 },
             },
             commandHandler: {
-                commandDirectory: '/commands',
+                commandDirectory: '/test/commands',
                 handlerOptions: {
                     allowMentionPrefix: true,
                     blockBots: true,
