@@ -20,7 +20,7 @@ Everything is easy to use, setup and very flexible.
 ## Setting Up The Client
 Setting up the Akago Client, this will need to be in your main file according to your `package.json`
 ```js
-const { AkagoClient } = require('discord.js-akago);
+const { AkagoClient } = require('discord.js-akago');
 
 const client = new AkagoClient({
 	ownerID: ['611466971371929602'],
