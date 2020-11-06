@@ -30,7 +30,12 @@ const client = new AkagoClient({
 	commandHandler: {
 		commandDirectory: '/src/commands',
 		handlerOptions: {
+			allowMentionPrefix: true,
+			blockBots: true,
+			blockClient: true,
+			useAkagoHelpCommand: true,
 			defaultCooldown:  3,
+			miscCommandCategory: 'Miscellaneous',
 			ignoreCooldowns: ['611466971371929602'],
 			ignorePermissions: ['611466971371929602'],
 		},
@@ -54,10 +59,18 @@ const { CommandBase } = require('discord.js-akago');
 module.exports = class extends CommandBase {
 	constructor(...args, {
 		super(...args, {
-			name: 'ping',
-			description: 'Pong!',
-			category: 'Util',
-			aliases: ['p'],
+			name: 'kick',
+			description: 'Kicks a member from the server!', // Optional (Will show on help embed)
+			category: 'Moderation', // Optional (Will show on help embed)
+			aliases: ['remove'],
+			usage: '<member> [...reason]', // Optional (Will show on help embed)
+			examples: ['kick @Coltz doing something bad!'],
+			cooldown: 10,
+			ownerOnly: false, // Default: false
+			guildOnly: true, // Default: true
+			nsfw: false, // Default: false
+			memberPermissions: ['KICK_MEMBERS'],
+			clientPermissions: ['KICK_MEMBERS'],
 		}):
 	}
 	
@@ -75,8 +88,8 @@ const { ListenerBase } = require('discord.js-akago');
 module.exports = class extends ListenerBase {
 	constructor(...args, {
 		super(...args, {
-			name: 'guildMemberAdd',
-			once: false,
+			name: 'guildMemberAdd', // Event name
+			once: false, // Default: false
 		}):
 	}
 	
