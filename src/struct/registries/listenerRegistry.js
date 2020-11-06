@@ -2,9 +2,10 @@ const ListenerBase = require('../base/listenerBase.js');
 const { promisify } = require('util');
 const path = require('path');
 const glob = promisify(require('glob'));
+const appRoot = require('app-root-path');
 
 module.exports = (client) => {
-    glob(`${path.dirname(require.main.filename)}${client.listenerDirectory}/**/*.js`).then(listeners => {
+    glob(`${appRoot}${client.commandDirectory}/**/*.js/**/*.js`).then(listeners => {
         for (const listenerFile of listeners) {
             const { name } = path.parse(listenerFile);
             const File = require(listenerFile);
