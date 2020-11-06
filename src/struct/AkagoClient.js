@@ -8,10 +8,28 @@ module.exports = class AkairoClient extends Client {
     constructor(options = {}, clientOptions) {
         super(clientOptions || options);
 
-        const { ownerID = '', token = '', prefix = '!', listenerHandler, commandHandler } = options;
-        const { allowMentionPrefix = true, blockBots = true, blockClient = true, ignorePermissions = [], ignoreCooldowns = [], defaultCooldown = 3, useAkagoHelpCommand = true, miscCommandCategory = 'Misc' } = commandHandler.handlerOptions || {};
-        const { useAkagoMessageListener = true, akagoLogReady = true } = listenerHandler.handlerOptions || {};
-        
+        const { ownerID = '', 
+                token = '', 
+                prefix = '!',
+                listenerHandler, 
+                commandHandler,
+            } = options;
+
+        const { allowMentionPrefix = true, 
+                blockBots = true, 
+                blockClient = true,
+                ignorePermissions = [], 
+                ignoreCooldowns = [], 
+                defaultCooldown = 3,
+                useAkagoHelpCommand = true, 
+                miscCommandCategory = 'Misc',
+            } = commandHandler.handlerOptions || {};
+
+        const { 
+                useAkagoMessageListener = true, 
+                akagoLogReady = true,
+            } = listenerHandler.handlerOptions || {};
+
         validateAkagoOptions(options);
 
         this.commands = new Collection();
