@@ -5,9 +5,10 @@
   </p>
   <br />
   <p>
-    <a href="https://www.npmjs.com/package/discord.js-akago"><img src="https://img.shields.io/npm/v/discord.js-akago.svg?maxAge=3600" alt="NPM version" /></a>
-    <a href="https://www.npmjs.com/package/discord.js-akago"><img src="https://img.shields.io/npm/dt/discord.js-akago.svg?maxAge=3600" alt="NPM downloads" /></a>
-    <a href="https://david-dm.org/discordjs/discord.js-akago"><img src="https://img.shields.io/david/discordjs/discord.js-akago.svg?maxAge=3600" alt="Dependencies" /></a>
+    <a href="https://www.npmjs.com/package/discord.js-akago"><img src="https://img.shields.io/npm/v/discord.js-akago.svg" alt="NPM version" /></a>
+    <a href="https://www.npmjs.com/package/discord.js-akago"><img src="https://img.shields.io/npm/dt/discord.js-akago.svg" alt="NPM downloads" /></a>
+	<a href="https://www.npmjs.com/package/discord.js-akago"><img src="https://img.shields.io/github/issues/iColtz/discord.js-akago" alt="NPM issues">
+	<a href="https://www.npmjs.com/package/discord.js-akago"><img src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style" alt="Code style">
   </p>
   <p>
     <a href="https://nodei.co/npm/discord.js-akago/"><img src="https://nodei.co/npm/discord.js-akago.png?downloads=true&stars=true" alt="npm installnfo" /></a>
