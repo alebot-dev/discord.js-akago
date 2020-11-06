@@ -1,26 +1,30 @@
 {
-  "name": "akago-framework",
+  "name": "discord.js-akago",
   "version": "1.0.0",
   "description": "Discord.js framework.",
-  "main": "./test/bot.js",
+  "main": "./src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "nodemon ./test/bot.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/iColtz/AkagoFramework.git"
+    "url": "git+https://github.com/iColtz/discord.js-akago.git"
   },
   "keywords": [
     "discord",
-    "api",
-    "framework"
+    "discord-js",
+    "discord.js",
+    "framework",
+    "bot",
+    "commands",
+    "listeners"
   ],
   "author": "iColtz",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/iColtz/AkagoFramework/issues"
+    "url": "https://github.com/iColtz/discord.js-akago/issues"
   },
-  "homepage": "https://github.com/iColtz/AkagoFramework#readme",
+  "homepage": "https://github.com/iColtz/discord.js-akago#readme",
   "devDependencies": {
     "eslint": "^7.12.1",
     "nodemon": "^2.0.6",
