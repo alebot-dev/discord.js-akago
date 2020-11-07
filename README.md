@@ -7,8 +7,11 @@
   <p>
     <a href="https://www.npmjs.com/package/discord.js-akago"><img src="https://img.shields.io/npm/v/discord.js-akago.svg" alt="NPM version" /></a>
     <a href="https://www.npmjs.com/package/discord.js-akago"><img src="https://img.shields.io/npm/dt/discord.js-akago.svg" alt="NPM downloads" /></a>
-	<a href="https://www.npmjs.com/package/discord.js-akago"><img src="https://img.shields.io/github/issues/iColtz/discord.js-akago" alt="NPM issues">
-	<a href="https://www.npmjs.com/package/discord.js-akago"><img src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style" alt="Code style">
+	<a href="https://github.com/iColtz/discord.js-akago/issues"><img src="https://img.shields.io/github/issues/iColtz/discord.js-akago" alt="NPM issues">
+	<a href="https://discord.gg/2jkBmzy"><img src="https://img.shields.io/discord/717861844127055873?color=7289da&logo=discord&logoColor=white" alt="Discord">
+	<a href="https://github.com/iColtz/discord.js-akago"><img src="https://img.shields.io/github/repo-size/iColtz/discord.js-akago" alt="Repo size">
+	<a href="https://github.com/iColtz/discord.js-akago"><img src="https://img.shields.io/github/commit-activity/y/iColtz/discord.js-akago" alt="Commits per year">
+	<a href="https://github.com/iColtz/discord.js-akago/blob/main/package.json#L33"><img src="https://img.shields.io/david/dev/iColtz/discord.js-akago" alt="Dependencies">
   </p>
   <p>
     <a href="https://nodei.co/npm/discord.js-akago/"><img src="https://nodei.co/npm/discord.js-akago.png?downloads=true&stars=true" alt="npm installnfo" /></a>
