@@ -58,7 +58,7 @@ Creating your first command, you will want to go to your command folder, the sam
 const { CommandBase } = require('discord.js-akago');
 
 module.exports = class extends CommandBase {
-	constructor(...args, {
+	constructor(...args) {
 		super(...args, {
 			name: 'kick',
 			description: 'Kicks a member from the server!', // Optional (Will show on help embed)
@@ -87,7 +87,7 @@ Although Akago has a default message and ready event you can use, you might also
 const { ListenerBase } = require('discord.js-akago');
 
 module.exports = class extends ListenerBase {
-	constructor(...args, {
+	constructor(...args) {
 		super(...args, {
 			name: 'guildMemberAdd', // Event name
 			once: false, // Default: false
