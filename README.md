@@ -112,34 +112,43 @@ Although we covered some of the features Akago has, there is still much more to 
 	- Prefix
 		- Collection of prefix's for your client. Either a string or an array.
 		- Type: String
+		- Default: !
 	- listenerHandler
 		- Type: Object
 			- useAkagoMessageListener
 				- Whether or not to use Akago's default message listener
 				- Type: Boolean
+				- Default: true
 			- akagoLogReady
 				- Wheather of not Akago will console log ready when bot starts
 				- Type: Boolean
+				- Default: true
 	- commandHandler
 		- Type: Object
 			- allowMentionPrefix
 				- Whether or not mentioning the client will be a valid prefix
 				- Type: Boolean
+				- Default: true
 			- blockBots
 				- Whether or not Akagos message listener will block bots messages
 				- Type: Boolean
+				- Default: true
 			- blockClient
 				- Whether or not Akagos message listener will block the clients messages
 				- Type: Boolean
+				- Default: true
 			- defaultCooldown
 				- The default cooldown of commands that don't have a cooldown, set to 0 for no default cooldown
 				- Type: Number
+				- Default: 3
 			- useAkagoHelpCommand
 				- Whether or not to use Akago's default help command, must use Akagos default message listener for this to work
 				- Type: Boolean
+				- Default: true
 			- miscCommandCategory
 				- Name of the category for commands that don't have their own category
 				- Type: String
+				- Default: Misc
 			- ignorePermissions
 				- Collection of users ID's that will bypass permission checks
 				- Type: Array
