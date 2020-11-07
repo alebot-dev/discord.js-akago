@@ -11,7 +11,7 @@
 	<a href="https://discord.gg/2jkBmzy"><img src="https://img.shields.io/discord/717861844127055873?color=7289da&logo=discord&logoColor=white" alt="Discord">
 	<a href="https://github.com/iColtz/discord.js-akago"><img src="https://img.shields.io/github/repo-size/iColtz/discord.js-akago" alt="Repo size">
 	<a href="https://github.com/iColtz/discord.js-akago"><img src="https://img.shields.io/github/commit-activity/y/iColtz/discord.js-akago" alt="Commits per year">
-	<a href="https://github.com/iColtz/discord.js-akago/blob/main/package.json#L33"><img src="https://img.shields.io/david/dev/iColtz/discord.js-akago" alt="Dependencies">
+	<a href="https://github.com/iColtz/discord.js-akago/blob/main/package.json#L33"><img src="https://img.shields.io/david/iColtz/discord.js-akago" alt="Dependencies">
   </p>
   <p>
     <a href="https://nodei.co/npm/discord.js-akago/"><img src="https://nodei.co/npm/discord.js-akago.png?downloads=true&stars=true" alt="npm installnfo" /></a>
