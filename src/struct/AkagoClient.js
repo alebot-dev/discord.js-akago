@@ -1,6 +1,5 @@
 const { Client, Collection } = require('discord.js');
 const Util = require('../util/ClientUtil.js');
-const validateAkagoOptions = require('../util/validateAkagoOptions.js');
 
 /**
  * Options used to determine how the framework behaves.
@@ -21,8 +20,6 @@ class AkagoClient extends Client {
      */
     constructor(options = {}, clientOptions) {
         super(clientOptions || options);
-
-        validateAkagoOptions(options);
 
         /**
          * Collection of all loaded commands.
@@ -52,27 +49,27 @@ class AkagoClient extends Client {
          * Discord ID of the client owner(s).
          * @type {Snowflake|Array<Snowflake>}
          */
-        this.ownerID = options.ownerID;
+        this.ownerID = typeof options.ownerID === 'string' ? options.ownerID : [];
         /**
          * Discord bot's token.
          * @type {string}
          */
-        this.token = options.token;
+        this.token = typeof options.token === 'string' ? options.token : '';
         /**
          * Default command prefix(es)
          * @type {string|Array<string>}
          */
-        this.prefix = options.prefix;
+        this.prefix = typeof options.prefix === 'string' ? options.prefix : '!';
         /**
          * Directory of listener folder.
          * @type {string}
          */
-        this.listenerDirectory = options.listenerDirectory;
+        this.listenerDirectory = typeof options.listenerDirectory === 'string' ? options.listenerDirectory : '';
         /**
          * Directory of commands folder.
          * @type {string}
          */
-        this.commandDirectory = options.commandDirectory;
+        this.commandDirectory = typeof options.commandDirectory === 'string' ? options.commandDirectory : '';
     }
 
     /**
@@ -91,8 +88,9 @@ class AkagoClient extends Client {
      * Logs the Akago Client in and loads events and commands
      */
     build() {
+        if (!this.token) throw new Error('Akago: client options, no token was provided.');
+        super.login(this.token).catch(err => { throw new Error(`Akago: client token option is invalid: ${err}`); });
         console.log('Yoo its ready!');
-        super.login(this.token);
     }
 }
 

@@ -5,6 +5,7 @@ const glob = promisify(require('glob'));
 const appRoot = require('app-root-path');
 
 module.exports = (client) => {
+    if (!client.listenerDirectory || typeof client.listenerDirectory !== 'string') throw new Error('Akago: clientOptions listenerDirectory either is missing or is not a string.');
     glob(`${appRoot}${client.listenerDirectory}/**/*.js`).then(listeners => {
         for (const listenerFile of listeners) {
             const { name } = path.parse(listenerFile);

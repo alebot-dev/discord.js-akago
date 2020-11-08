@@ -5,6 +5,7 @@ const glob = promisify(require('glob'));
 const appRoot = require('app-root-path');
 
 module.exports = (client) => {
+    if (!client.commandDirectory || typeof client.commandDirectory !== 'string') throw new Error('Akago: clientOptions commandDirectory either is missing or is not a string.');
     return glob(`${appRoot.path}${client.commandDirectory}/**/*.js`).then(commands => {
         for (const commandFile of commands) {
             const { name } = path.parse(commandFile);
