@@ -26,9 +26,9 @@ yourProject
 | index.js 
 |----src 
     |----commands 	
-	   	|----ping.js
+	  |----ping.js
     |----listeners
-	   	|----guildMemberAdd.js
+	  |----guildMemberAdd.js
 ```
 
 ```js
