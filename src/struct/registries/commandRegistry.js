@@ -5,7 +5,7 @@ const glob = promisify(require('glob'));
 const appRoot = require('app-root-path');
 
 module.exports = (client) => {
-    return glob(`${appRoot}${client.commandDirectory}/**/*.js`).then(commands => {
+    return glob(`${appRoot.path}${client.commandDirectory}/**/*.js`).then(commands => {
         for (const commandFile of commands) {
             const { name } = path.parse(commandFile);
             const File = require(commandFile);

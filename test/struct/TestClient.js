@@ -1,4 +1,4 @@
-const { AkagoClient } = require('../../src/index.js');
+const { AkagoClient, CommandHandler, listenerHandler } = require('../../src/index.js');
 
 module.exports = class TestClient extends AkagoClient {
     constructor() {
@@ -6,28 +6,24 @@ module.exports = class TestClient extends AkagoClient {
             ownerID: ['611466971371929602'],
             prefix: ['!', '?'],
             token: require('../config.json').token,
-            listenerHandler: {
-                listenerDirectory: '/test/listener',
-                handlerOptions: {
-                    useAkagoMessageListener: true,
-                    akagoLogReady: true,
-                },
-            },
-            commandHandler: {
-                commandDirectory: '/test/commands',
-                handlerOptions: {
-                    allowMentionPrefix: true,
-                    blockBots: true,
-                    blockClient: true,
-                    defaultCooldown: 3,
-                    ignoreCooldowns: ['611466971371929602'],
-                    ignorePermissions: ['611466971371929602'],
-                },
-            },
+            listenerDirectory: '/test/listeners',
+            commandDirectory: '/test/commands',
         });
+
+        new CommandHandler(this, {
+            allowMentionPrefix: true,
+            blockBots: true,
+            blockClient: true,
+            defaultCooldown: 3,
+            ignoreCooldowns: ['611466971371929602'],
+            ignorePermissions: ['611466971371929602'],
+        });
+
+        new listenerHandler(this);
+
     }
 
-    login() {
-        this.start();
+    start() {
+        this.build();
     }
 };

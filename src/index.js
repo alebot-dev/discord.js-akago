@@ -5,4 +5,8 @@ module.exports = {
     // BASE
     ListenerBase: require('./struct/base/listenerBase'),
     CommandBase: require('./struct/base/commandBase'),
+
+    // HANDLERS
+    CommandHandler: require('./struct/handler/commandHandler'),
+    listenerHandler: require('./struct/handler/ListenerHandler'),
 }; 

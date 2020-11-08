@@ -16,12 +16,12 @@ module.exports = class extends ListenerBase {
         
         const mentionedPrefix = RegExp(`^<@!?${this.client.user.id}> `);
     
-        const commandPrefix = this.client.allowMentionPrefix ? message.content.match(mentionedPrefix) ?
-        message.content.match(mentionedPrefix)[0] : Array.isArray(this.client.prefix) ? 
-        this.client.prefix.find(pre => message.content.startsWith(pre)) : this.client.prefix : this.client.prefix;
+        const commandPrefix = this.client.allowMentionPrefix && message.content.match(mentionedPrefix) ?
+            mentionedPrefix.match[0] : Array.isArray(this.client.prefix) ? 
+            this.client.prefix.find(pre => message.content.startsWith(pre)) : this.client.prefix;
     
         if (!message.content.startsWith(commandPrefix)) return;
-    
+        
         const [commandName, ...args] = message.content.slice(commandPrefix.length).trim().split(/ +/g); 
     
         const command = this.client.commands.get(commandName)

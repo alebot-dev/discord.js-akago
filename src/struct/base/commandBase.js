@@ -1,71 +1,91 @@
-module.exports = class Command {
+/**
+ * Options to use for command execution behavior.
+ * @typedef {Object} CommandOptions
+ * @prop {string} [name=file name] - Name of the command
+ * @prop {string} [description=''] - Description of the command.
+ * @prop {string} [usage=''] - The usage of the command.
+ * @prop {string|Array} [examples=[]] - Any exmaples of the command.
+ * @prop {string} [aliases=[]] - Aliases of the command.
+ * @prop {string} [category='Misc'] - Category for the command.
+ * @prop {boolean} [ownerOnly=false] - Whether or not to allow client owner(s) only.
+ * @prop {number} [cooldown=3] - The command cooldown in seconds.
+ * @prop {PermissionResolvable[]} [memberPermissions] - Permissions required by the member to run this command.
+ * @prop {PermissionResolvable[]} [clientPermissions] - Permissions required by the client to run this command.
+ * @prop {boolean} [guildOnly=true] - Whether or not the commans can only be used in a guild
+ * @prop {boolean} [nsfw=false] - Whether the command can only be done in a NSFW channel. 
+ */
 
+ class Command {
+    /**
+     * Creates a new command.
+     * @param {string} [name=File name] - Command name if isn't provided in CommandOptions.
+     * @param {AkagoClient} [client] - The Akago Client.
+     * @param {CommandOptions} [options={}] - Options for the command.
+     */
     constructor(client, name, options = {}) {
-        /**
-         * Discord Akago Framework Client
-         * @type {Object}
-         */
         this.client = client;
         /**
-         * The name of the command
-         * @type {String}
+         * Name of the command
+         * @type {string}
          */
         this.name = typeof options.name === 'string' ? options.name : name;
         /**
-         * Breif description of the command
-         * @type {String}
+         * Description of the command.
+         * @type {string}
          */
         this.description = typeof options.description === 'string' ? options.description : null;
         /**
-         * Usage of the command
-         * @type {String}
+         * The usage of the command.
+         * @type {string}
          */
         this.usage = typeof options.usage === 'string' ? options.usage : null;
         /**
-         * Collection of aliases for the command
+         * Aliases of the command.
          * @type {Array}
          */
         this.aliases = Array.isArray(options.aliases) ? options.aliases : [];
         /**
-         * Examples of the usage of the command
-         * @type {String|Array}
+         * Any exmaples of the command.
+         * @type {string|Array}
          */
         this.examples = (Array.isArray(options.examples) || typeof options.examples === 'string') ? options.examples : [];
         /**
-         * The category for the command
-         * @type {String}
+         * Category for the command.
+         * @type {string}
          */
         this.category = typeof options.category === 'string' ? options.category : null;
         /**
-         * The cooldown of a command in seconds
-         * @type {Number}
+         * The command cooldown in seconds.
+         * @type {number}
          */
         this.cooldown = typeof options.cooldown === 'number' ? options.cooldown : null;
         /**
-         * Only allows usr's in the ownerID collection in Akago Client option to use the command
-         * @type {Boolean}
+         * Whether or not to allow client owner(s) only.
+         * @type {boolean}
          */
         this.ownerOnly = typeof options.ownerOnly === 'boolean' ? options.ownerOnly : false;
         /**
-         * Only allowing commands to be executed in guilds not dms
-         * @type {Boolean}
+         * Whether or not the commans can only be used in a guild
+         * @type {boolean}
          */
-        this.guildOnly = typeof options.guildOnly === 'boolean' ? (options.guildOnly === undefined ? true : options.guildOnly) : true;
+        this.guildOnly = typeof options.guildOnly === 'boolean' ? (options.guildOnly === undefined ? true : options.guildOnly) : true;  
         /**
-         * Won't send a message if true and the message channel isn't NSFW
-         * @type {Boolean}
+         * Whether the command can only be done in a NSFW channel. 
+         * @type {boolean}
          */
         this.nsfw = typeof options.nsfw === 'boolean' ? options.nsfw : false;
         /**
-         * Collection of permissions the member requires
-         * @type {Array}
+         * Permissions required by the member to run this command.
+         * @type {PermissionResolvable[]}
          */
         this.memberPermissions = Array.isArray(options.memberPermissions) ? options.memberPermissions : [];
         /**
-         * Collection of permissions the client requires
-         * @type {Array}
+         * Permissions required by the client to run this command.
+         * @type {PermissionResolvable[]}
          */
         this.clientPermissions = Array.isArray(options.clientPermissions) ? options.clientPermissions : [];
     }
 
-}; 
+}
+
+module.exports = Command;
