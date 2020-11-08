@@ -6,7 +6,7 @@ module.exports = class extends CommandBase {
     constructor(...args) {
         super(...args, {
             name: 'help',
-            description: 'Pong!',
+            description: 'Display a list of all commands I have.',
             cooldown: 0,
         });
     }
