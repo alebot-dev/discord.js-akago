@@ -8,5 +8,5 @@ module.exports = {
 
     // HANDLERS
     CommandHandler: require('./struct/handler/commandHandler'),
-    listenerHandler: require('./struct/handler/ListenerHandler'),
+    ListenerHandler: require('./struct/handler/ListenerHandler'),
 }; 

@@ -1,4 +1,4 @@
-const { AkagoClient, CommandHandler, listenerHandler } = require('../../src/index.js');
+const { AkagoClient, CommandHandler, ListenerHandler } = require('../../src/index.js');
 
 module.exports = class TestClient extends AkagoClient {
     constructor() {
@@ -19,7 +19,7 @@ module.exports = class TestClient extends AkagoClient {
             ignorePermissions: ['611466971371929602'],
         });
 
-        new listenerHandler(this);
+        new ListenerHandler(this);
 
     }
 
