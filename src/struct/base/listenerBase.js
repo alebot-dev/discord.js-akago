@@ -8,8 +8,8 @@
 class Listener {
     /**
      * Creates a new listener.
-     * @param {string} [name=File name] - Listener name if isn't provided in ListenerOptions.
-     * @param {AkagoClient} [client] - The Akago Client.
+     * @param {string} name - Listener name if isn't provided in ListenerOptions.
+     * @param {AkagoClient} client - The Akago Client.
      * @param {ListenerOptions} [options={}] - Options for the listener.
      */
     constructor(client, name, options = {}) {

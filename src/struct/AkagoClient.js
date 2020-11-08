@@ -5,9 +5,9 @@ const validateAkagoOptions = require('../util/validateAkagoOptions.js');
 /**
  * Options used to determine how the framework behaves.
  * @typedef {Object} AkagosOptions
- * @prop {Snowflake|Array<Snowflake>} [ownerID=''] - Discord ID of the client owner(s).
- * @prop {string} [token] - Discord bot's token.
- * @prop {string|Array<string>} [prefix='!'] - Default command prefix(es)
+ * @prop {Snowflake|Array<Snowflake>} ownerID - Discord ID of the client owner(s).
+ * @prop {string} token - Discord bot's token.
+ * @prop {string|Array<string>} prefix='!' - Default command prefix(es)
  * @prop {string} [commandDirectory] - Directory to commands from the main project folder.
  * @prop {string} [listenerDirectory] - Directory to listeners from the main project folder.
  */
@@ -16,7 +16,7 @@ class AkagoClient extends Client {
     /**
      * The Akago framework client.
      * Creates the handlers and sets them up.
-     * @param {AkagosOptions} [options={}] - Options to use for the framework.
+     * @param {AkagosOptions} options - Options to use for the framework.
      * @param {ClientOptions} [clientOptions] - Options for Discord JS client.
      */
     constructor(options = {}, clientOptions) {

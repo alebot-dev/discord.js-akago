@@ -16,7 +16,7 @@ const path = require('path');
 class CommandHandler {
     /**
      * Loads commands and handles messages.
-     * @param {AkagoClient} [client] - The Akago Client.
+     * @param {AkagoClient} client - The Akago Client.
      * @param {commandHandlerOptions} [options={}] - Options for the command handler.
      */
     constructor(client, options = {}) {

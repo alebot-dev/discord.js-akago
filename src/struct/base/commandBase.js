@@ -18,8 +18,8 @@
  class Command {
     /**
      * Creates a new command.
-     * @param {string} [name=File name] - Command name if isn't provided in CommandOptions.
-     * @param {AkagoClient} [client] - The Akago Client.
+     * @param {string} name=File name - Command name if isn't provided in CommandOptions.
+     * @param {AkagoClient} client - The Akago Client.
      * @param {CommandOptions} [options={}] - Options for the command.
      */
     constructor(client, name, options = {}) {

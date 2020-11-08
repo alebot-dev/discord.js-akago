@@ -4,7 +4,8 @@
   "description": "Discord.js framework.",
   "main": "./src/index.js",
   "scripts": {
-    "test": "nodemon ./test/bot.js"
+    "test": "nodemon ./test/bot.js",
+    "doc": "jsdoc -c jsdoc.json"
   },
   "repository": {
     "type": "git",
@@ -26,6 +27,7 @@
   },
   "homepage": "https://github.com/iColtz/discord.js-akago#readme",
   "devDependencies": {
+    "clean-jsdoc-theme": "^2.2.13",
     "eslint": "^7.12.1",
     "nodemon": "^2.0.6",
     "prettier": "^2.1.2"
