@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>Tutorial: 2. Setting Up Command Handler</title>
+    <title>handler/commandHandler.js</title>
 
     <!--[if lt IE 9]>
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -43,56 +43,105 @@
 
 <div id="main">
     
-    <h1 class="page-title">Tutorial: 2. Setting Up Command Handler</h1>
+    <h1 class="page-title">handler/commandHandler.js</h1>
     
 
+    
+
+
+
+    
     <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @typedef {Object} commandHandlerOptions
+ * @prop {boolean} [allowMentionPrefix=true] - Allows mentioning the bot as a valid prefix.
+ * @prop {boolean} [blockBots=true] - Command handler will block message's from bots.
+ * @prop {boolean} [blockClient=true] - Command handler will block message's from the client.
+ * @prop {Array.&lt;Snowflake>} [ignorePermissions=[]] - Array of user's IDs that will ignore permission checks.
+ * @prop {Array.&lt;Snowflake>} [ignoreCooldown=[]] - Array of user's IDs that will ignore command cooldowns.
+ * @prop {number} [defaultCooldown=3] - Default cooldown of commands that don't have their own cooldown. Set to 0 for no default cooldown.
+ * @prop {boolean} [useAkagoHelpCommand=true] - Whether or not to use Akagos default help command.
+ * @prop {string} [miscCommandCategory='Misc'] - Name of the category for commands that don't have their own category.
+ */
 
-<header>
-    
+const commandRegistry = require('../registries/commandRegistry.js');
+const path = require('path');
 
-    <h2>2. Setting Up Command Handler</h2>
-</header>
+class CommandHandler {
+    /**
+     * Loads commands and handles messages.
+     * @param {AkagoClient} client - The Akago Client.
+     * @param {commandHandlerOptions} [options={}] - Options for the command handler.
+     */
+    constructor(client, options = {}) {
+        this.client = client;
+        
+        /**
+         * Allows mentioning the bot as a valid prefix.
+         * @type {boolean}
+         */
+        this.client.allowMentionPrefix = typeof options.allowMentionPrefix === 'boolean' ? options.allowMentionPrefix : true;
 
-<article>
-    <h3>Handlers</h3>
-<p>Since this is most likely your first time using <code>discord.js-akago</code> we have made it very easy for you to set up a <strong>command</strong> and <strong>event</strong> handlers. First off lets go to your main file. And it should look something like this right?</p>
-<pre class="prettyprint source lang-JavaScript"><code>const Akago = require('discord.js-akago');
+        /**
+         * Command handler will block message's from bots.
+         * @type {boolean}
+         */
+        this.client.blockBots = typeof options.blockBots === 'boolean' ? options.blockBots : true;
 
-const client = new Akago.AkagoClient({
-	// Akago Client Options
-	ownerID: ['611466971371929602'],
-	prefix: '?',
-	token: 'discord bot token',
-	listenerDirectory: '/src/listeners',
-	commandDirectory: '/src/commands',
-}, {
-	// Discord.js Client Options
-	disableMentions: 'everyone',
-});
-</code></pre>
-<p>Now lets add an event and command handler onto that!
-Easy right?</p>
-<pre class="prettyprint source lang-JavaScript"><code>const Akago = require('discord.js-akago');
+        /**
+         * Command handler will block message's from the client.
+         * @type {boolean}
+         */
+        this.client.blockClient = typeof options.blockClient === 'boolean' ? options.blockClient : true;
 
-const client = new Akago.AkagoClient({
-	// Akago Client Options
-	ownerID: ['611466971371929602'],
-	prefix: '?',
-	token: 'discord bot token',
-	listenerDirectory: '/src/listeners',
-	commandDirectory: '/src/commands',
-}, {
-	// Discord.js Client Options
-	disableMentions: 'everyone',
-});
+        /**
+         * Array of user's IDs that will ignore permission checks.
+         * @type {Array.&lt;Snowflake>}
+         */
+        this.client.ignorePermissions = Array.isArray(options.ignorePermissions) ? options.ignorePermissions : [];
 
-new Akago.CommandHandler(client);
-new Akago.ListenerHandler(client);
-</code></pre>
-</article>
+        /**
+         * Array of user's IDs that will ignore command cooldowns.
+         * @type {Array.&lt;Snowflake>}
+         */
+        this.client.ignoreCooldown = Array.isArray(options.ignoreCooldown) ? options.ignoreCooldown : [];
 
-</section>
+        /**
+         * Default cooldown of commands that don't have their own cooldown. Set to 0 for no default cooldown.
+         * @type {number}
+         */
+        this.client.defaultCooldown = typeof options.defaultCooldown === 'number' ? options.defaultCooldown : 3;
+
+        /**
+         * Whether or not to use Akagos default help command.
+         * @type {number}
+         */
+        this.client.useAkagoHelpCommand = typeof options.useAkagoHelpCommand === 'boolean' ? options.useAkagoHelpCommand : true;
+
+        /**
+         * Name of the category for commands that don't have their own category.
+         * @type {string}
+         */
+        this.client.miscCommandCategory = typeof options.miscCommandCategory === 'string' ? options.miscCommandCategory : 'Misc';
+
+        this.loadCommands();
+    }
+
+    loadCommands() {
+        commandRegistry(this.client);
+        if (this.client.useAkagoHelpCommand) require('../commands/registry/commandRegistry')(this.client, `${path.join(__dirname, '../')}/commands/help.js`, this.client.defaultCooldown);
+        require('../listeners/registry/listenerRegistry.js')(this.client, `${path.join(__dirname, '../')}/listeners/message.js`);
+    }
+
+}
+
+module.exports = CommandHandler;</code></pre>
+        </article>
+    </section>
+
+
+
 
 </div>
 

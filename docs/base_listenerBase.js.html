@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>Tutorial: 2. Setting Up Command Handler</title>
+    <title>base/listenerBase.js</title>
 
     <!--[if lt IE 9]>
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -43,56 +43,57 @@
 
 <div id="main">
     
-    <h1 class="page-title">Tutorial: 2. Setting Up Command Handler</h1>
+    <h1 class="page-title">base/listenerBase.js</h1>
     
 
+    
+
+
+
+    
     <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Options to use for command execution behavior.
+ * @typedef {Object} ListenerOptions
+ * @prop {string} [name=file name] The event name that will be emitted.
+ * @prop {boolean} [once='on'] Whether the event will be on or once.
+ * @prop {emitter} [emitter=client] The emitter of the event. 
+ */
+class Listener {
+    /**
+     * Creates a new listener.
+     * @param {string} name - Listener name if isn't provided in ListenerOptions.
+     * @param {AkagoClient} client - The Akago Client.
+     * @param {ListenerOptions} [options={}] - Options for the listener.
+     */
+    constructor(client, name, options = {}) {
+        this.client = client;
+        /**
+         * The event name that will be emitted.
+         * @type {string}
+         */
+        this.name = typeof options.name === 'string' ? options.name : name;
+        /**
+         * Whether the event will be on or once.
+         * @type {boolean}
+         */
+        this.type = typeof options.type === 'boolean' ? options.once ? 'once' : 'on' : 'on';
+        /**
+         * The emitter of the event.
+         * @type {emitter}
+         */
+        this.emitter = (typeof options.emitter === 'string' ? this.client[options.emitter] : options.emitter) || this.client;
+    }
 
-<header>
-    
+}
 
-    <h2>2. Setting Up Command Handler</h2>
-</header>
+module.exports = Listener;</code></pre>
+        </article>
+    </section>
 
-<article>
-    <h3>Handlers</h3>
-<p>Since this is most likely your first time using <code>discord.js-akago</code> we have made it very easy for you to set up a <strong>command</strong> and <strong>event</strong> handlers. First off lets go to your main file. And it should look something like this right?</p>
-<pre class="prettyprint source lang-JavaScript"><code>const Akago = require('discord.js-akago');
 
-const client = new Akago.AkagoClient({
-	// Akago Client Options
-	ownerID: ['611466971371929602'],
-	prefix: '?',
-	token: 'discord bot token',
-	listenerDirectory: '/src/listeners',
-	commandDirectory: '/src/commands',
-}, {
-	// Discord.js Client Options
-	disableMentions: 'everyone',
-});
-</code></pre>
-<p>Now lets add an event and command handler onto that!
-Easy right?</p>
-<pre class="prettyprint source lang-JavaScript"><code>const Akago = require('discord.js-akago');
 
-const client = new Akago.AkagoClient({
-	// Akago Client Options
-	ownerID: ['611466971371929602'],
-	prefix: '?',
-	token: 'discord bot token',
-	listenerDirectory: '/src/listeners',
-	commandDirectory: '/src/commands',
-}, {
-	// Discord.js Client Options
-	disableMentions: 'everyone',
-});
-
-new Akago.CommandHandler(client);
-new Akago.ListenerHandler(client);
-</code></pre>
-</article>
-
-</section>
 
 </div>
 

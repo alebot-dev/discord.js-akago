@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>Tutorial: 2. Setting Up Command Handler</title>
+    <title>ClientUtil.js</title>
 
     <!--[if lt IE 9]>
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -43,56 +43,62 @@
 
 <div id="main">
     
-    <h1 class="page-title">Tutorial: 2. Setting Up Command Handler</h1>
+    <h1 class="page-title">ClientUtil.js</h1>
     
 
+    
+
+
+
+    
     <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>class ClientUtil {
+    /**
+     * Akago client utilities.
+     * @param {AkagoClient} client - The Akago Client.
+     */
+    constructor(client) {
+        this.client = client;
+    }
 
-<header>
-    
+    /**
+     * Removes any duplicate elements from an array. 
+     * @param {Array}
+     * @returns {Array}
+     */
+    removeDuplicates(arr) {
+        return [...new Set(arr)];
+    }
 
-    <h2>2. Setting Up Command Handler</h2>
-</header>
+    /**
+     * Checks if a file exports a class.
+     * @param {File}
+     * @returns {boolean}
+     */
+    isClass(given) {
+        return typeof given === 'function' &amp;&amp;
+            typeof given.prototype === 'object' &amp;&amp;
+            new String(given).substring(0, 5) === 'class';
+    }
 
-<article>
-    <h3>Handlers</h3>
-<p>Since this is most likely your first time using <code>discord.js-akago</code> we have made it very easy for you to set up a <strong>command</strong> and <strong>event</strong> handlers. First off lets go to your main file. And it should look something like this right?</p>
-<pre class="prettyprint source lang-JavaScript"><code>const Akago = require('discord.js-akago');
+    /**
+     * Capitalizes the first character of a string.
+     * @param {string} 
+     * @returns {string}
+     */
+    capitalize(str) {
+        return str.charAt(0).toUpperCase() + str.slice(1);
+    }
 
-const client = new Akago.AkagoClient({
-	// Akago Client Options
-	ownerID: ['611466971371929602'],
-	prefix: '?',
-	token: 'discord bot token',
-	listenerDirectory: '/src/listeners',
-	commandDirectory: '/src/commands',
-}, {
-	// Discord.js Client Options
-	disableMentions: 'everyone',
-});
-</code></pre>
-<p>Now lets add an event and command handler onto that!
-Easy right?</p>
-<pre class="prettyprint source lang-JavaScript"><code>const Akago = require('discord.js-akago');
+}
 
-const client = new Akago.AkagoClient({
-	// Akago Client Options
-	ownerID: ['611466971371929602'],
-	prefix: '?',
-	token: 'discord bot token',
-	listenerDirectory: '/src/listeners',
-	commandDirectory: '/src/commands',
-}, {
-	// Discord.js Client Options
-	disableMentions: 'everyone',
-});
+module.exports = ClientUtil;</code></pre>
+        </article>
+    </section>
 
-new Akago.CommandHandler(client);
-new Akago.ListenerHandler(client);
-</code></pre>
-</article>
 
-</section>
+
 
 </div>
 
