@@ -2,7 +2,7 @@
 <div align="center">
   <br />
   <p>
-    <a href="https://discord.js.org"><img src="https://i.imgur.com/tt64LX5.png" width="546" alt="discord.js-akago" /></a>
+    <a href="https://3vccsdszsdbgafmasps2kw-on.drv.tw/www.discord-akago.com/"><img src="https://i.imgur.com/tt64LX5.png" width="546" alt="discord.js-akago" /></a>
   </p>
   <p>
     <a href="https://discord.gg/bRCvFy9"><img src="https://img.shields.io/discord/717861844127055873?color=7289da&logo=discord&logoColor=white" alt="Discord server" /></a>
@@ -19,76 +19,28 @@
 
 discord.js-akago is a flexible, easy to use framework for discord.js that allows you to make command handlers, event handlers completely customizable with many features such as: cooldowns, aliases and much much more!
 
-## Example usage
-### Directory
-```FILETREE
-yourProject 
-| index.js 
-|----src 
-    |----commands 	
-	  |----ping.js
-    |----listeners
-	  |----guildMemberAdd.js
-```
+## Features
 
-```js
-// Code for: index.js
-const Akago = require('discord.js-akago');
+## Completely Modular Commands and Listeners.
+	- Sub folder compatibility
+	- Customizable options for handler
 
-const client = new Akago.AkagoClient({
-	// Akago Client Options
-	ownerID: ['611466971371929602'],
-	prefix: '?',
-	token: 'discord bot token',
-	listenerDirectory: '/src/listeners',
-	commandDirectory: '/src/commands',
-}, {
-	// Discord.js Client Options
-	disableMentions: 'everyone',
-});
+### Command Handling.
+	- Command aliases
+	- Command cooldowns
+	- Client and member permission checks
+	- Multiple prefixes and mention prefixes
+	- Only executing commands in certain channel types
+	- Only allowing owners to execute certain commands
+	- Pre-made help command
 
-new Akago.CommandHandler(client);
-new Akago.listenerHandler(client);
-```
-```js
-// Code for: src/ping.js
-const { CommandBase } = require('discord.js-akago');
-
-module.exports = class extends CommandBase {
-	constructor(...args) {
-		super(...args, {
-			name: 'ping',
-			description: 'Pong!',
-			aliases: ['p'],
-			cooldown: 5,
-		});
-	}
-
-	async execute(message) {
-		return message.channel.send('Pong!');
-	}
-};
-```
-```js
-// Code for: src/guildMemberAdd.js
-const { ListenerBase } = require('discord.js-akago');
-
-module.exports = class extends ListenerBase  {
-	constructor(...args) {
-		super(...args, {
-			name: 'guildMemberAdd',
-			once: false,
-		});
-	}
-
-	async execute(member) {
-		console.log(`${member.user.tag} has joined the server!`);
-	}
-};
-```
+## Event Handling.
+	- Making the event to be either once or on
+	- Customizable event emitter
 
 ## Links
-- [Discord.js Discord server](https://discord.gg/2jkBmzy)
+- [Discord server](https://discord.gg/2jkBmzy)
+- [Docs](https://3vccsdszsdbgafmasps2kw-on.drv.tw/www.discord-akago.com/)
 - [GitHub](https://github.com/discord-js-akago/discord.js-akago)
 - [NPM](https://www.npmjs.com/package/discord.js-akago)
 
