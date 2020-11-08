@@ -1,0 +1,4 @@
+contact_links:
+  - name: Help
+    url: https://github.com/iColtz/discord.js-akago/issues
+    about: Please create an issue if you found a bug/issue/suggestion with the framework and add corresponding tags.
