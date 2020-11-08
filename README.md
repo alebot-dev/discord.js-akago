@@ -25,10 +25,10 @@ discord.js-akago is a flexible, easy to use framework for discord.js that allows
 yourProject 
 | index.js 
 |----src 
-   |----commands 	
-	   |----ping.js
-   |----listeners
-	   |----guildMemberAdd.js
+    |----commands 	
+	   	|----ping.js
+    |----listeners
+	   	|----guildMemberAdd.js
 ```
 
 ```js
