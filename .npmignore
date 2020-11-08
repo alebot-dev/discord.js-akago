@@ -7,5 +7,5 @@ node_modules
 .prettierrc.json
 test/
 examples/
-docs/
+docs/ 
 .LICENCE

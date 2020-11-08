@@ -13,7 +13,7 @@
     <link type="text/css" rel="stylesheet" href="styles/third-party/prettify-tomorrow.css">
     <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
     <link type="text/css" rel="stylesheet" href="styles/clean-jsdoc-theme-base.css">
-    <link type="text/css" rel="stylesheet" href="styles/clean-jsdoc-theme-dark.css">
+    <link type="text/css" rel="stylesheet" href="styles/clean-jsdoc-theme-light.css">
     
     
     
@@ -60,9 +60,9 @@ const validateAkagoOptions = require('../util/validateAkagoOptions.js');
 /**
  * Options used to determine how the framework behaves.
  * @typedef {Object} AkagosOptions
- * @prop {Snowflake|Array&lt;Snowflake>} [ownerID=''] - Discord ID of the client owner(s).
- * @prop {string} [token] - Discord bot's token.
- * @prop {string|Array&lt;string>} [prefix='!'] - Default command prefix(es)
+ * @prop {Snowflake|Array&lt;Snowflake>} ownerID - Discord ID of the client owner(s).
+ * @prop {string} token - Discord bot's token.
+ * @prop {string|Array&lt;string>} prefix='!' - Default command prefix(es)
  * @prop {string} [commandDirectory] - Directory to commands from the main project folder.
  * @prop {string} [listenerDirectory] - Directory to listeners from the main project folder.
  */
@@ -71,7 +71,7 @@ class AkagoClient extends Client {
     /**
      * The Akago framework client.
      * Creates the handlers and sets them up.
-     * @param {AkagosOptions} [options={}] - Options to use for the framework.
+     * @param {AkagosOptions} options - Options to use for the framework.
      * @param {ClientOptions} [clientOptions] - Options for Discord JS client.
      */
     constructor(options = {}, clientOptions) {
