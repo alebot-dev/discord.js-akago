@@ -70,6 +70,8 @@ const client = new Akago.AkagoClient({
 	// Discord.js Client Options
 	disableMentions: 'everyone',
 });
+
+client.build();
 </code></pre>
 <p>Now lets add an event and command handler onto that!
 Easy right?</p>
@@ -89,6 +91,8 @@ const client = new Akago.AkagoClient({
 
 new Akago.CommandHandler(client);
 new Akago.ListenerHandler(client);
+
+client.build();
 </code></pre>
 </article>
 
