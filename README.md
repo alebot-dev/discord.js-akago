@@ -20,61 +20,71 @@
 discord.js-akago is a flexible, easy to use framework for discord.js that allows you to make command handlers, event handlers completely customizable with many features such as: cooldowns, aliases and much much more!
 
 ## Example usage
-```JavaScript
+### Directory
+```FILETREE
 yourProject 
- | 
- |----index.js 
- | 	  const Akago = require('discord.js-akago');  
- |    const client = new Akago.AkagoClient({  
- |	     // Akago Client Options 
- |	     ownerID: ['611466971371929602'], 
- |	     prefix: '?',
- |	     token: 'discord bot token',
- |	     listenerDirectory: '/src/listeners', 
- |	     commandDirectory: '/src/commands',  
- |    },  {  
- |	     // Discord.js Client Options 
- |	     disableMentions:  'everyone',  
- |    });
- |
- |----src 
-	    |----commands 
-	    |     |
-	    |     |----ping.js
-	    |	  	   const { CommandBase } = require('discord.js-akago');
-		|
-		|	  	   module.exports = class extends CommandBase {
-		|		   constructor(...args) {
-		|		   	   super(...args, {
-		|			  	   name: 'ping',
-		|				   description: 'Pong!',
-		|				   aliases: ['p'],
-		|				   cooldown: 5,
-		|			   });
-		|		   }   
-		|
-		|			async execute(message) {
-		|				return message.channel.send('Pong!');
-		|			}
-		|		};
-		|
-	    |----listeners
-		      |
-	          |----guildMemberAdd.js
-				   const { ListenerBase } = require('discord.js-akago');
+| index.js 
+|----src 
+	   |----commands 	
+			    |----ping.js
+	   |----listeners
+			    |----guildMemberAdd.js
+```
 
-				   module.exports = class extends ListenerBase  {
-				       constructor(...args) {
-					       super(...args, {
-						       name: 'guildMemberAdd',
-						       once: false,
-						   });
-					   }
+```js
+// Code for: index.js
+const Akago = require('discord.js-akago');
 
-				       async execute(member) {
-				           console.log(`${member.user.tag} has joined the server!`);
-				       }
-				   };
+const client = new Akago.AkagoClient({
+	// Akago Client Options
+	ownerID: ['611466971371929602'],
+	prefix: '?',
+	token: 'discord bot token',
+	listenerDirectory: '/src/listeners',
+	commandDirectory: '/src/commands',
+}, {
+	// Discord.js Client Options
+	disableMentions: 'everyone',
+});
+
+new Akago.CommandHandler(client);
+new Akago.listenerHandler(client);
+```
+```js
+// Code for: src/ping.js
+const { CommandBase } = require('discord.js-akago');
+
+module.exports = class extends CommandBase {
+	constructor(...args) {
+		super(...args, {
+			name: 'ping',
+			description: 'Pong!',
+			aliases: ['p'],
+			cooldown: 5,
+		});
+	}
+
+	async execute(message) {
+		return message.channel.send('Pong!');
+	}
+};
+```
+```js
+// Code for: src/guildMemberAdd.js
+const { ListenerBase } = require('discord.js-akago');
+
+module.exports = class extends ListenerBase  {
+	constructor(...args) {
+		super(...args, {
+			name: 'guildMemberAdd',
+			once: false,
+		});
+	}
+
+	async execute(member) {
+		console.log(`${member.user.tag} has joined the server!`);
+	}
+};
 ```
 
 ## Links
