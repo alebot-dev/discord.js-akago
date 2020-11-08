@@ -3,10 +3,10 @@ module.exports = {
     AkagoClient: require('./struct/AkagoClient'),
 
     // BASE
-    ListenerBase: require('./struct/base/listenerBase'),
-    CommandBase: require('./struct/base/commandBase'),
+    ListenerBase: require('./struct/listener/Listener'),
+    CommandBase: require('./struct/command/Command'),
 
     // HANDLERS
-    CommandHandler: require('./struct/handler/commandHandler'),
-    ListenerHandler: require('./struct/handler/ListenerHandler'),
+    CommandHandler: require('./struct/command/CommandHandler'),
+    ListenerHandler: require('./struct/listener/ListenerHandler'),
 }; 

@@ -1,4 +1,4 @@
-const ListenerBase = require('../base/listenerBase.js');
+const ListenerBase = require('./Listener.js');
 const { promisify } = require('util');
 const path = require('path');
 const glob = promisify(require('glob'));

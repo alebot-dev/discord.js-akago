@@ -1,4 +1,4 @@
-const { ListenerBase } = require('../../index.js');
+const { ListenerBase } = require('../../../index.js');
 const { Collection, Permissions } = require('discord.js');
 
 module.exports = class extends ListenerBase {

@@ -10,7 +10,7 @@
  * @prop {string} [miscCommandCategory='Misc'] - Name of the category for commands that don't have their own category.
  */
 
-const CommandBase = require('../base/commandBase.js');
+const CommandBase = require('./Command.js');
 const { promisify } = require('util');
 const glob = promisify(require('glob'));
 const path = require('path');
@@ -73,7 +73,7 @@ class CommandHandler {
         this.client.miscCommandCategory = typeof options.miscCommandCategory === 'string' ? options.miscCommandCategory : 'Misc';
 
         this.loadCommands();
-        this.loadMessageEvent(path.join(__dirname, '..', 'listeners/message.js'));
+        this.loadMessageEvent(path.join(__dirname, '..', 'listener/events/message.js'));
     }
 
     loadCommands() {
@@ -82,7 +82,7 @@ class CommandHandler {
         }
 
         glob(`${process.cwd()}${this.client.commandDirectory}/**/*.js`).then(commands => {
-            if (this.client.useAkagoHelpCommand) commands.push(path.join(__dirname, '..', '/commands/help.js'));
+            if (this.client.useAkagoHelpCommand) commands.push(path.join(__dirname, '/cmds/help.js'));
             for (const commandFile of commands) {
                 const { name } = path.parse(commandFile);
                 const File = require(commandFile);
