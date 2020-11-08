@@ -1,5 +1,5 @@
 const { Client, Collection } = require('discord.js');
-const Util = require('../util/ClientUtil.js');
+const Util = require('./ClientUtil.js');
 
 /**
  * Options used to determine how the framework behaves.
