@@ -18,12 +18,10 @@
  class Command {
     /**
      * Creates a new command.
-     * @param {string} name=File name - Command name if isn't provided in CommandOptions.
-     * @param {AkagoClient} client - The Akago Client.
+     * @param {string} name - Name of the command.
      * @param {CommandOptions} [options={}] - Options for the command.
      */
-    constructor(client, name, options = {}) {
-        this.client = client;
+    constructor(name, options = {}) {
         /**
          * Name of the command
          * @type {string}
@@ -84,6 +82,11 @@
          * @type {PermissionResolvable[]}
          */
         this.clientPermissions = Array.isArray(options.clientPermissions) ? options.clientPermissions : [];
+        /**
+         * The Akago Client.
+         * @type {AkagoClient}
+         */
+        this.client;
     }
 
 }

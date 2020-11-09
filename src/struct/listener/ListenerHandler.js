@@ -32,7 +32,8 @@ class ListenerHandler {
         if (!this.client.util.isClass(File)) throw new TypeError(`Akago: Listener '${name}' doesn't export a class.`);
         const listener = new File(this.client, name.toLowerCase());
         if (!(listener instanceof ListenerBase)) throw new TypeError(`Akago: Listener '${name}' dosn't extend the listener base.`);
-        listener.emitter[listener.type]((listener.name || name), (...args) => listener.execute(...args));
+        const emitter = (typeof listener.emitter === 'string' ? this.client[listener.emitter] : listener.emitter) || this.client;
+        emitter[listener.type]((listener.name || name), (...args) => listener.execute(...args));
     }
 
 }

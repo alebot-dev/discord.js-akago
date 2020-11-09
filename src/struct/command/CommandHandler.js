@@ -197,6 +197,7 @@ class CommandHandler {
             if (command.nsfw && !message.channel.nsfw) return message.channel.send('I can\'t execute this command as this channel is not NSFW.');
 
             try {
+                command.client = this.client;
                 command.execute(message, args);
             }
             catch (error) {

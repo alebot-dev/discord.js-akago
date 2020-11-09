@@ -8,27 +8,25 @@
 class Listener {
     /**
      * Creates a new listener.
-     * @param {string} name - Listener name if isn't provided in ListenerOptions.
-     * @param {AkagoClient} client - The Akago Client.
+     * @param {string} name - Name of the listener.
      * @param {ListenerOptions} [options={}] - Options for the listener.
      */
-    constructor(client, name, options = {}) {
-        this.client = client;
+    constructor(name, options = {}) {
         /**
          * The event name that will be emitted.
          * @type {string}
          */
-        this.name = typeof options.name === 'string' ? options.name : name;
+        this.name = String(name);
         /**
          * Whether the event will be on or once.
          * @type {boolean}
          */
-        this.type = typeof options.type === 'boolean' ? options.once ? 'once' : 'on' : 'on';
+        this.type = options.once ? 'once' : 'on';
         /**
          * The emitter of the event.
          * @type {emitter}
          */
-        this.emitter = (typeof options.emitter === 'string' ? this.client[options.emitter] : options.emitter) || this.client;
+        this.emitter = options.emitter;
     }
 
 }

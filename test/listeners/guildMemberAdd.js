@@ -1,9 +1,8 @@
 const { ListenerBase } = require('../../src/index.js');
 
 module.exports = class extends ListenerBase {
-	constructor(...args) {
-		super(...args, {
-			name: 'guildMemberAdd', 
+	constructor() {
+		super('guildMemberAdd', {
 			once: false,
 		});
 	}

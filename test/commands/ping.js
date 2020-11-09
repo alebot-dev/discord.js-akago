@@ -2,9 +2,8 @@ const { CommandBase } = require('../../src/index.js');
 
 module.exports = class extends CommandBase {
 
-    constructor(...args) {
-        super(...args, {
-            name: 'ping',
+    constructor() {
+        super('ping', {
             description: 'Pong!',
             category: 'Util',
             cooldown: 5,
