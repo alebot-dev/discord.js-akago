@@ -26,52 +26,42 @@
          * Name of the command
          * @type {string}
          */
-        this.name = typeof options.name === 'string' ? options.name : name;
+        this.name = String(name);
         /**
          * Description of the command.
          * @type {string}
          */
-        this.description = typeof options.description === 'string' ? options.description : null;
-        /**
-         * The usage of the command.
-         * @type {string}
-         */
-        this.usage = typeof options.usage === 'string' ? options.usage : null;
+        this.description = String(options.description);
         /**
          * Aliases of the command.
          * @type {Array}
          */
         this.aliases = Array.isArray(options.aliases) ? options.aliases : [];
         /**
-         * Any exmaples of the command.
-         * @type {string|Array}
-         */
-        this.examples = (Array.isArray(options.examples) || typeof options.examples === 'string') ? options.examples : [];
-        /**
          * Category for the command.
          * @type {string}
          */
-        this.category = typeof options.category === 'string' ? options.category : null;
+        this.category = String(options.category);
         /**
          * The command cooldown in seconds.
          * @type {number}
          */
-        this.cooldown = typeof options.cooldown === 'number' ? options.cooldown : null;
+        this.cooldown = Number(options.cooldown);
         /**
          * Whether or not to allow client owner(s) only.
          * @type {boolean}
          */
-        this.ownerOnly = typeof options.ownerOnly === 'boolean' ? options.ownerOnly : false;
+        this.ownerOnly = Boolean(options.ownerOnly);
         /**
          * Whether or not the commans can only be used in a guild
          * @type {boolean}
          */
-        this.guildOnly = typeof options.guildOnly === 'boolean' ? (options.guildOnly === undefined ? true : options.guildOnly) : true;  
+        this.guildOnly = Boolean(options.guildOnly);
         /**
          * Whether the command can only be done in a NSFW channel. 
          * @type {boolean}
          */
-        this.nsfw = typeof options.nsfw === 'boolean' ? options.nsfw : false;
+        this.nsfw = Boolean(options.nsfw);
         /**
          * Permissions required by the member to run this command.
          * @type {PermissionResolvable[]}
