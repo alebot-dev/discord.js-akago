@@ -7,8 +7,6 @@ const Util = require('./ClientUtil.js');
  * @prop {Snowflake|Array<Snowflake>} ownerID - Discord ID of the client owner(s).
  * @prop {string} token - Discord bot's token.
  * @prop {string|Array<string>} prefix='!' - Default command prefix(es)
- * @prop {string} [commandDirectory] - Directory to commands from the main project folder.
- * @prop {string} [listenerDirectory] - Directory to listeners from the main project folder.
  */
 
 class AkagoClient extends Client {
@@ -64,12 +62,6 @@ class AkagoClient extends Client {
          * Directory of listener folder.
          * @type {string}
          */
-        this.listenerDirectory = typeof options.listenerDirectory === 'string' ? options.listenerDirectory : '';
-        /**
-         * Directory of commands folder.
-         * @type {string}
-         */
-        this.commandDirectory = typeof options.commandDirectory === 'string' ? options.commandDirectory : '';
     }
 
     /**
