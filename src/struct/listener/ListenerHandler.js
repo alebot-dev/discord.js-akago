@@ -22,6 +22,10 @@ class ListenerHandler {
         }
     }
 
+    /**
+     * Loads a Listener.
+     * @param {string} filepath Path to file.
+     */
     loadListener(filepath) {
          const { name } = path.parse(filepath);
         const File = require(filepath);
