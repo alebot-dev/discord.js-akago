@@ -6,8 +6,8 @@ module.exports = class TestClient extends AkagoClient {
             ownerID: ['611466971371929602'],
             prefix: ['!', '?'],
             token: require('../config.json').token,
-            listenerDirectory: '/test/listeners',
-            commandDirectory: '/test/commands',
+            listenerDirectory: './test/listeners',
+            commandDirectory: './test/commands',
         });
 
         new CommandHandler(this, {
