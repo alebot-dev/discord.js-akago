@@ -1,6 +1,6 @@
-const { ListenerBase } = require('../../src/index.js');
+const { Listener } = require('../../src/index.js');
 
-module.exports = class extends ListenerBase {
+module.exports = class extends Listener {
 	constructor() {
 		super('guildMemberAdd', {
 			once: false,

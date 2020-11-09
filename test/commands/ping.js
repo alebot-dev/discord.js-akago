@@ -1,6 +1,6 @@
-const { CommandBase } = require('../../src/index.js');
+const { Command } = require('../../src/index.js');
 
-module.exports = class extends CommandBase {
+module.exports = class extends Command {
 
     constructor() {
         super('ping', {
