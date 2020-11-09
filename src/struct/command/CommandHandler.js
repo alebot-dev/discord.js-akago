@@ -21,7 +21,16 @@ class CommandHandler {
      * @param {AkagoClient} client - The Akago Client.
      * @param {commandHandlerOptions} [options={}] - Options for the command handler.
      */
-    constructor(client, options = {}) {
+    constructor(client, {
+        allowMentionPrefix = true,
+        blockBots = true,
+        blockClient = true,
+        ignorePermissions = [],
+        ignoreCooldown = [],
+        defaultCooldown = 3,
+        useAkagoHelpCommand = true,
+        miscCommandCategory = 'Misc',
+    } = {}) {
         this.client = client;
 
         /**
@@ -34,52 +43,51 @@ class CommandHandler {
          * Allows mentioning the bot as a valid prefix.
          * @type {boolean}
          */
-        this.allowMentionPrefix = typeof options.allowMentionPrefix === 'boolean' ? options.allowMentionPrefix : true;
+        this.allowMentionPrefix = Boolean(allowMentionPrefix);
 
         /**
          * Command handler will block message's from bots.
          * @type {boolean}
          */
-        this.blockBots = typeof options.blockBots === 'boolean' ? options.blockBots : true;
+        this.blockBots = Boolean(blockBots);
 
         /**
          * Command handler will block message's from the client.
          * @type {boolean}
          */
-        this.blockClient = typeof options.blockClient === 'boolean' ? options.blockClient : true;
+        this.blockClient = Boolean(blockClient);
 
         /**
          * Array of user's IDs that will ignore permission checks.
          * @type {Array.<Snowflake>}
          */
-        this.ignorePermissions = Array.isArray(options.ignorePermissions) ? options.ignorePermissions : [];
+        this.ignorePermissions = Array.isArray(ignorePermissions) ? ignorePermissions : [];
 
         /**
          * Array of user's IDs that will ignore command cooldowns.
          * @type {Array.<Snowflake>}
          */
-        this.ignoreCooldown = Array.isArray(options.ignoreCooldown) ? options.ignoreCooldown : [];
+        this.ignoreCooldown = Array.isArray(ignoreCooldown) ? ignoreCooldown : [];
 
         /**
          * Default cooldown of commands that don't have their own cooldown. Set to 0 for no default cooldown.
          * @type {number}
          */
-        this.defaultCooldown = typeof options.defaultCooldown === 'number' ? options.defaultCooldown : 3;
+        this.defaultCooldown = Number(defaultCooldown);
 
         /**
          * Whether or not to use Akagos default help command.
          * @type {number}
          */
-        this.useAkagoHelpCommand = typeof options.useAkagoHelpCommand === 'boolean' ? options.useAkagoHelpCommand : true;
+        this.useAkagoHelpCommand = Boolean(useAkagoHelpCommand);
 
         /**
          * Name of the category for commands that don't have their own category.
          * @type {string}
          */
-        this.miscCommandCategory = typeof options.miscCommandCategory === 'string' ? options.miscCommandCategory : 'Misc';
+        this.miscCommandCategory = String(miscCommandCategory);
 
         if (!this.client.commandDirectory || typeof this.client.commandDirectory !== 'string') throw new Error('Akago: clientOptions commandDirectory either is missing or is not a string.');
-
         const commandPaths = glob.sync(`${this.commandDirectory}**/*`);
         for (const commandPath of commandPaths) {
             this.loadCommand(commandPath);
