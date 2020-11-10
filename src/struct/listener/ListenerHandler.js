@@ -1,3 +1,8 @@
+/**
+ * @typedef {Object} listenerHandlerOptions
+ * @prop {string} listenerDirectory - File path to listener directory.
+ */
+
 const ListenerBase = require('./Listener.js');
 const path = require('path');
 const glob = require('glob');

@@ -1,5 +1,7 @@
 /**
  * @typedef {Object} commandHandlerOptions
+ * @prop {string} commandDirectory - File path to command directory.
+ * @prop {string|Array} prefix - Prefixes for the command handler.
  * @prop {boolean} [allowMentionPrefix=true] - Allows mentioning the bot as a valid prefix.
  * @prop {boolean} [blockBots=true] - Command handler will block message's from bots.
  * @prop {boolean} [blockClient=true] - Command handler will block message's from the client.
