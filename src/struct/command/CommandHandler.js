@@ -112,6 +112,14 @@ class CommandHandler {
         }
     }
 
+    reloadCommand(name) {
+        const command = this.client.commands.get(name);
+        if (!command) throw new Error(`Akago: commandHandler reloadCommand ${name} isn't a command`);
+        delete require.cache[require.resolve(command.filepath)];
+        this.client.commands.delete(command.name);
+        this.loadCommand(command.filepath);
+    }
+
     /**
      * Handlers messages.
      * @param {Discord.Message} message - Message to hanle. 
