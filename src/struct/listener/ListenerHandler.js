@@ -49,6 +49,10 @@ class ListenerHandler {
         emitter[listener.type]((listener.name || name), (...args) => listener.execute(...args));
     }
 
+    /**
+     * Reloads a listener
+     * @param {string} name - Name of the listener wanted to reload.
+     */
     reloadListener(name) {
         const listener = this.client.events.get(name);
         if (!listener) throw new Error(`Akago: listenerHandler reloadListener ${name} isn't a event.`);

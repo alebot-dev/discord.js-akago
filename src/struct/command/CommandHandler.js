@@ -112,6 +112,10 @@ class CommandHandler {
         }
     }
 
+    /**
+     * Reloads a command.
+     * @param {string} name - Name of the command.
+     */
     reloadCommand(name) {
         const command = this.client.commands.get(name);
         if (!command) throw new Error(`Akago: commandHandler reloadCommand ${name} isn't a command`);
