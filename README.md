@@ -40,7 +40,7 @@ discord.js-akago is a flexible, easy to use framework for discord.js that allows
 
 ## Links
 - [Discord server](https://discord.gg/2jkBmzy)
-- [Docs](https://3vccsdszsdbgafmasps2kw-on.drv.tw/www.discord-akago.com/)
+- [Docs](https://3vccsdszsdbgafmasps2kw-on.drv.tw/www.discord-akago.org/)
 - [GitHub](https://github.com/discord-js-akago/discord.js-akago)
 - [NPM](https://www.npmjs.com/package/discord.js-akago)
 
