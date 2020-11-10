@@ -26,6 +26,6 @@ module.exports = class TestClient extends AkagoClient {
     }
 
     start() {
-        this.build();
+        this.build().then(() => console.log('Ready!'));
     }
 };
