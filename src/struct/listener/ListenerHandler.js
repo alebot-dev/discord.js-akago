@@ -44,6 +44,7 @@ class ListenerHandler {
         if (!(listener instanceof ListenerBase)) throw new TypeError(`Akago: Listener '${name}' dosn't extend the listener base.`);
         const emitter = (typeof listener.emitter === 'string' ? this.client[listener.emitter] : listener.emitter) || this.client;
         listener.client = this.client;
+        listener.filepath = filepath;
         emitter[listener.type]((listener.name || name), (...args) => listener.execute(...args));
     }
 
