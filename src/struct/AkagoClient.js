@@ -31,6 +31,12 @@ class AkagoClient extends Client {
         this.aliases = new Collection();
 
         /**
+         * Collection of all events.
+         * @type {Collection}
+         */
+        this.events = new Collection();
+
+        /**
          * Collection of all cooldowns
          * @type {Collection}
          */
