@@ -2,7 +2,7 @@
 <div align="center">
   <br />
   <p>
-    <a href="https://3vccsdszsdbgafmasps2kw-on.drv.tw/www.discord-akago.com/"><img src="https://i.imgur.com/tt64LX5.png" width="546" alt="discord.js-akago" /></a>
+    <a href="https://3vccsdszsdbgafmasps2kw-on.drv.tw/www.discord-akago.org/"><img src="https://i.imgur.com/tt64LX5.png" width="546" alt="discord.js-akago" /></a>
   </p>
   <p>
     <a href="https://discord.gg/bRCvFy9"><img src="https://img.shields.io/discord/717861844127055873?color=7289da&logo=discord&logoColor=white" alt="Discord server" /></a>
