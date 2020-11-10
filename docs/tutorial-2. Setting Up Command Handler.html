@@ -60,17 +60,17 @@
 <pre class="prettyprint source lang-JavaScript"><code>const Akago = require('discord.js-akago');
 
 const client = new Akago.AkagoClient({
-	// Akago Client Options
-	ownerID: ['611466971371929602'],
-	prefix: '?',
-	token: 'discord bot token',
-	listenerDirectory: '/src/listeners',
-	commandDirectory: '/src/commands',
+    // Akago Client Options
+    ownerID: ['611466971371929602'],
+    prefix: '?',
+    token: 'discord bot token',
+    listenerDirectory: '/src/listeners',
+    commandDirectory: '/src/commands',
 }, {
-	// Discord.js Client Options
-	disableMentions: 'everyone',
+    // Discord.js Client Options
+    disableMentions: 'everyone',
 });
-
+    
 client.build();
 </code></pre>
 <p>Now lets add an event and command handler onto that!
@@ -78,20 +78,20 @@ Easy right?</p>
 <pre class="prettyprint source lang-JavaScript"><code>const Akago = require('discord.js-akago');
 
 const client = new Akago.AkagoClient({
-	// Akago Client Options
-	ownerID: ['611466971371929602'],
-	prefix: '?',
-	token: 'discord bot token',
-	listenerDirectory: '/src/listeners',
-	commandDirectory: '/src/commands',
+    // Akago Client Options
+    ownerID: ['611466971371929602'],
+    prefix: '?',
+    token: 'discord bot token',
+    listenerDirectory: '/src/listeners',
+    commandDirectory: '/src/commands',
 }, {
-	// Discord.js Client Options
-	disableMentions: 'everyone',
+    // Discord.js Client Options
+    disableMentions: 'everyone',
 });
 
 new Akago.CommandHandler(client);
 new Akago.ListenerHandler(client);
-
+    
 client.build();
 </code></pre>
 </article>
