@@ -77,6 +77,11 @@
          * @type {AkagoClient}
          */
         this.client;
+        /**
+         * The file path to the command.
+         * @type {string}
+         */
+        this.filepath;
     }
 
 }
