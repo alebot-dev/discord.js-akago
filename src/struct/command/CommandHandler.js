@@ -6,8 +6,6 @@
  * @prop {Array.<Snowflake>} [ignorePermissions=[]] - Array of user's IDs that will ignore permission checks.
  * @prop {Array.<Snowflake>} [ignoreCooldown=[]] - Array of user's IDs that will ignore command cooldowns.
  * @prop {number} [defaultCooldown=3] - Default cooldown of commands that don't have their own cooldown. Set to 0 for no default cooldown.
- * @prop {boolean} [useAkagoHelpCommand=true] - Whether or not to use Akagos default help command.
- * @prop {string} [miscCommandCategory='Misc'] - Name of the category for commands that don't have their own category.
  */
 
 const CommandBase = require('./Command.js');
@@ -28,8 +26,6 @@ class CommandHandler {
         ignorePermissions = [],
         ignoreCooldown = [],
         defaultCooldown = 3,
-        useAkagoHelpCommand = true,
-        miscCommandCategory = 'Misc',
     } = {}) {
         this.client = client;
 
@@ -74,18 +70,6 @@ class CommandHandler {
          * @type {number}
          */
         this.defaultCooldown = Number(defaultCooldown);
-
-        /**
-         * Whether or not to use Akagos default help command.
-         * @type {number}
-         */
-        this.useAkagoHelpCommand = Boolean(useAkagoHelpCommand);
-
-        /**
-         * Name of the category for commands that don't have their own category.
-         * @type {string}
-         */
-        this.miscCommandCategory = String(miscCommandCategory);
 
         if (!this.client.commandDirectory || typeof this.client.commandDirectory !== 'string') throw new Error('Akago: clientOptions commandDirectory either is missing or is not a string.');
         const commandPaths = glob.sync(`${this.commandDirectory}**/*`);
