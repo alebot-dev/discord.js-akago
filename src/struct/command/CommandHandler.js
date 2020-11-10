@@ -20,6 +20,8 @@ class CommandHandler {
      * @param {commandHandlerOptions} [options={}] - Options for the command handler.
      */
     constructor(client, {
+        commandDirectory,
+        prefix = '!',
         allowMentionPrefix = true,
         blockBots = true,
         blockClient = true,
@@ -28,13 +30,20 @@ class CommandHandler {
         defaultCooldown = 3,
     } = {}) {
         this.client = client;
+        if (!commandDirectory || typeof commandDirectory !== 'string') {
+            throw new Error('Akago: commandHandlerOptions commandDirectory either is missing or is not a string.');
+        }
 
         /**
          * Directory to commands.
          * @type {string}
          */
-        this.commandDirectory = path.resolve(this.client.commandDirectory);
-        
+        this.commandDirectory = path.resolve(commandDirectory);
+        /**
+         * Default command prefix(es)
+         * @type {string|Array<string>}
+         */
+        this.prefix = String(prefix);
         /**
          * Allows mentioning the bot as a valid prefix.
          * @type {boolean}
@@ -71,7 +80,6 @@ class CommandHandler {
          */
         this.defaultCooldown = Number(defaultCooldown);
 
-        if (!this.client.commandDirectory || typeof this.client.commandDirectory !== 'string') throw new Error('Akago: clientOptions commandDirectory either is missing or is not a string.');
         const commandPaths = glob.sync(`${this.commandDirectory}**/*`);
         for (const commandPath of commandPaths) {
             this.loadCommand(commandPath);
@@ -112,8 +120,8 @@ class CommandHandler {
         const mentionedPrefix = RegExp(`^<@!?${this.client.user.id}> `);
     
         const commandPrefix = this.allowMentionPrefix && message.content.match(mentionedPrefix) ?
-            mentionedPrefix.match[0] : Array.isArray(this.client.prefix) ? 
-            this.client.prefix.find(pre => message.content.startsWith(pre)) : this.client.prefix;
+            mentionedPrefix.match[0] : Array.isArray(this.prefix) ? 
+            this.prefix.find(pre => message.content.startsWith(pre)) : this.prefix;
     
         if (!message.content.startsWith(commandPrefix)) return;
         

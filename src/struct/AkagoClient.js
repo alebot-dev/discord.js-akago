@@ -55,21 +55,6 @@ class AkagoClient extends Client {
          * @type {string}
          */
         this.token = typeof options.token === 'string' ? options.token : '';
-        /**
-         * Default command prefix(es)
-         * @type {string|Array<string>}
-         */
-        this.prefix = typeof options.prefix === 'string' ? options.prefix : '!';
-        /**
-         * Directory of listener folder.
-         * @type {string}
-         */
-        this.listenerDirectory = typeof options.listenerDirectory === 'string' ? options.listenerDirectory : '';
-        /**
-         * Directory of commands folder.
-         * @type {string}
-         */
-        this.commandDirectory = typeof options.commandDirectory === 'string' ? options.commandDirectory : '';
     }
 
     /**

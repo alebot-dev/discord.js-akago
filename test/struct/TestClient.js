@@ -6,11 +6,11 @@ module.exports = class TestClient extends AkagoClient {
             ownerID: ['611466971371929602'],
             prefix: ['!', '?'],
             token: require('../config.json').token,
-            listenerDirectory: './test/listeners',
-            commandDirectory: './test/commands',
         });
 
         new CommandHandler(this, {
+            commandDirectory: './test/commands',
+            prefix: '!',
             allowMentionPrefix: true,
             blockBots: true,
             blockClient: true,
@@ -19,7 +19,9 @@ module.exports = class TestClient extends AkagoClient {
             ignorePermissions: ['611466971371929602'],
         });
 
-        new ListenerHandler(this);
+        new ListenerHandler(this, {
+            listenerDirectory: './test/listeners',
+        });
 
     }
 

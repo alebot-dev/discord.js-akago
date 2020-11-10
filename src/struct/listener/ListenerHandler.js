@@ -7,14 +7,19 @@ class ListenerHandler {
      * Loads commands and handles messages.
      * @param {AkagoClient} client - The Akago Client.
      */
-    constructor(client) {
+    constructor(client, {
+        listenerDirectory,
+    }) {
         this.client = client;
+        if (!listenerDirectory || typeof listenerDirectory !== 'string') {
+            throw new Error('Akago: listenerHandlerOptions listenerDirectory either is missing or is not a string.');
+        }
 
         /**
          * Directory to listeners.
          * @type {string}
          */
-        this.listenerDirectory = path.resolve(this.client.listenerDirectory);
+        this.listenerDirectory = path.resolve(listenerDirectory);
 
         const listenerPaths = glob.sync(`${this.listenerDirectory}**/*`);
         for (const listenerPath of listenerPaths) {
