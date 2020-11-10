@@ -104,6 +104,7 @@ class CommandHandler {
         const command = new File(this.client, name.toLowerCase());
         if (!(command instanceof CommandBase)) throw new Error(`Akago: Command '${command.name}' name dosn't extend the command base.`);
         this.client.commands.set(command.name, command);
+        command.filepath = filepath;
         if (command.aliases.length) {
             for (const alias of command.aliases) {
                 this.client.aliases.set(alias, command.name);
