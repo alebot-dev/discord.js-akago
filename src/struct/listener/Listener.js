@@ -27,6 +27,11 @@ class Listener {
          * @type {emitter}
          */
         this.emitter = options.emitter;
+        /**
+         * The Akago Client.
+         * @type {AkagoClient}
+         */
+        this.client;
     }
 
 }
