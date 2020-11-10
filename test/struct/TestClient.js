@@ -10,11 +10,7 @@ module.exports = class TestClient extends AkagoClient {
 
         new CommandHandler(this, {
             commandDirectory: './test/commands',
-            prefix: '!',
-            allowMentionPrefix: true,
-            blockBots: true,
-            blockClient: true,
-            defaultCooldown: 3,
+            prefix: ['!', '?'],
             ignoreCooldowns: ['611466971371929602'],
             ignorePermissions: ['611466971371929602'],
         });
