@@ -133,8 +133,6 @@ class CommandHandler {
         const commandPrefix = this.allowMentionPrefix && message.content.match(mentionedPrefix) ?
             mentionedPrefix.match[0] : Array.isArray(this.prefix) ? 
             this.prefix.find(pre => message.content.startsWith(pre)) : this.prefix;
-
-        console.log(commandPrefix);
     
         if (!message.content.startsWith(commandPrefix)) return;
         
