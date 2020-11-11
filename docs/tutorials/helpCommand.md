@@ -27,7 +27,7 @@ module.exports = class extends Command {
             embed.setTitle(`\`${command.name} ${command.usage || ''}\``);
             embed.addField('❯ Description', command.description);
             if (command.aliases.length) {
-                embed.addField('❯ Aliases', command.aliases.map(alias => `\`${alias}\``).join(' '));
+                embed.addField('❯ Aliases', command.aliases.map(a => `\`${a}\``).join(' '));
             }
         }
         else {
@@ -36,7 +36,7 @@ module.exports = class extends Command {
             for (const category of categories) {
                 embed.addFields([{
                     name: `❯ ${category || 'Misc'}`,
-                    value: commands.filter(c => c.category === category).map(c => `\`${c.name}\``).join(' '),
+                    value: commands.map(c => `\`${c.name}\``).join(' '),
                 }]);
             }
         }
