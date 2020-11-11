@@ -52,7 +52,7 @@ class AkagoClient extends Client {
          * Discord ID of the client owner(s).
          * @type {Snowflake|Array<Snowflake>}
          */
-        this.ownerID = typeof options.ownerID === 'string' ? options.ownerID : [];
+        this.ownerID = (Array.isArray(options.ownerID) || typeof options.ownerID === 'string') ? options.ownerID : [];
         /**
          * Discord bot's token.
          * @type {string}
@@ -67,6 +67,7 @@ class AkagoClient extends Client {
      */
     isOwner(user) {
         const id = this.users.resolveID(user);
+        console.log(this.ownerID);
         return Array.isArray(this.ownerID)
             ? this.ownerID.includes(id)
             : id === this.ownerID;
