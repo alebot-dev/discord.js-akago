@@ -15,7 +15,7 @@ module.exports = class TestClient extends AkagoClient {
             ignorePermissions: ['611466971371929602'],
         });
 
-        new ListenerHandler(this, {
+        this.ListenerHandler = new ListenerHandler(this, {
             listenerDirectory: './test/listeners',
         });
 
