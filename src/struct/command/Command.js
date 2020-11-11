@@ -24,7 +24,7 @@
          * Name of the command
          * @type {string}
          */
-        this.name = name;
+        this.name = typeof name === 'string' ? name : '';
         /**
          * Description of the command.
          * @type {string}
@@ -34,7 +34,7 @@
          * Category of the command
          * @type {string}
          */
-        this.category = options.category;
+        this.category = typeof options.category === 'string' ? options.category : '';
         /**
          * Aliases of the command.
          * @type {Array}
@@ -44,7 +44,7 @@
          * The command cooldown in seconds.
          * @type {number}
          */
-        this.cooldown = options.cooldown;
+        this.cooldown = typeof options.cooldown === 'number' ? options.cooldown : null;
         /**
          * Whether or not to allow client owner(s) only.
          * @type {boolean}
