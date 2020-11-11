@@ -104,6 +104,7 @@ class CommandHandler {
         const command = new File(this.client, name.toLowerCase());
         if (!(command instanceof CommandBase)) throw new Error(`Akago: Command '${command.name}' name dosn't extend the command base.`);
         command.filepath = filepath;
+        command.client = this.client;
         this.client.commands.set(command.name, command);
         if (command.aliases.length) {
             for (const alias of command.aliases) {
@@ -204,7 +205,6 @@ class CommandHandler {
             if (command.nsfw && !message.channel.nsfw) return message.channel.send('I can\'t execute this command as this channel is not NSFW.');
 
             try {
-                command.client = this.client;
                 command.execute(message, args);
             }
             catch (error) {
