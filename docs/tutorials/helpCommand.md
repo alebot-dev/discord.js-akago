@@ -5,7 +5,7 @@ First make a new file in your command folder for sake of conveniency lets call i
 In that file you will want to following code.
 And make sure when you create your commands you give the `category` option to they get put into the help command correctly.
 ```JavaScript
-const { Command } = require('discord.js-akago');
+const { Command } = require('../../src/index.js');
 const { MessageEmbed } = require('discord.js');
 
 module.exports = class extends Command {
@@ -34,10 +34,10 @@ module.exports = class extends Command {
             const categories = util.removeDuplicates(commands.map(c => c.category));
             embed.setDescription('For additional info on a command, use `?help <command>`');
             for (const category of categories) {
-                embed.addField({
+                embed.addFields([{
                     name: `❯ ${category || 'Misc'}`,
                     value: commands.filter(c => c.category === category).map(c => `\`${c.name}\``).join(' '),
-                });
+                }]);
             }
         }
 
