@@ -76,7 +76,7 @@ class AkagoClient extends Client {
      * Logs the Akago Client in and loads events and commands
      */
     build() {
-        if (!this.token) throw new Error('Akago: client options, no token was provided.');
+        if (!this.token) throw new Error('Akago: client options no token was provided.');
         return new Promise((resolve, reject) => {
             super.login(this.token).catch(reject);
             this.once('ready', resolve);
