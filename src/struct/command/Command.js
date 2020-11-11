@@ -3,6 +3,7 @@
  * @typedef {Object} CommandOptions
  * @prop {string} [name=file name] - Name of the command
  * @prop {string} [description=''] - Description of the command.
+ * @prop {string} [category] - Category of the command.
  * @prop {string} [aliases=[]] - Aliases of the command.
  * @prop {boolean} [ownerOnly=false] - Whether or not to allow client owner(s) only.
  * @prop {number} [cooldown=3] - The command cooldown in seconds.
@@ -29,6 +30,11 @@
          * @type {string}
          */
         this.description = String(options.description);
+        /**
+         * Category of the command
+         * @type {string}
+         */
+        this.category = String(options.category);
         /**
          * Aliases of the command.
          * @type {Array}
