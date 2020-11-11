@@ -12,3 +12,5 @@
       path: firstCommand.md
     - name: First Listener
       path: firstListener.md
+    - name: Help Command
+      path: helpCommand.md
