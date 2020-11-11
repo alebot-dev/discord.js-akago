@@ -34,7 +34,7 @@ class CommandHandler extends Events {
         defaultCooldown = 3,
     } = {}) {
         super();
-        
+
         this.client = client;
         if (!commandDirectory || typeof commandDirectory !== 'string') {
             throw new Error('Akago: commandHandlerOptions commandDirectory either is missing or is not a string.');
@@ -187,12 +187,11 @@ class CommandHandler extends Events {
                 setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
             }
 
-            if ((command.memberPermissions && command.memberPermissions.length) && !checkIgnore(message.author, this.client.ignorePermissions)) {
-                if (!Array.isArray(command.memberPermissions)) throw new TypeError(`Akago: Command '${commandName}' memberPermissions need to be an array`);
+            if (command.memberPermissions.length && !checkIgnore(message.author, this.client.ignorePermissions)) {
                 checkValidPermission(command.memberPermissions);
                 if (command.memberPermissions.some(perm => !message.member.hasPermission(perm))) {
-                    const formattedMemberPermissions = command.memberPermissions.map(perm => `**${perm.toLowerCase().replace(/_/g, ' ')}**`).join(', ');
-                    return message.channel.send(`Your missing the ${formattedMemberPermissions} permission(s) you need to execute this command.`);
+                    const missingPerms = command.memberPermissions.filter(perm => !message.member.hasPermission(perm));
+                    return this.emit(CommandHandlerEvents.MISSING_MEMBER_PERMISSIONS, message, missingPerms, command);
                 }
             }
 
