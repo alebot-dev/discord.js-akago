@@ -37,7 +37,7 @@ class ListenerHandler {
      * @param {string} filepath Path to file.
      */
     loadListener(filepath) {
-         const { name } = path.parse(filepath);
+        const { name } = path.parse(filepath);
         const File = require(filepath);
         if (!this.client.util.isClass(File)) throw new Error(`Akago: Listener '${name}' doesn't export a class.`);
         const listener = new File(this.client, name.toLowerCase());
