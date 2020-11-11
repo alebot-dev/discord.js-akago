@@ -215,6 +215,7 @@ class CommandHandler extends Events {
 
             try {
                 command.execute(message, args);
+                this.emit(CommandHandlerEvents.COMMAND_USED, message, command);
             }
             catch (error) {
                 console.log(`There was an error while executing a command: ${error}`);
