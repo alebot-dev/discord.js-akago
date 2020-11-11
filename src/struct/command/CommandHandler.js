@@ -30,8 +30,8 @@
  * @event CommandHandler#cooldown
  * Emitted when a command is used but the user is on cooldown
  * @param {Discord.Message} message - The message sent.
- * @param {number} timeLeft - The time left on the cooldown in milliseconds.
  * @param {Command} command - The command used.
+ * @param {number} timeLeft - The time left on the cooldown in milliseconds.
  */
 
 /**
@@ -209,7 +209,7 @@ class CommandHandler extends Events {
                     
                 if (now < expirationTime) {
                     const timeLeft = expirationTime - now;
-                    return this.emit(CommandHandlerEvents.COOLDOWN, message, timeLeft, command);
+                    return this.emit(CommandHandlerEvents.COOLDOWN, message, command, timeLeft);
                 }
             }
 
