@@ -13,10 +13,11 @@
 const CommandBase = require('./Command.js');
 const { Collection, Permissions } = require('discord.js');
 const { CommandHandlerEvents } = require('../../util/Constants.js');
+const Events = require('events');
 const glob = require('glob');
 const path = require('path');
 
-class CommandHandler {
+class CommandHandler extends Events {
     /**
      * Loads commands and handles messages.
      * @param {AkagoClient} client - The Akago Client.
@@ -32,6 +33,8 @@ class CommandHandler {
         ignoreCooldown = [],
         defaultCooldown = 3,
     } = {}) {
+        super();
+        
         this.client = client;
         if (!commandDirectory || typeof commandDirectory !== 'string') {
             throw new Error('Akago: commandHandlerOptions commandDirectory either is missing or is not a string.');
@@ -169,17 +172,17 @@ class CommandHandler {
             const now = Date.now();
             const timestamps = this.client.cooldowns.get(command.name);
             const cooldownAmount = (command.cooldown || this.client.defaultCooldown) * 1000;
-    
+
             if (timestamps.has(message.author.id)) {
                 const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
                     
-            if (now < expirationTime) {
-                const timeLeft = (expirationTime - now) / 1000;
-                return message.channel.send(`Please wait ${timeLeft.toFixed(1)} more second(s) before reusing the **${command.name}** command.`);
+                if (now < expirationTime) {
+                    const timeLeft = expirationTime - now;
+                    return this.emit(CommandHandlerEvents.COOLDOWN, message, timeLeft, command);
                 }
             }
 
-            if (this.client.defaultCooldown > 0 && !checkIgnore(message.author, this.client.ignoreCooldowns)) {
+            if (!checkIgnore(message.author, this.client.ignoreCooldowns)) {
                 timestamps.set(message.author.id, now);
                 setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
             }

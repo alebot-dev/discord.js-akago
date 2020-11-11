@@ -8,7 +8,7 @@ module.exports = class TestClient extends AkagoClient {
             token: require('../config.json').token,
         });
 
-        new CommandHandler(this, {
+        this.CommandHandler = new CommandHandler(this, {
             commandDirectory: './test/commands',
             prefix: ['!', '?'],
             ignoreCooldowns: ['611466971371929602'],
