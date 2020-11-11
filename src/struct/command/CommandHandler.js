@@ -202,10 +202,13 @@ class CommandHandler extends Events {
                     return this.emit(CommandHandlerEvents.MISSING_PERMISSIONS, message, command, 'client', missingPerms);
                 }
             }
-
-            if (command.ownerOnly && !this.client.isOwner(message.author)) return message.channel.send('This command can only be executed by the owner(s) of this bot.');
-            if (command.guildOnly && message.channel.type === 'dm') return message.channel.send('I can\'t execute this command in DMS make sure you use this in a guild.');
-            if (command.nsfw && !message.channel.nsfw) return message.channel.send('I can\'t execute this command as this channel is not NSFW.');
+            
+            if (command.ownerOnly && !this.client.isOwner(message.author)) {
+                return this.emit(CommandHandlerEvents.COMMAND_BLOCK, message, command, 'owner');
+            }
+            if (command.nsfw && !message.channel.nsfw) {
+                return this.emit(CommandHandlerEvents.COMMAND_BLOCK, message, command, 'nsfw');
+            }
 
             try {
                 command.execute(message, args);
