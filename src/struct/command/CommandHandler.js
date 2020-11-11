@@ -1,15 +1,16 @@
 const CommandBase = require('./Command.js');
 const { Collection, Permissions } = require('discord.js');
 const { CommandHandlerEvents } = require('../../util/Constants.js');
-const Events = require('events');
+const EventEmitter = require('events');
 const glob = require('glob');
 const path = require('path');
 
-class CommandHandler extends Events {
+class CommandHandler extends EventEmitter {
     /**
      * Loads commands and handles messages.
      * @param {AkagoClient} client - The Akago Client.
      * @param {commandHandlerOptions} options - Options for the command handler.
+     * @extends {EventEmitter}
      */
     constructor(client, {
         commandDirectory,
@@ -228,32 +229,32 @@ module.exports = CommandHandler;
  */
 
 /**
- * @event CommandHandler#missingPermissions
  * Emitted when the client or user is missing permissions to execute a command.
+ * @event CommandHandler#missingPermissions
  * @param {Discord.Message} message - The message sent.
  * @param {Command} command - The command used.
  * @param {Array} missingPerms - The permissions missing.
  */
 
 /**
- * @event CommandHandler#commandBlocked
  * Emitted when a command is blocked due to it being a onlyOnly, guildOnly or NSFW command.
+ * @event CommandHandler#commandBlocked
  * @param {Discord.Message} message - The message sent.
  * @param {Command} command - The command used.
  * @param {string} type - The reason the command was blocked either: owner, dm or nsfw.
  */
 
 /**
- * @event CommandHandler#cooldown
  * Emitted when a command is used but the user is on cooldown
+ * @event CommandHandler#cooldown
  * @param {Discord.Message} message - The message sent.
  * @param {Command} command - The command used.
  * @param {number} timeLeft - The time left on the cooldown in milliseconds.
  */
 
 /**
- * @event CommandHandler#commandUsed
  * Emitted when a command is successfully executed
+ * @event CommandHandler#commandUsed
  * @param {Discord.Message} message - The message sent.
  * @param {Command} command - The command used.
  */
