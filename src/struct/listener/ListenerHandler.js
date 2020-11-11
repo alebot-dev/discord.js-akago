@@ -16,6 +16,7 @@ class ListenerHandler {
         listenerDirectory,
     }) {
         this.client = client;
+        
         if (!listenerDirectory || typeof listenerDirectory !== 'string') {
             throw new Error('Akago: listenerHandlerOptions listenerDirectory either is missing or is not a string.');
         }
