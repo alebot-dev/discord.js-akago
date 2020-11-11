@@ -12,6 +12,7 @@
 
 const CommandBase = require('./Command.js');
 const { Collection, Permissions } = require('discord.js');
+const { CommandHandlerEvents } = require('../../util/Constants.js');
 const glob = require('glob');
 const path = require('path');
 
