@@ -24,7 +24,7 @@
          * Name of the command
          * @type {string}
          */
-        this.name = String(name);
+        this.name = name;
         /**
          * Description of the command.
          * @type {string}
@@ -34,7 +34,7 @@
          * Category of the command
          * @type {string}
          */
-        this.category = String(options.category);
+        this.category = options.category;
         /**
          * Aliases of the command.
          * @type {Array}
@@ -44,7 +44,7 @@
          * The command cooldown in seconds.
          * @type {number}
          */
-        this.cooldown = Number(options.cooldown);
+        this.cooldown = options.cooldown;
         /**
          * Whether or not to allow client owner(s) only.
          * @type {boolean}
