@@ -3,10 +3,7 @@
  * @typedef {Object} CommandOptions
  * @prop {string} [name=file name] - Name of the command
  * @prop {string} [description=''] - Description of the command.
- * @prop {string} [usage=''] - The usage of the command.
- * @prop {string|Array} [examples=[]] - Any exmaples of the command.
  * @prop {string} [aliases=[]] - Aliases of the command.
- * @prop {string} [category='Misc'] - Category for the command.
  * @prop {boolean} [ownerOnly=false] - Whether or not to allow client owner(s) only.
  * @prop {number} [cooldown=3] - The command cooldown in seconds.
  * @prop {PermissionResolvable[]} [memberPermissions] - Permissions required by the member to run this command.
@@ -37,11 +34,6 @@
          * @type {Array}
          */
         this.aliases = Array.isArray(options.aliases) ? options.aliases : [];
-        /**
-         * Category for the command.
-         * @type {string}
-         */
-        this.category = String(options.category);
         /**
          * The command cooldown in seconds.
          * @type {number}
