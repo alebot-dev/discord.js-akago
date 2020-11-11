@@ -96,6 +96,7 @@ class CommandHandler extends EventEmitter {
         if (!this.client.util.isClass(File)) throw new Error(`Akago: Command '${name}' doesn't export a class.`);
         const command = new File(this.client, name.toLowerCase());
         if (!(command instanceof CommandBase)) throw new Error(`Akago: Command '${command.name}' name dosn't extend the command base.`);
+        if (!command.execute || typeof command.execute !== 'function') throw new Error(`Akago: Command '${command.name}' dosn't have a execute function.`);
         if (this.client.commands.has(command.name)) throw new Error(`Akago: Command '${command.name}' already exists.`);
         command.filepath = filepath;
         command.client = this.client;
