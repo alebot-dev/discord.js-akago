@@ -191,7 +191,7 @@ class CommandHandler extends Events {
                 checkValidPermission(command.memberPermissions);
                 if (command.memberPermissions.some(perm => !message.member.hasPermission(perm))) {
                     const missingPerms = command.memberPermissions.filter(perm => !message.member.hasPermission(perm));
-                    return this.emit(CommandHandlerEvents.MISSING_MEMBER_PERMISSIONS, message, missingPerms, command);
+                    return this.emit(CommandHandlerEvents.MISSING_PERMISSIONS, message, command, 'member', missingPerms);
                 }
             }
 
@@ -199,7 +199,7 @@ class CommandHandler extends Events {
             checkValidPermission(command.clientPermissions);
             if (command.clientPermissions.some(perm => !message.guild.me.hasPermission(perm))) {
                     const missingPerms = command.clientPermissions.filter(perm => !message.guild.me.hasPermission(perm));     
-                    return this.emit(CommandHandlerEvents.MISSING_CLIENT_PERMISSIONS, message, missingPerms, command);
+                    return this.emit(CommandHandlerEvents.MISSING_PERMISSIONS, message, command, 'client', missingPerms);
                 }
             }
 
