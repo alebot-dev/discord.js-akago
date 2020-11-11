@@ -206,6 +206,9 @@ class CommandHandler extends Events {
             if (command.ownerOnly && !this.client.isOwner(message.author)) {
                 return this.emit(CommandHandlerEvents.COMMAND_BLOCK, message, command, 'owner');
             }
+            if (command.guildOnly && !message.guild) {
+                return this.emit(CommandHandlerEvents.COMMAND_BLOCK, message, command, 'dm');
+            }
             if (command.nsfw && !message.channel.nsfw) {
                 return this.emit(CommandHandlerEvents.COMMAND_BLOCK, message, command, 'nsfw');
             }
