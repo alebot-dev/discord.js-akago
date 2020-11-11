@@ -12,6 +12,7 @@ module.exports = class extends Listener {
 		const reasons = {
             'owner': `The **${command.name}** command can only be executed by the owner of this bot.`,
             'nsfw': `The **${command.name}** command can only be used in a nsfw channel.`,
+            'dm': `The **${command.name}** command can only be used in guilds.`,
         };
 
         message.channel.send(reasons[reason]);
