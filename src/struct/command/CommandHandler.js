@@ -196,11 +196,10 @@ class CommandHandler extends Events {
             }
 
             if (command.clientPermissions && command.clientPermissions.length) {
-            if (!Array.isArray(command.clientPermissions)) throw new TypeError(`Akago: Command '${commandName}' clientPermissions need to be an array`);
             checkValidPermission(command.clientPermissions);
             if (command.clientPermissions.some(perm => !message.guild.me.hasPermission(perm))) {
-                    const formattedClientPermissions = command.clientPermissions.map(perm => `**${perm.toLowerCase().replace(/_/g, ' ')}**`).join(', ');
-                    return message.channel.send(`I'm missing the ${formattedClientPermissions} permissions(s) I need to execute this command.`);
+                    const missingPerms = command.clientPermissions.filter(perm => !message.guild.me.hasPermission(perm));     
+                    return this.emit(CommandHandlerEvents.MISSING_CLIENT_PERMISSIONS, message, missingPerms, command);
                 }
             }
 
