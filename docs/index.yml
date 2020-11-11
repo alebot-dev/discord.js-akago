@@ -2,3 +2,13 @@
   files:
     - name: Welcome
       path: welcome.md
+- name: Tutorials
+    files:
+      - name: Getting Started
+        path: starting.md
+      - name: Handlers
+        path: handlers.md
+      - name: First Command
+        path: firstCommand.md
+      - name: First Listener
+        path: firstListener.md
