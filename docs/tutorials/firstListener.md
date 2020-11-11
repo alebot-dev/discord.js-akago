@@ -14,3 +14,4 @@ module.exports = class extends Listener  {
 		console.log(`${member.user.tag} has joined the server!`);
 	}
 };
+```
