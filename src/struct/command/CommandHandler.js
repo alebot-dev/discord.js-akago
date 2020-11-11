@@ -1,46 +1,3 @@
-/**
- * @typedef {Object} commandHandlerOptions
- * @prop {string} commandDirectory - File path to command directory.
- * @prop {string|Array} prefix - Prefixes for the command handler.
- * @prop {boolean} [allowMentionPrefix=true] - Allows mentioning the bot as a valid prefix.
- * @prop {boolean} [blockBots=true] - Command handler will block message's from bots.
- * @prop {boolean} [blockClient=true] - Command handler will block message's from the client.
- * @prop {Array.<Snowflake>} [ignorePermissions=[]] - Array of user's IDs that will ignore permission checks.
- * @prop {Array.<Snowflake>} [ignoreCooldown=[]] - Array of user's IDs that will ignore command cooldowns.
- * @prop {number} [defaultCooldown=3] - Default cooldown of commands that don't have their own cooldown. Set to 0 for no default cooldown.
- */
-
-/**
- * @event CommandHandler#missingPermissions
- * Emitted when the client or user is missing permissions to execute a command.
- * @param {Discord.Message} message - The message sent.
- * @param {Command} command - The command used.
- * @param {Array} missingPerms - The permissions missing.
- */
-
-/**
- * @event CommandHandler#commandBlocked
- * Emitted when a command is blocked due to it being a onlyOnly, guildOnly or NSFW command.
- * @param {Discord.Message} message - The message sent.
- * @param {Command} command - The command used.
- * @param {string} type - The reason the command was blocked either: owner, dm or nsfw.
- */
-
-/**
- * @event CommandHandler#cooldown
- * Emitted when a command is used but the user is on cooldown
- * @param {Discord.Message} message - The message sent.
- * @param {Command} command - The command used.
- * @param {number} timeLeft - The time left on the cooldown in milliseconds.
- */
-
-/**
- * @event CommandHandler#commandUsed
- * Emitted when a command is successfully executed
- * @param {Discord.Message} message - The message sent.
- * @param {Command} command - The command used.
- */
-
 const CommandBase = require('./Command.js');
 const { Collection, Permissions } = require('discord.js');
 const { CommandHandlerEvents } = require('../../util/Constants.js');
@@ -257,3 +214,46 @@ class CommandHandler extends Events {
 }
 
 module.exports = CommandHandler;
+
+/**
+ * @typedef {Object} commandHandlerOptions
+ * @prop {string} commandDirectory - File path to command directory.
+ * @prop {string|Array} prefix - Prefixes for the command handler.
+ * @prop {boolean} [allowMentionPrefix=true] - Allows mentioning the bot as a valid prefix.
+ * @prop {boolean} [blockBots=true] - Command handler will block message's from bots.
+ * @prop {boolean} [blockClient=true] - Command handler will block message's from the client.
+ * @prop {Array.<Snowflake>} [ignorePermissions=[]] - Array of user's IDs that will ignore permission checks.
+ * @prop {Array.<Snowflake>} [ignoreCooldown=[]] - Array of user's IDs that will ignore command cooldowns.
+ * @prop {number} [defaultCooldown=3] - Default cooldown of commands that don't have their own cooldown. Set to 0 for no default cooldown.
+ */
+
+/**
+ * @event CommandHandler#missingPermissions
+ * Emitted when the client or user is missing permissions to execute a command.
+ * @param {Discord.Message} message - The message sent.
+ * @param {Command} command - The command used.
+ * @param {Array} missingPerms - The permissions missing.
+ */
+
+/**
+ * @event CommandHandler#commandBlocked
+ * Emitted when a command is blocked due to it being a onlyOnly, guildOnly or NSFW command.
+ * @param {Discord.Message} message - The message sent.
+ * @param {Command} command - The command used.
+ * @param {string} type - The reason the command was blocked either: owner, dm or nsfw.
+ */
+
+/**
+ * @event CommandHandler#cooldown
+ * Emitted when a command is used but the user is on cooldown
+ * @param {Discord.Message} message - The message sent.
+ * @param {Command} command - The command used.
+ * @param {number} timeLeft - The time left on the cooldown in milliseconds.
+ */
+
+/**
+ * @event CommandHandler#commandUsed
+ * Emitted when a command is successfully executed
+ * @param {Discord.Message} message - The message sent.
+ * @param {Command} command - The command used.
+ */
