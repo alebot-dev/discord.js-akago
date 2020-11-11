@@ -9,16 +9,16 @@ class ClientUtil {
 
     /**
      * Removes any duplicate elements from an array. 
-     * @param {Array}
+     * @param {Array} - Array to remove duplicate elements from.
      * @returns {Array}
      */
-    removeDuplicates(arr) {
-        return [...new Set(arr)];
+    removeDuplicates(array) {
+        return [...new Set(array)];
     }
 
     /**
-     * Checks if a file exports a class.
-     * @param {File}
+     * Checks if a function exports a class.
+     * @param {Function} - Function to check if it exports a class.
      * @returns {boolean}
      */
     isClass(given) {
@@ -29,11 +29,11 @@ class ClientUtil {
 
     /**
      * Capitalizes the first character of a string.
-     * @param {string} 
+     * @param {string} - String to be capitalized
      * @returns {string}
      */
-    capitalize(str) {
-        return str.charAt(0).toUpperCase() + str.slice(1);
+    capitalize(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
     }
 
 }
