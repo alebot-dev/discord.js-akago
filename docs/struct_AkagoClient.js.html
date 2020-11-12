@@ -128,7 +128,6 @@ class AkagoClient extends Client {
      */
     isOwner(user) {
         const id = this.users.resolveID(user);
-        console.log(this.ownerID);
         return Array.isArray(this.ownerID)
             ? this.ownerID.includes(id)
             : id === this.ownerID;
