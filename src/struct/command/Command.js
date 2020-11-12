@@ -29,7 +29,7 @@
         nsfw = false,
         memberPermissions = [],
         clientPermissions = [],
-    } = {}) {
+    } = {}, opts = {}) {
         /**
          * Name of the command
          * @type {string}
@@ -90,6 +90,11 @@
          * @type {string}
          */
         this.filepath;
+        /**
+         * Command custom options used for adding options that arn't already in the command class.
+         * @type {object}
+         */
+        if (opts && typeof opts === 'object') this.opts = opts;
     }
 
 }
