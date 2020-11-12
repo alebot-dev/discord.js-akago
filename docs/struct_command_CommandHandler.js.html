@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="images/prismarine_js.svg"/>
+    
+    <title>struct/command/CommandHandler.js</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <script src="scripts/search.js"></script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.4.5/fuse.min.js"></script> -->
+    <script src="scripts/fuse.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/variables.css">
+    <link type="text/css" rel="stylesheet" href="styles/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+    <link type="text/css" rel="stylesheet" href="styles/clean-jsdoc-theme.css">
+    
+    
+    
+<svg aria-hidden="true" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="display:none">
+    <defs>
+        <symbol id="copy-icon" viewbox="0 0 488.3 488.3">
+            <g>
+                <path d="M314.25,85.4h-227c-21.3,0-38.6,17.3-38.6,38.6v325.7c0,21.3,17.3,38.6,38.6,38.6h227c21.3,0,38.6-17.3,38.6-38.6V124    C352.75,102.7,335.45,85.4,314.25,85.4z M325.75,449.6c0,6.4-5.2,11.6-11.6,11.6h-227c-6.4,0-11.6-5.2-11.6-11.6V124    c0-6.4,5.2-11.6,11.6-11.6h227c6.4,0,11.6,5.2,11.6,11.6V449.6z"/>
+                <path d="M401.05,0h-227c-21.3,0-38.6,17.3-38.6,38.6c0,7.5,6,13.5,13.5,13.5s13.5-6,13.5-13.5c0-6.4,5.2-11.6,11.6-11.6h227    c6.4,0,11.6,5.2,11.6,11.6v325.7c0,6.4-5.2,11.6-11.6,11.6c-7.5,0-13.5,6-13.5,13.5s6,13.5,13.5,13.5c21.3,0,38.6-17.3,38.6-38.6    V38.6C439.65,17.3,422.35,0,401.05,0z"/>
+            </g>
+        </symbol>
+    </defs>
+</svg>
+
+</head>
+<body>
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html"><div class="text">Home</div></a></h2><div class="search-box"><input type="text" placeholder="Search..." id="search-box" /><div class="search-item-container" id="search-item-container"><ul class="search-item-ul" id="search-item-ul"></ul></div></div><div class="sidebar-list-div"><h3>Classes</h3><ul><li><a href="AkagoClient.html">AkagoClient</a><ul class='methods'><li data-type='method'><a href="AkagoClient.html#build">build</a></li><li data-type='method'><a href="AkagoClient.html#isOwner">isOwner</a></li></ul></li><li><a href="ClientUtil.html">ClientUtil</a><ul class='methods'><li data-type='method'><a href="ClientUtil.html#capitalize">capitalize</a></li><li data-type='method'><a href="ClientUtil.html#isClass">isClass</a></li><li data-type='method'><a href="ClientUtil.html#removeDuplicates">removeDuplicates</a></li></ul></li><li><a href="Command.html">Command</a></li><li><a href="CommandHandler.html">CommandHandler</a><ul class='methods'><li data-type='method'><a href="CommandHandler.html#handle">handle</a></li><li data-type='method'><a href="CommandHandler.html#loadCommand">loadCommand</a></li><li data-type='method'><a href="CommandHandler.html#reloadCommand">reloadCommand</a></li></ul></li><li><a href="Listener.html">Listener</a></li><li><a href="ListenerHandler.html">ListenerHandler</a><ul class='methods'><li data-type='method'><a href="ListenerHandler.html#loadListener">loadListener</a></li><li data-type='method'><a href="ListenerHandler.html#reloadListener">reloadListener</a></li></ul></li></ul><h3>Events</h3><ul><li><a href="CommandHandler.html#event:commandBlocked">commandBlocked</a></li><li><a href="CommandHandler.html#event:commandUsed">commandUsed</a></li><li><a href="CommandHandler.html#event:cooldown">cooldown</a></li><li><a href="CommandHandler.html#event:missingPermissions">missingPermissions</a></li></ul><h3><a href="global.html">Global</a></h3></div>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">struct/command/CommandHandler.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const CommandBase = require('./Command.js');
+const { Collection, Permissions } = require('discord.js');
+const { CommandHandlerEvents } = require('../../util/Constants.js');
+const EventEmitter = require('events');
+const glob = require('glob');
+const path = require('path');
+
+class CommandHandler extends EventEmitter {
+    /**
+     * Loads commands and handles messages.
+     * @param {AkagoClient} client - The Akago Client.
+     * @param {commandHandlerOptions} options - Options for the command handler.
+     * @extends {EventEmitter}
+     */
+    constructor(client, {
+        commandDirectory,
+        prefix = '!',
+        allowMentionPrefix = true,
+        blockBots = true,
+        blockClient = true,
+        ignorePermissions = [],
+        ignoreCooldown = [],
+        defaultCooldown = 3,
+    } = {}) {
+        super();
+
+        this.client = client;
+        if (!commandDirectory || typeof commandDirectory !== 'string') {
+            throw new Error('Akago: commandHandlerOptions commandDirectory either is missing or is not a string.');
+        }
+
+        /**
+         * Directory to commands.
+         * @type {string}
+         */
+        this.commandDirectory = path.resolve(commandDirectory);
+        /**
+         * Default command prefix(es)
+         * @type {string|Array&lt;string>}
+         */
+        this.prefix = typeof prefix === 'string' ? prefix : '!';
+        /**
+         * Allows mentioning the bot as a valid prefix.
+         * @type {boolean}
+         */
+        this.allowMentionPrefix = Boolean(allowMentionPrefix);
+
+        /**
+         * Command handler will block message's from bots.
+         * @type {boolean}
+         */
+        this.blockBots = Boolean(blockBots);
+
+        /**
+         * Command handler will block message's from the client.
+         * @type {boolean}
+         */
+        this.blockClient = Boolean(blockClient);
+
+        /**
+         * Array of user's IDs that will ignore permission checks.
+         * @type {Array.&lt;Snowflake>}
+         */
+        this.ignorePermissions = Array.isArray(ignorePermissions) ? ignorePermissions : [];
+
+        /**
+         * Array of user's IDs that will ignore command cooldowns.
+         * @type {Array.&lt;Snowflake>}
+         */
+        this.ignoreCooldown = Array.isArray(ignoreCooldown) ? ignoreCooldown : [];
+
+        /**
+         * Default cooldown of commands that don't have their own cooldown. Set to 0 for no default cooldown.
+         * @type {number}
+         */
+        this.defaultCooldown = Number(defaultCooldown);
+
+        const commandPaths = glob.sync(`${this.commandDirectory}**/*`);
+        for (const commandPath of commandPaths) {
+            this.loadCommand(commandPath);
+        }
+
+        this.client.on('message', (message) => {
+            this.handle(message);
+        });
+    }
+
+    /**
+     * Loads a Command.
+     * @param {string} filepath Path to file.
+     */
+    loadCommand(filepath) {
+        if (!filepath) throw new Error('Akago: Tried to load a command but no file path was provided.');
+        const { name } = path.parse(filepath);
+        const File = require(filepath);
+        if (!this.client.util.isClass(File)) throw new Error(`Akago: Command '${name}' doesn't export a class.`);
+        const command = new File(this.client, name.toLowerCase());
+        if (!(command instanceof CommandBase)) throw new Error(`Akago: Command '${command.name}' name dosn't extend the command base.`);
+        if (!command.execute || typeof command.execute !== 'function') throw new Error(`Akago: Command '${command.name}' dosn't have a execute function.`);
+        if (this.client.commands.has(command.name)) throw new Error(`Akago: Command '${command.name}' already exists.`);
+        command.filepath = filepath;
+        command.client = this.client;
+        this.client.commands.set(command.name, command);
+        if (command.aliases.length) {
+            for (const alias of command.aliases) {
+                this.client.aliases.set(alias, command.name);
+            }
+        }
+    }
+
+    /**
+     * Reloads a command.
+     * @param {string} name - Name of the command.
+     */
+    reloadCommand(name) {
+        const command = this.client.commands.get(name);
+        if (!command) throw new Error(`Akago: commandHandler reloadCommand ${name} isn't a command`);
+        delete require.cache[require.resolve(command.filepath)];
+        this.client.commands.delete(command.name);
+        this.loadCommand(command.filepath);
+    }
+
+    /**
+     * Handlers messages.
+     * @param {Discord.Message} message - Message to hanle. 
+     */
+    handle(message) {
+        if (message.author.id === this.client.user.id &amp;&amp; this.blockClient) return; 
+        if (message.author.bot &amp;&amp; this.blockBots) return;
+        
+        const mentionedPrefix = RegExp(`^&lt;@!?${this.client.user.id}> `);
+    
+        const commandPrefix = this.allowMentionPrefix &amp;&amp; message.content.match(mentionedPrefix) ?
+            mentionedPrefix.match[0] : Array.isArray(this.prefix) ? 
+            this.prefix.find(pre => message.content.startsWith(pre)) : this.prefix;
+    
+        if (!message.content.startsWith(commandPrefix)) return;
+        
+        const [commandName, ...args] = message.content.slice(commandPrefix.length).trim().split(/ +/g); 
+    
+        const command = this.client.commands.get(commandName)
+            || this.client.commands.get(this.client.aliases.get(commandName));
+    
+        if (command) {
+            const checkValidPermission = (permArr) => {
+                if (permArr.some(perm => !(Object.keys(Permissions.FLAGS)).includes(perm))) {
+                    throw new TypeError(`Akago: Command '${commandName}' has invalid client or member permissions.`);
+                }
+            };
+
+            const checkIgnore = (user, array) => {
+                const { id } = user;
+                return Array.isArray(array)
+                    ? array.includes(id)
+                    : id === array;
+            };
+
+            if (!this.client.cooldowns.has(command.name)) {
+                this.client.cooldowns.set(command.name, new Collection());
+            }
+                        
+            const now = Date.now();
+            const timestamps = this.client.cooldowns.get(command.name);
+            const cooldownAmount = (command.cooldown || this.client.defaultCooldown) * 1000;
+
+            if (timestamps.has(message.author.id)) {
+                const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
+                    
+                if (now &lt; expirationTime) {
+                    const timeLeft = expirationTime - now;
+                    return this.emit(CommandHandlerEvents.COOLDOWN, message, command, timeLeft);
+                }
+            }
+
+            if (!checkIgnore(message.author, this.client.ignoreCooldowns)) {
+                timestamps.set(message.author.id, now);
+                setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
+            }
+
+            if (command.memberPermissions.length &amp;&amp; !checkIgnore(message.author, this.client.ignorePermissions)) {
+                checkValidPermission(command.memberPermissions);
+                if (command.memberPermissions.some(perm => !message.member.hasPermission(perm))) {
+                    const missingPerms = command.memberPermissions.filter(perm => !message.member.hasPermission(perm));
+                    return this.emit(CommandHandlerEvents.MISSING_PERMISSIONS, message, command, 'member', missingPerms);
+                }
+            }
+
+            if (command.clientPermissions &amp;&amp; command.clientPermissions.length) {
+            checkValidPermission(command.clientPermissions);
+            if (command.clientPermissions.some(perm => !message.guild.me.hasPermission(perm))) {
+                    const missingPerms = command.clientPermissions.filter(perm => !message.guild.me.hasPermission(perm));     
+                    return this.emit(CommandHandlerEvents.MISSING_PERMISSIONS, message, command, 'client', missingPerms);
+                }
+            }
+            
+            if (command.ownerOnly &amp;&amp; !this.client.isOwner(message.author)) {
+                return this.emit(CommandHandlerEvents.COMMAND_BLOCK, message, command, 'owner');
+            }
+            if (command.guildOnly &amp;&amp; !message.guild) {
+                return this.emit(CommandHandlerEvents.COMMAND_BLOCK, message, command, 'dm');
+            }
+            if (command.nsfw &amp;&amp; !message.channel.nsfw) {
+                return this.emit(CommandHandlerEvents.COMMAND_BLOCK, message, command, 'nsfw');
+            }
+
+            try {
+                command.execute(message, args);
+                this.emit(CommandHandlerEvents.COMMAND_USED, message, command);
+            }
+            catch (error) {
+                console.log(`There was an error while executing a command: ${error}`);
+            }
+        }
+    }
+
+}
+
+module.exports = CommandHandler;
+
+/**
+ * @typedef {Object} commandHandlerOptions
+ * @prop {string} commandDirectory - File path to command directory.
+ * @prop {string|Array} prefix - Prefixes for the command handler.
+ * @prop {boolean} [allowMentionPrefix=true] - Allows mentioning the bot as a valid prefix.
+ * @prop {boolean} [blockBots=true] - Command handler will block message's from bots.
+ * @prop {boolean} [blockClient=true] - Command handler will block message's from the client.
+ * @prop {Array.&lt;Snowflake>} [ignorePermissions=[]] - Array of user's IDs that will ignore permission checks.
+ * @prop {Array.&lt;Snowflake>} [ignoreCooldown=[]] - Array of user's IDs that will ignore command cooldowns.
+ * @prop {number} [defaultCooldown=3] - Default cooldown of commands that don't have their own cooldown. Set to 0 for no default cooldown.
+ */
+
+/**
+ * Emitted when the client or user is missing permissions to execute a command.
+ * @event CommandHandler#missingPermissions
+ * @param {Discord.Message} message - The message sent.
+ * @param {Command} command - The command used.
+ * @param {Array} missingPerms - The permissions missing.
+ */
+
+/**
+ * Emitted when a command is blocked due to it being a onlyOnly, guildOnly or NSFW command.
+ * @event CommandHandler#commandBlocked
+ * @param {Discord.Message} message - The message sent.
+ * @param {Command} command - The command used.
+ * @param {string} type - The reason the command was blocked either: owner, dm or nsfw.
+ */
+
+/**
+ * Emitted when a command is used but the user is on cooldown
+ * @event CommandHandler#cooldown
+ * @param {Discord.Message} message - The message sent.
+ * @param {Command} command - The command used.
+ * @param {number} timeLeft - The time left on the cooldown in milliseconds.
+ */
+
+/**
+ * Emitted when a command is successfully executed
+ * @event CommandHandler#commandUsed
+ * @param {Discord.Message} message - The message sent.
+ * @param {Command} command - The command used.
+ */</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+  
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+<script>
+var list = [{"title":"AkagoClient","link":"<a href=\"AkagoClient.html\">AkagoClient</a>"},{"title":"AkagoClient#build","link":"<a href=\"AkagoClient.html#build\">AkagoClient &rtrif; build</a>"},{"title":"AkagoClient#isOwner","link":"<a href=\"AkagoClient.html#isOwner\">AkagoClient &rtrif; isOwner</a>"},{"title":"ClientUtil","link":"<a href=\"ClientUtil.html\">ClientUtil</a>"},{"title":"ClientUtil#capitalize","link":"<a href=\"ClientUtil.html#capitalize\">ClientUtil &rtrif; capitalize</a>"},{"title":"ClientUtil#isClass","link":"<a href=\"ClientUtil.html#isClass\">ClientUtil &rtrif; isClass</a>"},{"title":"ClientUtil#removeDuplicates","link":"<a href=\"ClientUtil.html#removeDuplicates\">ClientUtil &rtrif; removeDuplicates</a>"},{"title":"Command","link":"<a href=\"Command.html\">Command</a>"},{"title":"CommandHandler","link":"<a href=\"CommandHandler.html\">CommandHandler</a>"},{"title":"CommandHandler#handle","link":"<a href=\"CommandHandler.html#handle\">CommandHandler &rtrif; handle</a>"},{"title":"CommandHandler#loadCommand","link":"<a href=\"CommandHandler.html#loadCommand\">CommandHandler &rtrif; loadCommand</a>"},{"title":"CommandHandler#reloadCommand","link":"<a href=\"CommandHandler.html#reloadCommand\">CommandHandler &rtrif; reloadCommand</a>"},{"title":"Listener","link":"<a href=\"Listener.html\">Listener</a>"},{"title":"ListenerHandler","link":"<a href=\"ListenerHandler.html\">ListenerHandler</a>"},{"title":"ListenerHandler#loadListener","link":"<a href=\"ListenerHandler.html#loadListener\">ListenerHandler &rtrif; loadListener</a>"},{"title":"ListenerHandler#reloadListener","link":"<a href=\"ListenerHandler.html#reloadListener\">ListenerHandler &rtrif; reloadListener</a>"},{"title":"commandBlocked","link":"<a href=\"CommandHandler.html#event:commandBlocked\">commandBlocked</a>"},{"title":"commandUsed","link":"<a href=\"CommandHandler.html#event:commandUsed\">commandUsed</a>"},{"title":"cooldown","link":"<a href=\"CommandHandler.html#event:cooldown\">cooldown</a>"},{"title":"missingPermissions","link":"<a href=\"CommandHandler.html#event:missingPermissions\">missingPermissions</a>"}];
+setupSearch(list)
+</script>
+
+ 
+<script type="text/javascript" src="scripts/misc.js"></script>
+</body>
+</html>

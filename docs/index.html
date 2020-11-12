@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="images/prismarine_js.svg"/>
+    
+    <title>Home</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <script src="scripts/search.js"></script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.4.5/fuse.min.js"></script> -->
+    <script src="scripts/fuse.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/variables.css">
+    <link type="text/css" rel="stylesheet" href="styles/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+    <link type="text/css" rel="stylesheet" href="styles/clean-jsdoc-theme.css">
+    
+    
+    
+<svg aria-hidden="true" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="display:none">
+    <defs>
+        <symbol id="copy-icon" viewbox="0 0 488.3 488.3">
+            <g>
+                <path d="M314.25,85.4h-227c-21.3,0-38.6,17.3-38.6,38.6v325.7c0,21.3,17.3,38.6,38.6,38.6h227c21.3,0,38.6-17.3,38.6-38.6V124    C352.75,102.7,335.45,85.4,314.25,85.4z M325.75,449.6c0,6.4-5.2,11.6-11.6,11.6h-227c-6.4,0-11.6-5.2-11.6-11.6V124    c0-6.4,5.2-11.6,11.6-11.6h227c6.4,0,11.6,5.2,11.6,11.6V449.6z"/>
+                <path d="M401.05,0h-227c-21.3,0-38.6,17.3-38.6,38.6c0,7.5,6,13.5,13.5,13.5s13.5-6,13.5-13.5c0-6.4,5.2-11.6,11.6-11.6h227    c6.4,0,11.6,5.2,11.6,11.6v325.7c0,6.4-5.2,11.6-11.6,11.6c-7.5,0-13.5,6-13.5,13.5s6,13.5,13.5,13.5c21.3,0,38.6-17.3,38.6-38.6    V38.6C439.65,17.3,422.35,0,401.05,0z"/>
+            </g>
+        </symbol>
+    </defs>
+</svg>
+
+</head>
+<body>
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html"><div class="text">Home</div></a></h2><div class="search-box"><input type="text" placeholder="Search..." id="search-box" /><div class="search-item-container" id="search-item-container"><ul class="search-item-ul" id="search-item-ul"></ul></div></div><div class="sidebar-list-div"><h3>Classes</h3><ul><li><a href="AkagoClient.html">AkagoClient</a><ul class='methods'><li data-type='method'><a href="AkagoClient.html#build">build</a></li><li data-type='method'><a href="AkagoClient.html#isOwner">isOwner</a></li></ul></li><li><a href="ClientUtil.html">ClientUtil</a><ul class='methods'><li data-type='method'><a href="ClientUtil.html#capitalize">capitalize</a></li><li data-type='method'><a href="ClientUtil.html#isClass">isClass</a></li><li data-type='method'><a href="ClientUtil.html#removeDuplicates">removeDuplicates</a></li></ul></li><li><a href="Command.html">Command</a></li><li><a href="CommandHandler.html">CommandHandler</a><ul class='methods'><li data-type='method'><a href="CommandHandler.html#handle">handle</a></li><li data-type='method'><a href="CommandHandler.html#loadCommand">loadCommand</a></li><li data-type='method'><a href="CommandHandler.html#reloadCommand">reloadCommand</a></li></ul></li><li><a href="Listener.html">Listener</a></li><li><a href="ListenerHandler.html">ListenerHandler</a><ul class='methods'><li data-type='method'><a href="ListenerHandler.html#loadListener">loadListener</a></li><li data-type='method'><a href="ListenerHandler.html#reloadListener">reloadListener</a></li></ul></li></ul><h3>Events</h3><ul><li><a href="CommandHandler.html#event:commandBlocked">commandBlocked</a></li><li><a href="CommandHandler.html#event:commandUsed">commandUsed</a></li><li><a href="CommandHandler.html#event:cooldown">cooldown</a></li><li><a href="CommandHandler.html#event:missingPermissions">missingPermissions</a></li></ul><h3><a href="global.html">Global</a></h3></div>
+</nav>
+
+<div id="main">
+    
+
+    
+
+
+
+    
+
+
+
+
+
+
+
+
+
+    
+
+
+    <section class="readme">
+        <article><div align="center">
+  <br />
+  <p>
+    <a href="https://3vccsdszsdbgafmasps2kw-on.drv.tw/www.discord-akago.org/"><img src="https://i.imgur.com/tt64LX5.png" width="546" alt="discord.js-akago" /></a>
+  </p>
+  <p>
+    <a href="https://discord.gg/bRCvFy9"><img src="https://img.shields.io/discord/717861844127055873?color=7289da&logo=discord&logoColor=white" alt="Discord server" /></a>
+    <a href="https://www.npmjs.com/package/discord.js-akago"><img src="https://img.shields.io/npm/v/discord.js-akago.svg" alt="NPM version" /></a>
+    <a href="https://www.npmjs.com/package/discord.js-akago"><img src="https://img.shields.io/npm/dt/discord.js-akago.svg" alt="NPM downloads" /></a>
+    <a href="https://david-dm.org/discordjs/discord.js-akago"><img src="https://img.shields.io/david/iColtz/discord.js-akago" alt="Dependencies" /></a>
+  </p>
+  <p>
+    <a href="https://nodei.co/npm/discord.js-akago/"><img src="https://nodei.co/npm/discord.js-akago.png?downloads=true&stars=true" alt="npm installnfo" /></a>
+  </p>
+</div>
+<h2>About</h2>
+<p>discord.js-akago is a flexible, easy to use framework for discord.js that allows you to make command handlers, event handlers completely customizable with many features such as: cooldowns, aliases and much much more!</p>
+<h2>Features</h2>
+<h2>Completely Modular Commands and Listeners.</h2>
+<pre><code>- Sub folder compatibility
+- Customizable options for handler
+</code></pre>
+<h3>Command Handling.</h3>
+<pre><code>- Command aliases
+- Command cooldowns
+- Client and member permission checks
+- Multiple prefixes and mention prefixes
+- Only executing commands in certain channel types
+- Only allowing owners to execute certain commands
+- Pre-made help command
+</code></pre>
+<h2>Event Handling.</h2>
+<pre><code>- Making the event to be either once or on
+- Customizable event emitter
+</code></pre>
+<h2>Links</h2>
+<ul>
+<li><a href="https://discord.gg/2jkBmzy">Discord server</a></li>
+<li><a href="https://3vccsdszsdbgafmasps2kw-on.drv.tw/www.discord-akago.org/">Docs</a></li>
+<li><a href="https://github.com/discord-js-akago/discord.js-akago">GitHub</a></li>
+<li><a href="https://www.npmjs.com/package/discord.js-akago">NPM</a></li>
+</ul>
+<h2>Help</h2>
+<p>If you don't understand something in the documentation, you are experiencing problems, don't hesitate to join our <a href="https://discord.gg/2jkBmzy">Discord Server</a> to seek for some help.</p></article>
+    </section>
+
+
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+  
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+<script>
+var list = [{"title":"AkagoClient","link":"<a href=\"AkagoClient.html\">AkagoClient</a>"},{"title":"AkagoClient#build","link":"<a href=\"AkagoClient.html#build\">AkagoClient &rtrif; build</a>"},{"title":"AkagoClient#isOwner","link":"<a href=\"AkagoClient.html#isOwner\">AkagoClient &rtrif; isOwner</a>"},{"title":"ClientUtil","link":"<a href=\"ClientUtil.html\">ClientUtil</a>"},{"title":"ClientUtil#capitalize","link":"<a href=\"ClientUtil.html#capitalize\">ClientUtil &rtrif; capitalize</a>"},{"title":"ClientUtil#isClass","link":"<a href=\"ClientUtil.html#isClass\">ClientUtil &rtrif; isClass</a>"},{"title":"ClientUtil#removeDuplicates","link":"<a href=\"ClientUtil.html#removeDuplicates\">ClientUtil &rtrif; removeDuplicates</a>"},{"title":"Command","link":"<a href=\"Command.html\">Command</a>"},{"title":"CommandHandler","link":"<a href=\"CommandHandler.html\">CommandHandler</a>"},{"title":"CommandHandler#handle","link":"<a href=\"CommandHandler.html#handle\">CommandHandler &rtrif; handle</a>"},{"title":"CommandHandler#loadCommand","link":"<a href=\"CommandHandler.html#loadCommand\">CommandHandler &rtrif; loadCommand</a>"},{"title":"CommandHandler#reloadCommand","link":"<a href=\"CommandHandler.html#reloadCommand\">CommandHandler &rtrif; reloadCommand</a>"},{"title":"Listener","link":"<a href=\"Listener.html\">Listener</a>"},{"title":"ListenerHandler","link":"<a href=\"ListenerHandler.html\">ListenerHandler</a>"},{"title":"ListenerHandler#loadListener","link":"<a href=\"ListenerHandler.html#loadListener\">ListenerHandler &rtrif; loadListener</a>"},{"title":"ListenerHandler#reloadListener","link":"<a href=\"ListenerHandler.html#reloadListener\">ListenerHandler &rtrif; reloadListener</a>"},{"title":"commandBlocked","link":"<a href=\"CommandHandler.html#event:commandBlocked\">commandBlocked</a>"},{"title":"commandUsed","link":"<a href=\"CommandHandler.html#event:commandUsed\">commandUsed</a>"},{"title":"cooldown","link":"<a href=\"CommandHandler.html#event:cooldown\">cooldown</a>"},{"title":"missingPermissions","link":"<a href=\"CommandHandler.html#event:missingPermissions\">missingPermissions</a>"}];
+setupSearch(list)
+</script>
+
+ 
+<script type="text/javascript" src="scripts/misc.js"></script>
+</body>
+</html>
