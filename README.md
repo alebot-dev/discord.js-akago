@@ -2,7 +2,7 @@
 <div align="center">
   <br />
   <p>
-    <a href="https://discord-js-akago.github.io"><img src="https://i.imgur.com/ENzIUyF.png" width="546" alt="Discord Akago"/></a>
+    <a href="https://discord-akago.github.io"><img src="https://i.imgur.com/ENzIUyF.png" width="546" alt="Discord Akago"/></a>
   </p>
   <p>
     <a href="https://www.npmjs.com/package/discord-js-akago"><img src="https://img.shields.io/npm/v/discord.js-akago.svg" alt="NPM Version" /></a>
@@ -38,7 +38,7 @@
   - Reloadable listeners and commands
 
 ## Links
-- [Website](https://discord-js-akago.github.io)
+- [Website](https://discord-akago.github.io)
 - [Repository](https://github.com/discord-js-akago/discord.js-akago)  
 - [Discord](https://discord.gg/arTauDY)  
 
