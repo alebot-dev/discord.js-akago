@@ -1,7 +1,6 @@
 /**
  * Options to use for command execution behavior.
  * @typedef {Object} CommandOptions
- * @prop {string} [name=file name] - Name of the command
  * @prop {string} [description=''] - Description of the command.
  * @prop {string} [category] - Category of the command.
  * @prop {string} [aliases=[]] - Aliases of the command.
