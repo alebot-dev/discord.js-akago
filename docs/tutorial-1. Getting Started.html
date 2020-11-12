@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="images/prismarine_js.svg"/>
     
-    <title>struct/listener/ListenerHandler.js</title>
+    <title>Tutorial: 1. Getting Started</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -49,92 +49,46 @@
 
 <div id="main">
     
-    <h1 class="page-title">struct/listener/ListenerHandler.js</h1>
+    <h1 class="page-title">Tutorial: 1. Getting Started</h1>
     
 
-    
-
-
-
-    
     <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>/**
- * @typedef {Object} listenerHandlerOptions
- * @prop {string} listenerDirectory - File path to listener directory.
- */
 
-const ListenerBase = require('./Listener.js');
-const path = require('path');
-const glob = require('glob');
+<header>
+    
 
-class ListenerHandler {
-    /**
-     * Loads commands and handles messages.
-     * @param {AkagoClient} client - The Akago Client.
-     */
-    constructor(client, {
-        listenerDirectory,
-    }) {
-        this.client = client;
-        
-        if (!listenerDirectory || typeof listenerDirectory !== 'string') {
-            throw new Error('Akago: listenerHandlerOptions listenerDirectory either is missing or is not a string.');
-        }
+    <h2>1. Getting Started</h2>
+</header>
 
-        /**
-         * Directory to listeners.
-         * @type {string}
-         */
-        this.listenerDirectory = path.resolve(listenerDirectory);
+<article>
+    <h3>Installation</h3>
+<p>First off, you need to install the packages you will need.
+<code>npm install discord.js-akago discord.js</code></p>
+<h3>Main File</h3>
+<pre class="prettyprint source lang-JavaScript"><code>const Akago = require('discord.js-akago');
 
-        const listenerPaths = glob.sync(`${this.listenerDirectory}**/*`);
-        for (const listenerPath of listenerPaths) {
-            this.loadListener(listenerPath);
-        }
-    }
+const client = new Akago.AkagoClient({
+	// Akago Client Options
+	ownerID: ['611466971371929602'],
+	prefix: '?',
+	token: 'discord bot token',
+}, {
+	// Discord.js Client Options
+	disableMentions: 'everyone',
+});
 
-    /**
-     * Loads a Listener.
-     * @param {string} filepath Path to file.
-     */
-    loadListener(filepath) {
-        const { name } = path.parse(filepath);
-        const File = require(filepath);
-        if (!this.client.util.isClass(File)) throw new Error(`Akago: Listener '${name}' doesn't export a class.`);
-        const listener = new File(this.client, name.toLowerCase());
-        if (!(listener instanceof ListenerBase)) throw new Error(`Akago: Listener '${name}' dosn't extend the listener base.`);
-        if (!listener.execute || typeof listener.execute !== 'function') throw new Error(`Akago: Listener '${listener.name}' dosn't have a execute function.`);
-        if (this.client.events.has(listener.name)) throw new Error(`Akago: listenerHandler '${listener.name}' already exists.`);
-        const emitter = (typeof listener.emitter === 'string' ? this.client[listener.emitter] : listener.emitter) || this.client;
-        listener.client = this.client;
-        listener.filepath = filepath;
-        this.client.events.set(listener.name, listener);
-        emitter[listener.type]((listener.name || name), (...args) => listener.execute(...args));
-    }
+client.build().then(console.log('Ready!'));
+</code></pre>
+<h3>Directory</h3>
+<pre class="prettyprint source lang-FileTree"><code>yourProject
+|    index.js
+|----src
+     |----commands
+     |----listeners
+</code></pre>
+</article>
 
-    /**
-     * Reloads a listener
-     * @param {string} name - Name of the listener wanted to reload.
-     */
-    reloadListener(name) {
-        const listener = this.client.events.get(name);
-        if (!listener) throw new Error(`Akago: listenerHandler reloadListener ${name} isn't a event.`);
-        delete require.cache[require.resolve(listener.filepath)];
-        this.client.events.delete(listener.name);
-        const emitter = (typeof listener.emitter === 'string' ? this.client[listener.emitter] : listener.emitter) || this.client;
-        emitter.removeListener(listener.eventName, listener.execute);
-        this.loadListener(listener.filepath);
-    }
-
-}
-
-module.exports = ListenerHandler;</code></pre>
-        </article>
-    </section>
-
-
-
+</section>
 
 </div>
 
