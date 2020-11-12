@@ -17,7 +17,7 @@
      * Creates a new command.
      * @param {string} name - Name of the command.
      * @param {CommandOptions} [options={}] - Options for the command.
-     * @param {opts} opts - Custom options for the command class.
+     * @param {opts} [opts={}] - Custom options for the command class.
      */
     constructor(name, {
         description = '',
