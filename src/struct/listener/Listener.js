@@ -14,7 +14,7 @@ class Listener {
     constructor(name, {
         once = false,
         emitter = '',
-    } = {}) {
+    } = {}, opts = {}) {
         /**
          * The event name that will be emitted.
          * @type {string}
@@ -40,6 +40,11 @@ class Listener {
          * @type {string}
          */
         this.filepath;
+        /**
+         * Listener custom options used for adding options that arn't already in the listener class.
+         * @type {object}
+         */
+        if (opts && typeof opts === 'object') this.opts = opts;
     }
 
 }
