@@ -2,49 +2,46 @@
 <div align="center">
   <br />
   <p>
-    <a href="https://3vccsdszsdbgafmasps2kw-on.drv.tw/www.discord-akago.org/"><img src="https://i.imgur.com/tt64LX5.png" width="546" alt="discord.js-akago" /></a>
+    <a href="https://discord-js-akago.github.io"><img src="https://i.imgur.com/ENzIUyF.png" width="546" alt="Discord Akago"/></a>
   </p>
   <p>
-    <a href="https://discord.gg/bRCvFy9"><img src="https://img.shields.io/discord/717861844127055873?color=7289da&logo=discord&logoColor=white" alt="Discord server" /></a>
-    <a href="https://www.npmjs.com/package/discord.js-akago"><img src="https://img.shields.io/npm/v/discord.js-akago.svg" alt="NPM version" /></a>
-    <a href="https://www.npmjs.com/package/discord.js-akago"><img src="https://img.shields.io/npm/dt/discord.js-akago.svg" alt="NPM downloads" /></a>
-    <a href="https://david-dm.org/discordjs/discord.js-akago"><img src="https://img.shields.io/david/iColtz/discord.js-akago" alt="Dependencies" /></a>
+    <a href="https://www.npmjs.com/package/discord-js-akago"><img src="https://img.shields.io/npm/v/discord.js-akago.svg" alt="NPM Version" /></a>
+    <a href="https://www.npmjs.com/package/discord.js-akago"><img src="https://img.shields.io/npm/dt/discord.js-akago.svg" alt="NPM Downloads" /></a>
+    <a href="https://img.shields.io/david/discord-js-akago/discord.js-akago"><img src="https://img.shields.io/david/discord-js-akago/discord.js-akago" alt="Deps" /></a>
   </p>
   <p>
-    <a href="https://nodei.co/npm/discord.js-akago/"><img src="https://nodei.co/npm/discord.js-akago.png?downloads=true&stars=true" alt="npm installnfo" /></a>
+    <a href="https://nodei.co/npm/discord.js-akago/"><img src="https://nodei.co/npm/discord.js-akago.png?downloads=true" alt="NPM Install Info" /></a>
   </p>
 </div>
 
-## About
-
-discord.js-akago is a flexible, easy to use framework for discord.js that allows you to make command handlers, event handlers completely customizable with many features such as: cooldowns, aliases and much much more!
-
 ## Features
 
-## Completely Modular Commands and Listeners.
-	- Sub folder compatibility
-	- Customizable options for handler
+#### Completely modular commands, and listeners.
+  - Reading files recursively from directories.
+  - Easy to handle listeners and commands.
 
-### Command Handling.
-	- Command aliases
-	- Command cooldowns
-	- Client and member permission checks
-	- Multiple prefixes and mention prefixes
-	- Only executing commands in certain channel types
-	- Only allowing owners to execute certain commands
-	- Pre-made help command
+#### Flexible command handling and creation.
+  - Command aliases.
+  - Command cooldowns.
+  - Client and user permission checks.
+  - Multiple prefixes and mention prefixes.
+  - Owner only commands.
+  - Guild only commands.
+  - NSFW only channel commands.
 
-## Event Handling.
-	- Making the event to be either once or on
-	- Customizable event emitter
+#### Flexible event handling and creation.
+- Once or on listeners.
+- Listener emitter.
+
+#### Helpful events and modular listeners.
+  - Events for different stages of command handling.
+  - Reloadable listeners and commands
 
 ## Links
-- [Discord server](https://discord.gg/2jkBmzy)
-- [Docs](https://3vccsdszsdbgafmasps2kw-on.drv.tw/www.discord-akago.org/)
-- [GitHub](https://github.com/discord-js-akago/discord.js-akago)
-- [NPM](https://www.npmjs.com/package/discord.js-akago)
+- [Website](https://discord-js-akago.github.io)
+- [Repository](https://github.com/discord-js-akago/discord.js-akago)  
+- [Discord](https://discord.gg/arTauDY)  
 
-
-## Help
-
-If you don't understand something in the documentation, you are experiencing problems, don't hesitate to join our [Discord Server](https://discord.gg/2jkBmzy) to seek for some help.
+## Contributing
+Open an issue or a pull request!  
+Everyone is welcome to do so. 
