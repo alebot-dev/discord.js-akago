@@ -6,8 +6,8 @@
  * @prop {string} [aliases=[]] - Aliases of the command.
  * @prop {boolean} [ownerOnly=false] - Whether or not to allow client owner(s) only.
  * @prop {number} [cooldown=3] - The command cooldown in seconds.
- * @prop {PermissionResolvable[]} [memberPermissions] - Permissions required by the member to run this command.
- * @prop {PermissionResolvable[]} [clientPermissions] - Permissions required by the client to run this command.
+ * @prop {PermissionResolvable[]} [memberPermissions=[]] - Permissions required by the member to run this command.
+ * @prop {PermissionResolvable[]} [clientPermissions=[]] - Permissions required by the client to run this command.
  * @prop {boolean} [guildOnly=true] - Whether or not the commans can only be used in a guild
  * @prop {boolean} [nsfw=false] - Whether the command can only be done in a NSFW channel. 
  */
