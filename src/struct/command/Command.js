@@ -19,7 +19,17 @@
      * @param {string} name - Name of the command.
      * @param {CommandOptions} [options={}] - Options for the command.
      */
-    constructor(name, options = {}) {
+    constructor(name, {
+        description = '',
+        category = '',
+        aliases = [],
+        cooldown,
+        ownerOnly = true,
+        guildOnly = true,
+        nsfw = false,
+        memberPermissions = [],
+        clientPermissions = [],
+    } = {}) {
         /**
          * Name of the command
          * @type {string}
@@ -29,47 +39,47 @@
          * Description of the command.
          * @type {string}
          */
-        this.description = String(options.description);
+        this.description = typeof description === 'string' ? description : '';
         /**
          * Category of the command
          * @type {string}
          */
-        this.category = typeof options.category === 'string' ? options.category : '';
+        this.category = typeof category === 'string' ? category : '';
         /**
          * Aliases of the command.
          * @type {Array}
          */
-        this.aliases = Array.isArray(options.aliases) ? options.aliases : [];
+        this.aliases = Array.isArray(aliases) ? aliases : [];
         /**
          * The command cooldown in seconds.
          * @type {number}
          */
-        this.cooldown = typeof options.cooldown === 'number' ? options.cooldown : null;
+        this.cooldown = typeof cooldown === 'number' ? cooldown : null;
         /**
          * Whether or not to allow client owner(s) only.
          * @type {boolean}
          */
-        this.ownerOnly = Boolean(options.ownerOnly);
+        this.ownerOnly = Boolean(ownerOnly);
         /**
          * Whether or not the commans can only be used in a guild
          * @type {boolean}
          */
-        this.guildOnly = Boolean(options.guildOnly);
+        this.guildOnly = Boolean(guildOnly);
         /**
          * Whether the command can only be done in a NSFW channel. 
          * @type {boolean}
          */
-        this.nsfw = Boolean(options.nsfw);
+        this.nsfw = Boolean(nsfw);
         /**
          * Permissions required by the member to run this command.
          * @type {PermissionResolvable[]}
          */
-        this.memberPermissions = Array.isArray(options.memberPermissions) ? options.memberPermissions : [];
+        this.memberPermissions = Array.isArray(memberPermissions) ? memberPermissions : [];
         /**
          * Permissions required by the client to run this command.
          * @type {PermissionResolvable[]}
          */
-        this.clientPermissions = Array.isArray(options.clientPermissions) ? options.clientPermissions : [];
+        this.clientPermissions = Array.isArray(clientPermissions) ? clientPermissions : [];
         /**
          * The Akago Client.
          * @type {AkagoClient}
