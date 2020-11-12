@@ -11,6 +11,7 @@
     },
     "opts": {
         "recurse": true,
+        "tutorials": "./examples",
         "template": "node_modules/prismarine-jsdoc-theme",
         "destination": "./docs/",
         "readme": "./README.md"
