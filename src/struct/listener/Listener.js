@@ -9,7 +9,7 @@ class Listener {
      * Creates a new listener.
      * @param {string} name - Name of the listener.
      * @param {ListenerOptions} [options] - Options for the listener.
-     * @param {object} opts - Custom options for the listener class.
+     * @param {object} [opts] - Custom options for the listener class.
      */
     constructor(name, {
         once = false,
