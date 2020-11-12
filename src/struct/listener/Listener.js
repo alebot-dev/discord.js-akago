@@ -1,7 +1,6 @@
 /**
  * Options to use for command execution behavior.
  * @typedef {Object} ListenerOptions
- * @prop {string} [name=file name] The event name that will be emitted.
  * @prop {boolean} [once='on'] Whether the event will be on or once.
  * @prop {emitter} [emitter=client] The emitter of the event. 
  */
