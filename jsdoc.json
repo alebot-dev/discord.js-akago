@@ -11,9 +11,11 @@
     },
     "opts": {
         "recurse": true,
-        "template": "node_modules/clean-jsdoc-theme",
-        "tutorials": "./examples",
+        "template": "node_modules/prismarine-jsdoc-theme",
         "destination": "./docs/",
         "readme": "./README.md"
+    },
+    "docdash": {
+        "search": true
     }
 }
