@@ -62,7 +62,6 @@
             <pre class="prettyprint source linenums"><code>/**
  * Options to use for command execution behavior.
  * @typedef {Object} CommandOptions
- * @prop {string} [name=file name] - Name of the command
  * @prop {string} [description=''] - Description of the command.
  * @prop {string} [category] - Category of the command.
  * @prop {string} [aliases=[]] - Aliases of the command.
@@ -90,7 +89,7 @@
         nsfw = false,
         memberPermissions = [],
         clientPermissions = [],
-    } = {}) {
+    } = {}, opts = {}) {
         /**
          * Name of the command
          * @type {string}
@@ -151,6 +150,11 @@
          * @type {string}
          */
         this.filepath;
+        /**
+         * Command custom options used for adding options that arn't already in the command class.
+         * @type {object}
+         */
+        if (opts &amp;&amp; typeof opts === 'object') this.opts = opts;
     }
 
 }

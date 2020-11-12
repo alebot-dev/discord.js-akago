@@ -62,7 +62,6 @@
             <pre class="prettyprint source linenums"><code>/**
  * Options to use for command execution behavior.
  * @typedef {Object} ListenerOptions
- * @prop {string} [name=file name] The event name that will be emitted.
  * @prop {boolean} [once='on'] Whether the event will be on or once.
  * @prop {emitter} [emitter=client] The emitter of the event. 
  */
@@ -75,7 +74,7 @@ class Listener {
     constructor(name, {
         once = false,
         emitter = '',
-    } = {}) {
+    } = {}, opts = {}) {
         /**
          * The event name that will be emitted.
          * @type {string}
@@ -101,6 +100,11 @@ class Listener {
          * @type {string}
          */
         this.filepath;
+        /**
+         * Listener custom options used for adding options that arn't already in the listener class.
+         * @type {object}
+         */
+        if (opts &amp;&amp; typeof opts === 'object') this.opts = opts;
     }
 
 }
