@@ -28,13 +28,13 @@
   "homepage": "https://github.com/iColtz/discord.js-akago#readme",
   "devDependencies": {
     "eslint": "^7.12.1",
+    "jsdoc": "^3.6.6",
     "nodemon": "^2.0.6",
     "prettier": "^2.1.2",
     "prismarine-jsdoc-theme": "^2.3.12"
   },
   "dependencies": {
     "discord.js": "^12.4.1",
-    "jsdoc": "^3.6.6",
     "readdir-recursive": "0.0.4"
   }
 }
