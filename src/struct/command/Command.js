@@ -24,7 +24,7 @@
         category = '',
         aliases = [],
         cooldown,
-        ownerOnly = true,
+        ownerOnly = false,
         guildOnly = true,
         nsfw = false,
         memberPermissions = [],
