@@ -93,6 +93,7 @@ const client = new Akago.AkagoClient({
 
 client.commandHandler = new Akago.CommandHandler(client, {
 	commandDirectory: './src/commands',
+	prefix: '!',
 });
 client.listenerHandler = new Akago.ListenerHandler(client, {
 	listenerDirectory: './src/listeners',
