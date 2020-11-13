@@ -2,7 +2,7 @@ const CommandBase = require('./Command.js');
 const { Collection, Permissions } = require('discord.js');
 const { CommandHandlerEvents } = require('../../util/Constants.js');
 const EventEmitter = require('events');
-const glob = require('glob');
+const rread = require('readdir-recursive');
 const path = require('path');
 
 class CommandHandler extends EventEmitter {
@@ -75,7 +75,7 @@ class CommandHandler extends EventEmitter {
          */
         this.defaultCooldown = Number(defaultCooldown);
 
-        const commandPaths = glob.sync(`${this.commandDirectory}**/*`);
+        const commandPaths = rread.fileSync(this.commandDirectory);
         for (const commandPath of commandPaths) {
             this.loadCommand(commandPath);
         }

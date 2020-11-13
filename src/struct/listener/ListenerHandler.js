@@ -5,7 +5,7 @@
 
 const ListenerBase = require('./Listener.js');
 const path = require('path');
-const glob = require('glob');
+const rread = require('readdir-recursive');
 
 class ListenerHandler {
     /**
@@ -27,7 +27,7 @@ class ListenerHandler {
          */
         this.listenerDirectory = path.resolve(listenerDirectory);
 
-        const listenerPaths = glob.sync(`${this.listenerDirectory}**/*`);
+        const listenerPaths = rread.fileSync(this.listenerDirectory);
         for (const listenerPath of listenerPaths) {
             this.loadListener(listenerPath);
         }
