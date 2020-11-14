@@ -38,18 +38,15 @@ class ListenerHandler {
      * @param {string} filepath Path to file.
      */
     loadListener(filepath) {
-        const { name } = path.parse(filepath);
         const File = require(filepath);
-        if (!this.client.util.isClass(File)) throw new Error(`Akago: Listener '${name}' doesn't export a class.`);
-        const listener = new File(this.client, name.toLowerCase());
-        if (!(listener instanceof ListenerBase)) throw new Error(`Akago: Listener '${name}' dosn't extend the listener base.`);
-        if (!listener.execute || typeof listener.execute !== 'function') throw new Error(`Akago: Listener '${listener.name}' dosn't have a execute function.`);
-        if (this.client.events.has(listener.name)) throw new Error(`Akago: listenerHandler '${listener.name}' already exists.`);
-        const emitter = (typeof listener.emitter === 'string' ? this.client[listener.emitter] : listener.emitter) || this.client;
+        const listener = new File(this.client);
+        if (!(listener instanceof ListenerBase)) return;
+        if (this.client.events.has(listener.name)) throw new Error(`Akago: Listener '${listener.name}' has already been loaded.`);
         listener.client = this.client;
         listener.filepath = filepath;
+        const emitter = (typeof listener.emitter === 'string' ? this.client[listener.emitter] : listener.emitter) || this.client;
         this.client.events.set(listener.name, listener);
-        emitter[listener.type]((listener.name || name), (...args) => listener.execute(...args));
+        emitter[listener.type](listener.name, (...args) => listener.execute(...args));
     }
 
     /**
