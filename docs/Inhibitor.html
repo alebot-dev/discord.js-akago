@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="images/prismarine_js.svg"/>
     
-    <title>struct/listener/ListenerHandler.js</title>
+    <title>Inhibitor</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -49,87 +49,326 @@
 
 <div id="main">
     
-    <h1 class="page-title">struct/listener/ListenerHandler.js</h1>
+    <h1 class="page-title">Inhibitor</h1>
     
 
     
 
 
 
-    
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>const ListenerBase = require('./Listener.js');
-const path = require('path');
-const rread = require('readdir-recursive');
 
-class ListenerHandler {
-    /**
-     * Loads commands and handles messages.
-     * @param {AkagoClient} client - The Akago Client.
-     */
-    constructor(client, {
-        listenerDirectory,
-    }) {
-        this.client = client;
+<section>
+
+
+<header>
+    
         
-        if (!listenerDirectory || typeof listenerDirectory !== 'string') {
-            throw new Error('Akago: listenerHandlerOptions listenerDirectory either is missing or is not a string.');
-        }
+        <h2>
+        
+        Inhibitor
+        
+        </h2>
+        
+        
+    
+</header>
 
-        /**
-         * Directory to listeners.
-         * @type {string}
-         */
-        this.listenerDirectory = path.resolve(listenerDirectory);
 
-        const listenerPaths = rread.fileSync(this.listenerDirectory);
-        for (const listenerPath of listenerPaths) {
-            this.loadListener(listenerPath);
-        }
-    }
+<article>
+    <div class="container-overview">
+    
+        
 
-    /**
-     * Loads a Listener.
-     * @param {string} filepath Path to file.
-     */
-    loadListener(filepath) {
-        const File = require(filepath);
-        const listener = new File(this.client);
-        if (!listener.execute &amp;&amp; typeof listener.execute !== 'function') throw new Error(`Akago: Listener '${listener.name}' doesn't have an execute function.`);
-        if (!(listener instanceof ListenerBase)) return;
-        if (this.client.events.has(listener.name)) throw new Error(`Akago: Listener '${listener.name}' has already been loaded.`);
-        listener.client = this.client;
-        listener.filepath = filepath;
-        const emitter = (typeof listener.emitter === 'string' ? this.client[listener.emitter] : listener.emitter) || this.client;
-        this.client.events.set(listener.name, listener);
-        emitter[listener.type](listener.name, (...args) => listener.execute(...args));
-    }
+    
 
-    /**
-     * Reloads a listener
-     * @param {string} name - Name of the listener wanted to reload.
-     */
-    reloadListener(name) {
-        const listener = this.client.events.get(name);
-        if (!listener) throw new Error(`Akago: listenerHandler reloadListener ${name} isn't a event.`);
-        delete require.cache[require.resolve(listener.filepath)];
-        this.client.events.delete(listener.name);
-        const emitter = (typeof listener.emitter === 'string' ? this.client[listener.emitter] : listener.emitter) || this.client;
-        emitter.removeListener(listener.eventName, listener.execute);
-        this.loadListener(listener.filepath);
-    }
+    <h4 class="name" id="Inhibitor"><span class="type-signature"></span>new Inhibitor<span class="signature">(name, opts<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
 
-}
+    
 
-module.exports = ListenerHandler;
 
-/**
- * @typedef {Object} listenerHandlerOptions
- * @prop {string} listenerDirectory - File path to listener directory.
- */</code></pre>
-        </article>
-    </section>
+
+    <div class="description">
+        <p>Creates a new command.</p>
+    </div>
+
+
+
+
+
+
+
+
+
+    <div class="method-member-container flex flex-col w-100 overflow-auto mt-20">
+        <strong>Parameters:</strong>
+        
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>name</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>Name of the inhibitor.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>opts</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">opts</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    {}
+                
+                </td>
+            
+
+            <td class="description last"><p>Custom options for the inhibitor class.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <div class="details-item-container">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source"><ul class="dummy"><li>
+                <a href="struct_inhibitor_Inhibitor.js.html">struct/inhibitor/Inhibitor.js</a>, <a href="struct_inhibitor_Inhibitor.js.html#line7">line 7</a>
+            </li></ul></dd>
+        </div>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id="name"><span class="type-signature"></span>name<span class="type-signature"> :string</span></h4>
+
+
+
+
+<div class="description">
+    <p>The name of the inhibitor</p>
+</div>
+
+
+
+    <div class="member-item-container flex">
+        <strong>Type: </strong>
+        <ul>
+            <li>
+                
+<span class="param-type">string</span>
+
+
+            </li>
+        </ul>
+    </div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <div class="details-item-container">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source"><ul class="dummy"><li>
+                <a href="struct_inhibitor_Inhibitor.js.html">struct/inhibitor/Inhibitor.js</a>, <a href="struct_inhibitor_Inhibitor.js.html#line12">line 12</a>
+            </li></ul></dd>
+        </div>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 

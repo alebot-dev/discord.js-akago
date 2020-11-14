@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="images/prismarine_js.svg"/>
     
-    <title>struct/listener/ListenerHandler.js</title>
+    <title>struct/inhibitor/InhibitorHandler.js</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -49,7 +49,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">struct/listener/ListenerHandler.js</h1>
+    <h1 class="page-title">struct/inhibitor/InhibitorHandler.js</h1>
     
 
     
@@ -59,74 +59,67 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>const ListenerBase = require('./Listener.js');
-const path = require('path');
+            <pre class="prettyprint source linenums"><code>const path = require('path');
+const InhibitorBase = require('./Inhibitor.js');
 const rread = require('readdir-recursive');
 
-class ListenerHandler {
+class InhibitorHandler {
     /**
-     * Loads commands and handles messages.
+     * Loads inhibitors.
      * @param {AkagoClient} client - The Akago Client.
+     * @param {inhibitorHandlerOptions} options - Options for the inhibitor handler.
      */
     constructor(client, {
-        listenerDirectory,
+        inhibitorDirectory,
     }) {
         this.client = client;
-        
-        if (!listenerDirectory || typeof listenerDirectory !== 'string') {
-            throw new Error('Akago: listenerHandlerOptions listenerDirectory either is missing or is not a string.');
-        }
 
         /**
-         * Directory to listeners.
+         * Path to the inhibitor directory.
          * @type {string}
          */
-        this.listenerDirectory = path.resolve(listenerDirectory);
+        this.inhibitorDirectory = path.resolve(inhibitorDirectory);
 
-        const listenerPaths = rread.fileSync(this.listenerDirectory);
-        for (const listenerPath of listenerPaths) {
-            this.loadListener(listenerPath);
+        const inhibitorsPaths = rread.fileSync(this.inhibitorDirectory);
+        for (const inhibitorsPath of inhibitorsPaths) {
+            this.loadInhibitor(inhibitorsPath);
         }
     }
 
     /**
-     * Loads a Listener.
-     * @param {string} filepath Path to file.
+     * Loads an inhibitor.
+     * @param {string} filepath - The file path to the inhibitor.
      */
-    loadListener(filepath) {
+    loadInhibitor(filepath) {
+        if (!filepath) throw new Error('Akago: Tried to load a inhibitor but no file path was provided.');
         const File = require(filepath);
-        const listener = new File(this.client);
-        if (!listener.execute &amp;&amp; typeof listener.execute !== 'function') throw new Error(`Akago: Listener '${listener.name}' doesn't have an execute function.`);
-        if (!(listener instanceof ListenerBase)) return;
-        if (this.client.events.has(listener.name)) throw new Error(`Akago: Listener '${listener.name}' has already been loaded.`);
-        listener.client = this.client;
-        listener.filepath = filepath;
-        const emitter = (typeof listener.emitter === 'string' ? this.client[listener.emitter] : listener.emitter) || this.client;
-        this.client.events.set(listener.name, listener);
-        emitter[listener.type](listener.name, (...args) => listener.execute(...args));
+        const inhibitor = new File(this.client);
+        if (!inhibitor.execute &amp;&amp; typeof inhibitor.execute !== 'function') throw new Error(`Akago: Inhibitor '${inhibitor.name}' doesn't have an execute function.`);
+        if (!(inhibitor instanceof InhibitorBase)) return;
+        if (this.client.inhibitors.has(inhibitor.name)) throw new Error(`Akago: Inhibitor '${inhibitor.name}' has already been loaded.`);
+        inhibitor.filepath = filepath;
+        inhibitor.client = this.client;
+        this.client.inhibitors.set(inhibitor.name, inhibitor);
     }
 
     /**
-     * Reloads a listener
-     * @param {string} name - Name of the listener wanted to reload.
+     * Reloads an inhibitor.
+     * @param {string} name - Name of the inhibitor to reload.
      */
-    reloadListener(name) {
-        const listener = this.client.events.get(name);
-        if (!listener) throw new Error(`Akago: listenerHandler reloadListener ${name} isn't a event.`);
-        delete require.cache[require.resolve(listener.filepath)];
-        this.client.events.delete(listener.name);
-        const emitter = (typeof listener.emitter === 'string' ? this.client[listener.emitter] : listener.emitter) || this.client;
-        emitter.removeListener(listener.eventName, listener.execute);
-        this.loadListener(listener.filepath);
+    reloadCommand(name) {
+        const inhibitor = this.client.inhibitors.get(name);
+        if (!inhibitor) throw new Error(`Akago: inhibitorHandler reloadInhibitor '${name}' isn't an inhibitor`);
+        delete require.cache[require.resolve(inhibitor.filepath)];
+        this.client.inhibitors.delete(inhibitor.name);
+        this.loadInhibitor(inhibitor.filepath);
     }
-
 }
 
-module.exports = ListenerHandler;
+module.exports = InhibitorHandler;
 
 /**
- * @typedef {Object} listenerHandlerOptions
- * @prop {string} listenerDirectory - File path to listener directory.
+ * @typedef {Object} inhibitorHandlerOptions
+ * @prop {string} inhibitorDirectory - File path to inhibitor directory.
  */</code></pre>
         </article>
     </section>
