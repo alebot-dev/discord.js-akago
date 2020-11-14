@@ -1,4 +1,4 @@
-const { AkagoClient, CommandHandler, ListenerHandler } = require('../../src/index.js');
+const { AkagoClient, CommandHandler, ListenerHandler, InhibitorHandler } = require('../../src/index.js');
 
 module.exports = class TestClient extends AkagoClient {
     constructor() {
@@ -16,6 +16,10 @@ module.exports = class TestClient extends AkagoClient {
 
         this.ListenerHandler = new ListenerHandler(this, {
             listenerDirectory: './test/listeners',
+        });
+
+        this.inhibitorHandler = new InhibitorHandler(this, {
+            inhibitorDirectory: './test/inhibitors',
         });
 
     }
