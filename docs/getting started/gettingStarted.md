@@ -47,7 +47,7 @@ class myClient extends AkagoClient {
 		});
 	};
 	start() {
-		this.build().then(() => console.log('The bot is ready!'));
+		this.build();
 	}
 }
 

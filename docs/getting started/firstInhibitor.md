@@ -39,7 +39,7 @@ client.start();
 The `inhibitorHandler` option tells the handler what folder all your inhibitors are located.
 ```js
 this.inhibitorHandler = new InhibitorHandler (this, {
-	inhibitorHandler : './inhibitors',
+	inhibitorDirectory: './inhibitors',
 });
 ```
 You can view all of the `inhibitorHandlerOptions` [here](https://discord-akago.github.io/global.html#inhibitorHandlerOptions).

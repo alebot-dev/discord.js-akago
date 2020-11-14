@@ -55,7 +55,7 @@ module.exports = class ReadyListener extends Listener {
 	};
 	
 	execute() {
-		console.log('I'\'m ready!');
+		console.log('Im ready!');
 	}
 };
 ```
@@ -139,7 +139,7 @@ module.exports = class MissingPermissionsListener extends Listener {
 	}
 
 	execute(message, command, type, missing) {
-		const perms = missing.map(p  =>  p.replace(/_/g,  '  ').toLowerCase()}).join(', ');
+		const perms = missing.map(p  =>  p.replace(/_/g,  ' ').toLowerCase()).join(', ');
 		const user = type  ===  'client'  ?  'I am'  :  'You are';
 		const { name } = command;
 		return message.channel.send(`${user} missing permissions ${perms} for the command ${name}`);
