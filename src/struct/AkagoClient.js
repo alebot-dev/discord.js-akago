@@ -37,6 +37,12 @@ class AkagoClient extends Client {
         this.events = new Collection();
 
         /**
+         * Collection of all inhibitors
+         * @type {Collection}
+         */
+        this.inhibitors = new Collection(); 
+
+        /**
          * Collection of all cooldowns
          * @type {Collection}
          */
