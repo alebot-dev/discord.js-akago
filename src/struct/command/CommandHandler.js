@@ -211,7 +211,7 @@ class CommandHandler extends EventEmitter {
             }
     
             try {
-                    command.execute(message, args);
+                command.execute(message, args);
                 this.emit(CommandHandlerEvents.COMMAND_USED, message, command);
             }
             catch (error) {
