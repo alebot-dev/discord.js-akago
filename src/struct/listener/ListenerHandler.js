@@ -40,6 +40,7 @@ class ListenerHandler {
     loadListener(filepath) {
         const File = require(filepath);
         const listener = new File(this.client);
+        if (!listener.execute && typeof listener.execute !== 'function') throw new Error(`Akago: Listener '${listener.name}' doesn't have an execute function.`);
         if (!(listener instanceof ListenerBase)) return;
         if (this.client.events.has(listener.name)) throw new Error(`Akago: Listener '${listener.name}' has already been loaded.`);
         listener.client = this.client;
