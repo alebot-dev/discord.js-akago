@@ -35,7 +35,7 @@ this.listenerHandler = new ListenerHandler(this, {
 	listenerDirectory: './listeners',
 });
 ```
-You can view all of the `listenerHandlerOptions` [here](https://discord-akago.github.io/global.html#listenerHandlerOptions).
+You can view all of the `listenerHandlerOptions` [here](https://discord-akago.github.io/#/docs/main/main/typedef/listenerHandlerOptions).
 ### Ready event
 Time to make your first listener!
 In the listener handler options you specified a directory to a listener folder go to that directory and make a new file, lets call it `ready.js`.
@@ -61,7 +61,7 @@ module.exports = class ReadyListener extends Listener {
 ```
 The first parameter of the `super` is the unique listener name.
 The second parameter are the options of the command such as: `emitter`, `once` ect.
-You can view a full list of all command options [here](https://discord-akago.github.io/global.html#ListenerOptions).
+You can view a full list of all command options [here](https://discord-akago.github.io/#/docs/main/main/typedef/ListenerOptions).
 The third optional parameter are custom opts of the listener, this is not needed.
 The execute method if the function ran when the listener is emitted.
 

@@ -33,7 +33,7 @@ class myClient extends AkagoClient {
 const client = new myClient();
 client.start();
 ```
-Lets say we want to add some [Discord.js Client Options](https://discord.js.org/#/docs/main/stable/typedef/ClientOptions) to our Akago Client. Lets add the `disableMentions` option to our client.
+Lets say we want to add some [Discord.js Client Options](https://discord-akago.github.io/#/docs/main/main/typedef/AkagosOptions) to our Akago Client. Lets add the `disableMentions` option to our client.
 ```js
 const { AkagoClient } = require('discord.js-akago');
 

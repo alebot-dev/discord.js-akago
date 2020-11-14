@@ -33,7 +33,7 @@ this.commandHandler = new CommandHandler(this, {
 	prefix: '!', // or ['?', '!']
 });
 ```
-You can view all of the `commandHandlerOptions` [here](https://discord-akago.github.io/global.html#commandHandlerOptions).
+You can view all of the `commandHandlerOptions` [here](https://discord-akago.github.io/#/docs/main/main/typedef/commandHandlerOptions).
 ### Ping Command
 Time to make your first command!
 In the command handler options we specified a `commandDirectory` go to that folder directory and create a new file called `ping.js`. 
@@ -61,7 +61,7 @@ module.exports = class PingCommand extends Command {
 ```
 The first parameter of the `super` is the unique command name.
 The second parameter are the options of the command such as: `aliases`, `cooldown`, `ownerOnly` ect.
-You can view a full list of all command options [here](https://discord-akago.github.io/global.html#CommandOptions).
+You can view a full list of all command options [here](https://discord-akago.github.io/#/docs/main/main/typedef/CommandOptions).
 The third optional parameter are custom opts of the command, this is not needed.
 The execute method if the function ran when the command is used.
 

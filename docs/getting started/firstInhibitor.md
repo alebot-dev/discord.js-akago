@@ -42,7 +42,7 @@ this.inhibitorHandler = new InhibitorHandler (this, {
 	inhibitorDirectory: './inhibitors',
 });
 ```
-You can view all of the `inhibitorHandlerOptions` [here](https://discord-akago.github.io/global.html#inhibitorHandlerOptions).
+You can view all of the `inhibitorHandlerOptions` [here](https://discord-akago.github.io/#/docs/main/main/typedef/inhibitorHandlerOptions).
 ### Blacklisting Members
 Go to your inhibitors folder and create a new file called `blacklist.js`
 ```js
