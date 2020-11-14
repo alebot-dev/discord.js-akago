@@ -156,69 +156,66 @@ class CommandHandler extends EventEmitter {
             const inhibitorResult = await inhibitor[1].execute(message, command);
             inhibitorResults.push(inhibitorResult);
         }
+        if (inhibitorResults.some((i) => i)) return;
 
-        new Promise(() => {
-            if (inhibitorResults.some((i) => i)) return;
-
-            const checkValidPermission = (permArr) => {
-                if (permArr.some(perm => !(Object.keys(Permissions.FLAGS)).includes(perm))) {
-                    throw new TypeError(`Akago: Command '${commandName}' has invalid client or member permissions.`);
-                }
-            };
-    
-            const checkIgnore = (user, array) => {
-                const { id } = user;
-                return Array.isArray(array)
-                    ? array.includes(id)
-                    : id === array;
-            };
-    
-            if (!this.client.cooldowns.has(command.name)) {
-                this.client.cooldowns.set(command.name, new Collection());
+        const checkValidPermission = (permArr) => {
+            if (permArr.some(perm => !(Object.keys(Permissions.FLAGS)).includes(perm))) {
+                throw new TypeError(`Akago: Command '${commandName}' has invalid client or member permissions.`);
             }
+        };
+    
+        const checkIgnore = (user, array) => {
+            const { id } = user;
+            return Array.isArray(array)
+                ? array.includes(id)
+                : id === array;
+        };
+    
+        if (!this.client.cooldowns.has(command.name)) {
+            this.client.cooldowns.set(command.name, new Collection());
+        }
                             
-            const now = Date.now();
-            const timestamps = this.client.cooldowns.get(command.name);
-            const cooldownAmount = (command.cooldown || this.defaultCooldown) * 1000;
+        const now = Date.now();
+        const timestamps = this.client.cooldowns.get(command.name);
+        const cooldownAmount = (command.cooldown || this.defaultCooldown) * 1000;
     
-            if (timestamps.has(message.author.id)) {
-                const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
+        if (timestamps.has(message.author.id)) {
+            const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
                         
-                if (now < expirationTime) {
-                    const timeLeft = expirationTime - now;
-                    return this.emit(CommandHandlerEvents.COOLDOWN, message, command, timeLeft);
-                }
+            if (now < expirationTime) {
+                const timeLeft = expirationTime - now;
+                return this.emit(CommandHandlerEvents.COOLDOWN, message, command, timeLeft);
             }
+        }
     
-            if (!checkIgnore(message.author, this.ignoreCooldowns)) {
-                timestamps.set(message.author.id, now);
-                setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
-            }
+        if (!checkIgnore(message.author, this.ignoreCooldowns)) {
+            timestamps.set(message.author.id, now);
+            setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
+        }
 
-            if (command.memberPermissions.length && !checkIgnore(message.author, this.ignorePermissions)) {
-                checkValidPermission(command.memberPermissions);
-                if (command.memberPermissions.some(perm => !message.member.hasPermission(perm))) {
-                    const missingPerms = command.memberPermissions.filter(perm => !message.member.hasPermission(perm));
-                    return this.emit(CommandHandlerEvents.MISSING_PERMISSIONS, message, command, 'member', missingPerms);
-                }
+        if (command.memberPermissions.length && !checkIgnore(message.author, this.ignorePermissions)) {
+            checkValidPermission(command.memberPermissions);
+            if (command.memberPermissions.some(perm => !message.member.hasPermission(perm))) {
+                const missingPerms = command.memberPermissions.filter(perm => !message.member.hasPermission(perm));
+                return this.emit(CommandHandlerEvents.MISSING_PERMISSIONS, message, command, 'member', missingPerms);
             }
+        }
     
-            if (command.clientPermissions && command.clientPermissions.length) {
-            checkValidPermission(command.clientPermissions);
-            if (command.clientPermissions.some(perm => !message.guild.me.hasPermission(perm))) {
-                    const missingPerms = command.clientPermissions.filter(perm => !message.guild.me.hasPermission(perm));     
-                    return this.emit(CommandHandlerEvents.MISSING_PERMISSIONS, message, command, 'client', missingPerms);
-                }
+        if (command.clientPermissions && command.clientPermissions.length) {
+        checkValidPermission(command.clientPermissions);
+        if (command.clientPermissions.some(perm => !message.guild.me.hasPermission(perm))) {
+                const missingPerms = command.clientPermissions.filter(perm => !message.guild.me.hasPermission(perm));     
+                return this.emit(CommandHandlerEvents.MISSING_PERMISSIONS, message, command, 'client', missingPerms);
             }
+        }
     
-            try {
-                command.execute(message, args);
-                this.emit(CommandHandlerEvents.COMMAND_USED, message, command);
-            }
-            catch (error) {
-                console.warn(`There was an error while executing a command: ${error}`);
-            }
-        });
+        try {
+            command.execute(message, args);
+            this.emit(CommandHandlerEvents.COMMAND_USED, message, command);
+        }
+        catch (error) {
+            console.warn(`There was an error while executing a command: ${error}`);
+        }
     }
 
 }
