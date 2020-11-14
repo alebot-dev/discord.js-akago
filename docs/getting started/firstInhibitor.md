@@ -26,7 +26,7 @@ class myClient extends AkagoClient {
 		this.inhibitorHandler = new InhibitorHandler(this, {
 			// Options for the inhibitor handler.
 		});
-	};
+	}
 	start()  {
 		this.build();
 	}
@@ -50,7 +50,7 @@ const { Inhibitor } = require('discord.js-akago');
 
 module.exports = class BlackListInhibitor extends Inhibitor {
 	constructor() {
-			super('blacklist');
+		super('blacklist');
 	}
 	
 	execute(message) {

@@ -15,7 +15,7 @@ class myClient extends AkagoClient {
 		this.commandHandler = new CommandHandler(this, {
 			// Options for the command handler.
 		});
-	};
+	}
 	start()  {
 		this.build();
 	}
@@ -52,7 +52,7 @@ module.exports = class PingCommand extends Command {
 			aliases: ['p'],
 			category: 'Utilities',
 		});
-	};
+	}
 	
 	execute(message) {
 		return message.reply('Pong!');

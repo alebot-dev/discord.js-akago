@@ -24,7 +24,7 @@ class myClient extends AkagoClient {
 		}, {
 			// Discord.js Client Options
 		});
-	};
+	}
 	start() {
 		this.build();
 	}
@@ -45,7 +45,7 @@ class myClient extends AkagoClient {
 		}, {
 			disableMentions: 'everyone',
 		});
-	};
+	}
 	start() {
 		this.build();
 	}

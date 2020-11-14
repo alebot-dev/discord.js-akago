@@ -19,7 +19,7 @@ class myClient extends AkagoClient {
 		this.listenerHandler = new ListenerHandler(this, {
 			// Options for the listener handler.
 		});
-	};
+	}
 	start()  {
 		this.build();
 	}
@@ -52,7 +52,7 @@ module.exports = class ReadyListener extends Listener {
 		super('ready', {
 			once: true,
 		});
-	};
+	}
 	
 	execute() {
 		console.log('Im ready!');
@@ -82,7 +82,7 @@ module.exports = class CooldownListener extends Listener {
 			emitter: 'commandHandler',
 			once: false,
 		});
-	};
+	}
 	
 	execute(message, command, timeLeft) {
 		const remaining = (timeLeft / 1000).toFixed(1);
@@ -128,7 +128,7 @@ Third parameter is the reason the command was blocked either `owner`, `dm` or `n
 The `missingPermissions` event will emit when a command is used but either the client or member is missing permissions to run the command.
 Lets go to our listener directory and create a new file lets call it `missingPermissions.js`.
 ```js
-const { Listener } =  require('discord.js-akago');
+const { Listener } = require('discord.js-akago');
 
 module.exports = class MissingPermissionsListener extends Listener {
 	constructor() {
@@ -139,8 +139,8 @@ module.exports = class MissingPermissionsListener extends Listener {
 	}
 
 	execute(message, command, type, missing) {
-		const perms = missing.map(p  =>  p.replace(/_/g,  ' ').toLowerCase()).join(', ');
-		const user = type  ===  'client'  ?  'I am'  :  'You are';
+		const perms = missing.map(p => p.replace(/_/g, ' ').toLowerCase()).join(', ');
+		const user = type === 'client' ? 'I am' : 'You are';
 		const { name } = command;
 		return message.channel.send(`${user} missing permissions ${perms} for the command ${name}`);
 	}
