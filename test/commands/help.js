@@ -17,10 +17,10 @@ module.exports = class extends Command {
         const command = commands.get(commandName);
 
         if (command) {
-            embed.setTitle(`\`${command.name} ${command.usage || ''}\``);
-            embed.addField('❯ Description', command.description);
+            embed.setTitle(`\`${command.name}\``);
+            embed.addField('Description', command.description);
             if (command.aliases.length) {
-                embed.addField('❯ Aliases', command.aliases.map(a => `\`${a}\``).join(' '));
+                embed.addField('Aliases', command.aliases.map(a => `\`${a}\``).join(' '));
             }
         }
         else {
@@ -28,8 +28,8 @@ module.exports = class extends Command {
             embed.setDescription('For additional info on a command, use `?help <command>`');
             for (const category of categories) {
                 embed.addFields([{
-                    name: `❯ ${category || 'Misc'}`,
-                    value: commands.map(c => `\`${c.name}\``).join(' '),
+                    name: category || 'Misc',
+                    value: commands.filter(c => c.category === category).map(c => `\`${c.name}\``).join(' '),
                 }]);
             }
         }
