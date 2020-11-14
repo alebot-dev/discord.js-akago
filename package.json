@@ -5,7 +5,7 @@
   "main": "./src/index.js",
   "scripts": {
     "test": "nodemon ./test/bot.js",
-    "doc": "docgen --source src --output docs/docs.json"
+    "doc": "docgen --source src --custom docs/index.yml --output docs/docs.json"
   },
   "repository": {
     "type": "git",
