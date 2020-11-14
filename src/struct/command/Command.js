@@ -1,17 +1,3 @@
-/**
- * Options to use for command execution behavior.
- * @typedef {Object} CommandOptions
- * @prop {string} [description=''] - Description of the command.
- * @prop {string} [category] - Category of the command.
- * @prop {string} [aliases=[]] - Aliases of the command.
- * @prop {boolean} [ownerOnly=false] - Whether or not to allow client owner(s) only.
- * @prop {number} [cooldown=3] - The command cooldown in seconds.
- * @prop {PermissionResolvable[]} [memberPermissions=[]] - Permissions required by the member to run this command.
- * @prop {PermissionResolvable[]} [clientPermissions=[]] - Permissions required by the client to run this command.
- * @prop {boolean} [guildOnly=true] - Whether or not the commans can only be used in a guild
- * @prop {boolean} [nsfw=false] - Whether the command can only be done in a NSFW channel. 
- */
-
  class Command {
     /**
      * Creates a new command.
@@ -100,3 +86,17 @@
 }
 
 module.exports = Command;
+
+/**
+ * Options to use for command execution behavior.
+ * @typedef {Object} CommandOptions
+ * @prop {string} [description=''] - Description of the command.
+ * @prop {string} [category] - Category of the command.
+ * @prop {string} [aliases=[]] - Aliases of the command.
+ * @prop {boolean} [ownerOnly=false] - Whether or not to allow client owner(s) only.
+ * @prop {number} [cooldown=3] - The command cooldown in seconds.
+ * @prop {PermissionResolvable[]} [memberPermissions=[]] - Permissions required by the member to run this command.
+ * @prop {PermissionResolvable[]} [clientPermissions=[]] - Permissions required by the client to run this command.
+ * @prop {boolean} [guildOnly=true] - Whether or not the commans can only be used in a guild
+ * @prop {boolean} [nsfw=false] - Whether the command can only be done in a NSFW channel. 
+ */
