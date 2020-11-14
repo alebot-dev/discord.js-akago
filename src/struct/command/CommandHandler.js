@@ -216,7 +216,7 @@ class CommandHandler extends EventEmitter {
                 this.emit(CommandHandlerEvents.COMMAND_USED, message, command);
             }
             catch (error) {
-                console.log(`There was an error while executing a command: ${error}`);
+                console.warn(`There was an error while executing a command: ${error}`);
             }
         });
     }
