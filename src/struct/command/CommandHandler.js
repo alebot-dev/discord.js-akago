@@ -91,13 +91,10 @@ class CommandHandler extends EventEmitter {
      */
     loadCommand(filepath) {
         if (!filepath) throw new Error('Akago: Tried to load a command but no file path was provided.');
-        const { name } = path.parse(filepath);
         const File = require(filepath);
-        if (!this.client.util.isClass(File)) throw new Error(`Akago: Command '${name}' doesn't export a class.`);
-        const command = new File(this.client, name.toLowerCase());
-        if (!(command instanceof CommandBase)) throw new Error(`Akago: Command '${command.name}' name dosn't extend the command base.`);
-        if (!command.execute || typeof command.execute !== 'function') throw new Error(`Akago: Command '${command.name}' dosn't have a execute function.`);
-        if (this.client.commands.has(command.name)) throw new Error(`Akago: Command '${command.name}' already exists.`);
+        const command = new File(this.client);
+        if (!(command instanceof CommandBase)) return;
+        if (this.client.commands.has(command.name)) throw new Error(`Akago: Command '${command.name}' has already been loaded.`);
         command.filepath = filepath;
         command.client = this.client;
         this.client.commands.set(command.name, command);
