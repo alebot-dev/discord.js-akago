@@ -1,9 +1,3 @@
-/**
- * Options to use for command execution behavior.
- * @typedef {Object} ListenerOptions
- * @prop {boolean} [once='on'] Whether the event will be on or once.
- * @prop {emitter} [emitter=client] The emitter of the event. 
- */
 class Listener {
     /**
      * Creates a new listener.
@@ -50,3 +44,10 @@ class Listener {
 }
 
 module.exports = Listener;
+
+/**
+ * Options to use for command execution behavior.
+ * @typedef {Object} ListenerOptions
+ * @prop {boolean} [once='on'] Whether the event will be on or once.
+ * @prop {emitter} [emitter=client] The emitter of the event. 
+ */
