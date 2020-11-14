@@ -17,9 +17,11 @@ class InhibitorHandler {
     }
 
     loadInhibitor(filepath) {
-        const inhibitor = require(filepath);
+        if (!filepath) throw new Error('Akago: Tried to load a inhibitor but no file path was provided.');
+        const File = require(filepath);
+        const inhibitor = new File(this.client);
         if (!(inhibitor instanceof InhibitorBase)) return;
-        if (this.inhibitors.has(inhibitor.id)) throw new Error(`Inhibitor ${inhibitor.id} already loaded.`);
+        if (this.client.inhibitors.has(inhibitor.name)) throw new Error(`Akago: Inhibitor '${inhibitor.name}' has already been loaded.`);
         inhibitor.filepath = filepath;
         inhibitor.client = this.client;
         this.client.inhibitors.set(inhibitor.name, inhibitor);
