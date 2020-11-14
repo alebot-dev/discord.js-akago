@@ -2,6 +2,16 @@
   files: 
     - name: Welcome
       path: welcome.md
+- name: Getting Started
+  files:
+    - name: Client Structure
+      path: gettingStarted.md
+    - name: Command
+      path: firstCommand.md
+    - name: Listener
+      path: firstListener.md
+    - name: Inhibitor
+      path: firstInhibitor.md
 - name: Snippets
   files: 
     - name: Help Command
