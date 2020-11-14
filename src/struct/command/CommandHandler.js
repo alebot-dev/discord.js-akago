@@ -19,7 +19,7 @@ class CommandHandler extends EventEmitter {
         blockBots = true,
         blockClient = true,
         ignorePermissions = [],
-        ignoreCooldown = [],
+        ignoreCooldowns = [],
         defaultCooldown = 3,
     } = {}) {
         super();
@@ -67,7 +67,7 @@ class CommandHandler extends EventEmitter {
          * Array of user's IDs that will ignore command cooldowns.
          * @type {Array.<Snowflake>}
          */
-        this.ignoreCooldown = Array.isArray(ignoreCooldown) ? ignoreCooldown : [];
+        this.ignoreCooldowns = Array.isArray(ignoreCooldowns) ? ignoreCooldowns : [];
 
         /**
          * Default cooldown of commands that don't have their own cooldown. Set to 0 for no default cooldown.
@@ -179,7 +179,7 @@ class CommandHandler extends EventEmitter {
                             
             const now = Date.now();
             const timestamps = this.client.cooldowns.get(command.name);
-            const cooldownAmount = (command.cooldown || this.client.defaultCooldown) * 1000;
+            const cooldownAmount = (command.cooldown || this.defaultCooldown) * 1000;
     
             if (timestamps.has(message.author.id)) {
                 const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
@@ -190,12 +190,12 @@ class CommandHandler extends EventEmitter {
                 }
             }
     
-            if (!checkIgnore(message.author, this.client.ignoreCooldowns)) {
+            if (!checkIgnore(message.author, this.ignoreCooldowns)) {
                 timestamps.set(message.author.id, now);
                 setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
             }
-    
-            if (command.memberPermissions.length && !checkIgnore(message.author, this.client.ignorePermissions)) {
+
+            if (command.memberPermissions.length && !checkIgnore(message.author, this.ignorePermissions)) {
                 checkValidPermission(command.memberPermissions);
                 if (command.memberPermissions.some(perm => !message.member.hasPermission(perm))) {
                     const missingPerms = command.memberPermissions.filter(perm => !message.member.hasPermission(perm));
