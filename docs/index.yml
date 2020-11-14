@@ -5,4 +5,4 @@
 - name: Snippets
   files: 
     - name: Help Command
-    - path: help.md
+      path: help.md
