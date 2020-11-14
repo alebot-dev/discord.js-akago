@@ -26,6 +26,14 @@ class InhibitorHandler {
         inhibitor.client = this.client;
         this.client.inhibitors.set(inhibitor.name, inhibitor);
     }
+
+    reloadCommand(name) {
+        const inhibitor = this.client.inhibitors.get(name);
+        if (!inhibitor) throw new Error(`Akago: inhibitorHandler reloadInhibitor '${name}' isn't an inhibitor`);
+        delete require.cache[require.resolve(inhibitor.filepath)];
+        this.client.inhibitors.delete(inhibitor.name);
+        this.loadInhibitor(inhibitor.filepath);
+    }
 }
 
 module.exports = InhibitorHandler;
