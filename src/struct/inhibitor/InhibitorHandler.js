@@ -20,7 +20,7 @@ class InhibitorHandler {
         if (!filepath) throw new Error('Akago: Tried to load a inhibitor but no file path was provided.');
         const File = require(filepath);
         const inhibitor = new File(this.client);
-        if (!inhibitor.execute && typeof inhibitor.execute !== 'function') throw new Error(`Akago: Inhibitor '${inhibitor.name} doesn't have an execute function.'`);
+        if (!inhibitor.execute && typeof inhibitor.execute !== 'function') throw new Error(`Akago: Inhibitor '${inhibitor.name}' doesn't have an execute function.`);
         if (!(inhibitor instanceof InhibitorBase)) return;
         if (this.client.inhibitors.has(inhibitor.name)) throw new Error(`Akago: Inhibitor '${inhibitor.name}' has already been loaded.`);
         inhibitor.filepath = filepath;
