@@ -138,7 +138,7 @@ class CommandHandler extends EventEmitter {
         const command = this.client.commands.get(commandName)
             || this.client.commands.get(this.client.aliases.get(commandName));
 
-        if (!command) return;
+        if (!command) return this.emit(CommandHandlerEvents.INVALID_COMMAND, message);
     
         if (command.ownerOnly && !this.client.isOwner(message.author)) {
             return this.emit(CommandHandlerEvents.COMMAND_BLOCK, message, command, 'owner');
