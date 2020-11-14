@@ -38,7 +38,7 @@ class CommandHandler extends EventEmitter {
          * Default command prefix(es)
          * @type {string|Array<string>}
          */
-        this.prefix = typeof prefix === 'string' ? prefix : '!';
+        this.prefix = (typeof prefix === 'string' || Array.isArray(prefix)) ? prefix : '!';
         /**
          * Allows mentioning the bot as a valid prefix.
          * @type {boolean}
