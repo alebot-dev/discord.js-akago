@@ -66,7 +66,9 @@ The third optional parameter are custom opts of the listener, this is not needed
 The execute method if the function ran when the listener is emitted.
 
 If everything was done correctly your ready listener should now work!
-### Akago Command Handler Listeners
+## Reference
+You can compare your code to the guides code here [here](https://github.com/discord-akago/guide/tree/main/Code%20Samples/ListenerHandling)
+## Akago Command Handler Listeners
 Akago has events that are emitted through out various stages of the command handling. Such as there is an event when a member dosn't have permissions to do a command or they are on cooldown ect.
 We can use these events to send messages when they are missing something to execute the command.
 #### Cooldown Event
@@ -150,3 +152,6 @@ First parameter is a discord `message` that was sent.
 The second parameter is the `command` that was used.
 The third parameter is whos missing the permissions either `client` or `member`.
 The fourth parameter is a filtered array of the permission that is missing that is needed for the command.
+
+## Reference
+You can compare your code to the guides code here [here](https://github.com/discord-akago/guide/tree/main/Code%20Samples/CommandHandlerListeners)

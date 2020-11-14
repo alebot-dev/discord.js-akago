@@ -55,3 +55,6 @@ const client = new myClient();
 client.start();
 ```
 Your bot will now login and your ready to move onto making handlers!
+
+## Reference
+You can compare your code to the guides code here [here](https://github.com/discord-akago/guide/tree/main/Code%20Samples/Client%20Structure)

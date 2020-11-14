@@ -61,3 +61,6 @@ module.exports = class BlackListInhibitor extends Inhibitor {
 ```
 The first parameter is the discord `message` that was sent.
 The second parameter is the `command` that was used.
+
+### Reference
+You can compare your code to the guides code here [here](https://github.com/discord-akago/guide/tree/main/Code%20Samples/InhibitorHandling).

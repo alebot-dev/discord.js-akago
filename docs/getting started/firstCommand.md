@@ -66,3 +66,6 @@ The third optional parameter are custom opts of the command, this is not needed.
 The execute method if the function ran when the command is used.
 
 If everything was done correctly you ping command should now work!
+
+### Reference
+You can compare your code to the guides code here [here](https://github.com/discord-akago/guide/tree/main/Code%20Samples/CommandHandling).
