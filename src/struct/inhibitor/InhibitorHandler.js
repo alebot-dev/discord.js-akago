@@ -1,8 +1,3 @@
-/**
- * @typedef {Object} inhibitorHandlerOptions
- * @prop {string} inhibitorDirectory - File path to inhibitor directory.
- */
-
 const path = require('path');
 const InhibitorBase = require('./Inhibitor.js');
 const rread = require('readdir-recursive');
@@ -60,3 +55,8 @@ class InhibitorHandler {
 }
 
 module.exports = InhibitorHandler;
+
+/**
+ * @typedef {Object} inhibitorHandlerOptions
+ * @prop {string} inhibitorDirectory - File path to inhibitor directory.
+ */
