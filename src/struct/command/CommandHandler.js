@@ -266,3 +266,9 @@ module.exports = CommandHandler;
  * @param {Discord.Message} message - The message sent.
  * @param {Command} command - The command used.
  */
+
+ /**
+  * Emitted when a command is invalid
+  * @event CommandHandler#invalidCommand
+  * @param {Discord.Message} message - The message sent.
+  */
