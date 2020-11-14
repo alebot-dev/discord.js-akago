@@ -2,3 +2,7 @@
   files: 
     - name: Welcome
       path: welcome.md
+- name: Snippets
+  files: 
+    - name: Help Command
+    - path: help.md
