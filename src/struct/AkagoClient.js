@@ -1,13 +1,6 @@
 const { Client, Collection } = require('discord.js');
 const Util = require('../util/ClientUtil.js');
 
-/**
- * Options used to determine how the framework behaves.
- * @typedef {Object} AkagosOptions
- * @prop {Snowflake|Array<Snowflake>} ownerID - Discord ID of the client owner(s).
- * @prop {string} token - Discord bot's token.
- */
-
 class AkagoClient extends Client {
     /**
      * The Akago framework client.
@@ -91,3 +84,10 @@ class AkagoClient extends Client {
 }
 
 module.exports = AkagoClient;
+
+/**
+ * Options used to determine how the framework behaves.
+ * @typedef {Object} AkagosOptions
+ * @prop {Snowflake|Array<Snowflake>} ownerID - Discord ID of the client owner(s).
+ * @prop {string} token - Discord bot's token.
+ */
