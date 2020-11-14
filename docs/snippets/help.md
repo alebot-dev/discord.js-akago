@@ -27,9 +27,10 @@ module.exports = class HelpCommand extends Command {
             const categories = util.removeDuplicates(commands.map(c => c.category));
             embed.setDescription('For additional info on a command, use `?help <command>`');
             for (const category of categories) {
+                const filteredCommands = commands.filter(c => c.category == category);
                 embed.addFields([{
                     name: category || 'Misc',
-                    value: commands.filter(c => c.category == category).map(c => `\`${c.name}\``).join(' '),
+                    value: filteredCommands.map(c => `\`${c.name}\``).join(' '),
                 }]);
             }
         }
