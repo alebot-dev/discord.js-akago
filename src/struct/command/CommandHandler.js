@@ -121,7 +121,7 @@ class CommandHandler extends EventEmitter {
      * Handlers messages.
      * @param {Discord.Message} message - Message to hanle. 
      */
-    handle(message) {
+    async handle(message) {
         if (message.author.id === this.client.user.id && this.blockClient) return; 
         if (message.author.bot && this.blockBots) return;
         
@@ -139,74 +139,84 @@ class CommandHandler extends EventEmitter {
             || this.client.commands.get(this.client.aliases.get(commandName));
     
         if (command) {
-            const checkValidPermission = (permArr) => {
-                if (permArr.some(perm => !(Object.keys(Permissions.FLAGS)).includes(perm))) {
-                    throw new TypeError(`Akago: Command '${commandName}' has invalid client or member permissions.`);
-                }
-            };
-
-            const checkIgnore = (user, array) => {
-                const { id } = user;
-                return Array.isArray(array)
-                    ? array.includes(id)
-                    : id === array;
-            };
-
-            if (!this.client.cooldowns.has(command.name)) {
-                this.client.cooldowns.set(command.name, new Collection());
+            const inhibitorResults = [];
+            for (const inhibitor of this.client.inhibitors) {
+                const inhibitorResult = await inhibitor[1].execute(message, command);
+                inhibitorResults.push(inhibitorResult);
             }
+
+            new Promise(() => {
+                if (inhibitorResults.some((i) => i)) return;
+
+                const checkValidPermission = (permArr) => {
+                    if (permArr.some(perm => !(Object.keys(Permissions.FLAGS)).includes(perm))) {
+                        throw new TypeError(`Akago: Command '${commandName}' has invalid client or member permissions.`);
+                    }
+                };
+    
+                const checkIgnore = (user, array) => {
+                    const { id } = user;
+                    return Array.isArray(array)
+                        ? array.includes(id)
+                        : id === array;
+                };
+    
+                if (!this.client.cooldowns.has(command.name)) {
+                    this.client.cooldowns.set(command.name, new Collection());
+                }
+                            
+                const now = Date.now();
+                const timestamps = this.client.cooldowns.get(command.name);
+                const cooldownAmount = (command.cooldown || this.client.defaultCooldown) * 1000;
+    
+                if (timestamps.has(message.author.id)) {
+                    const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
                         
-            const now = Date.now();
-            const timestamps = this.client.cooldowns.get(command.name);
-            const cooldownAmount = (command.cooldown || this.client.defaultCooldown) * 1000;
-
-            if (timestamps.has(message.author.id)) {
-                const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
-                    
-                if (now < expirationTime) {
-                    const timeLeft = expirationTime - now;
-                    return this.emit(CommandHandlerEvents.COOLDOWN, message, command, timeLeft);
+                    if (now < expirationTime) {
+                        const timeLeft = expirationTime - now;
+                        return this.emit(CommandHandlerEvents.COOLDOWN, message, command, timeLeft);
+                    }
                 }
-            }
-
-            if (!checkIgnore(message.author, this.client.ignoreCooldowns)) {
-                timestamps.set(message.author.id, now);
-                setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
-            }
-
-            if (command.memberPermissions.length && !checkIgnore(message.author, this.client.ignorePermissions)) {
-                checkValidPermission(command.memberPermissions);
-                if (command.memberPermissions.some(perm => !message.member.hasPermission(perm))) {
-                    const missingPerms = command.memberPermissions.filter(perm => !message.member.hasPermission(perm));
-                    return this.emit(CommandHandlerEvents.MISSING_PERMISSIONS, message, command, 'member', missingPerms);
+    
+                if (!checkIgnore(message.author, this.client.ignoreCooldowns)) {
+                    timestamps.set(message.author.id, now);
+                    setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
                 }
-            }
-
-            if (command.clientPermissions && command.clientPermissions.length) {
-            checkValidPermission(command.clientPermissions);
-            if (command.clientPermissions.some(perm => !message.guild.me.hasPermission(perm))) {
-                    const missingPerms = command.clientPermissions.filter(perm => !message.guild.me.hasPermission(perm));     
-                    return this.emit(CommandHandlerEvents.MISSING_PERMISSIONS, message, command, 'client', missingPerms);
+    
+                if (command.memberPermissions.length && !checkIgnore(message.author, this.client.ignorePermissions)) {
+                    checkValidPermission(command.memberPermissions);
+                    if (command.memberPermissions.some(perm => !message.member.hasPermission(perm))) {
+                        const missingPerms = command.memberPermissions.filter(perm => !message.member.hasPermission(perm));
+                        return this.emit(CommandHandlerEvents.MISSING_PERMISSIONS, message, command, 'member', missingPerms);
+                    }
                 }
-            }
-            
-            if (command.ownerOnly && !this.client.isOwner(message.author)) {
-                return this.emit(CommandHandlerEvents.COMMAND_BLOCK, message, command, 'owner');
-            }
-            if (command.guildOnly && !message.guild) {
-                return this.emit(CommandHandlerEvents.COMMAND_BLOCK, message, command, 'dm');
-            }
-            if (command.nsfw && !message.channel.nsfw) {
-                return this.emit(CommandHandlerEvents.COMMAND_BLOCK, message, command, 'nsfw');
-            }
-
-            try {
-                command.execute(message, args);
-                this.emit(CommandHandlerEvents.COMMAND_USED, message, command);
-            }
-            catch (error) {
-                console.log(`There was an error while executing a command: ${error}`);
-            }
+    
+                if (command.clientPermissions && command.clientPermissions.length) {
+                checkValidPermission(command.clientPermissions);
+                if (command.clientPermissions.some(perm => !message.guild.me.hasPermission(perm))) {
+                        const missingPerms = command.clientPermissions.filter(perm => !message.guild.me.hasPermission(perm));     
+                        return this.emit(CommandHandlerEvents.MISSING_PERMISSIONS, message, command, 'client', missingPerms);
+                    }
+                }
+                
+                if (command.ownerOnly && !this.client.isOwner(message.author)) {
+                    return this.emit(CommandHandlerEvents.COMMAND_BLOCK, message, command, 'owner');
+                }
+                if (command.guildOnly && !message.guild) {
+                    return this.emit(CommandHandlerEvents.COMMAND_BLOCK, message, command, 'dm');
+                }
+                if (command.nsfw && !message.channel.nsfw) {
+                    return this.emit(CommandHandlerEvents.COMMAND_BLOCK, message, command, 'nsfw');
+                }
+    
+                try {
+                    command.execute(message, args);
+                    this.emit(CommandHandlerEvents.COMMAND_USED, message, command);
+                }
+                catch (error) {
+                    console.log(`There was an error while executing a command: ${error}`);
+                }
+            });
         }
     }
 
