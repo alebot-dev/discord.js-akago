@@ -16,3 +16,5 @@
   files: 
     - name: Help Command
       path: help.md
+    - name: Ping Command
+      path: ping.md
