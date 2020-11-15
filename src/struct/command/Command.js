@@ -1,4 +1,4 @@
- class Command {
+class Command {
     /**
      * Creates a new command.
      * @param {string} name - Name of the command.
@@ -94,7 +94,7 @@ module.exports = Command;
  * @prop {string} [category] - Category of the command.
  * @prop {string} [aliases=[]] - Aliases of the command.
  * @prop {boolean} [ownerOnly=false] - Whether or not to allow client owner(s) only.
- * @prop {number} [cooldown=3] - The command cooldown in seconds.
+ * @prop {number} [cooldown=null] - The command cooldown in seconds.
  * @prop {PermissionResolvable[]} [memberPermissions=[]] - Permissions required by the member to run this command.
  * @prop {PermissionResolvable[]} [clientPermissions=[]] - Permissions required by the client to run this command.
  * @prop {boolean} [guildOnly=true] - Whether or not the commans can only be used in a guild
