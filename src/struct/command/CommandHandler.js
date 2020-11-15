@@ -133,13 +133,6 @@ class CommandHandler extends EventEmitter {
             this.prefix.find(pre => message.content.startsWith(pre)) : this.prefix;
     
         if (!message.content.startsWith(commandPrefix)) return;
-
-        const inhibitorResults = [];
-        for (const inhibitor of this.client.inhibitors) {
-            const inhibitorResult = await inhibitor[1].execute(message, command);
-            inhibitorResults.push(inhibitorResult);
-        }
-        if (inhibitorResults.some((i) => i)) return;
         
         const [commandName, ...args] = message.content.slice(commandPrefix.length).trim().split(/ +/g); 
     
@@ -147,6 +140,13 @@ class CommandHandler extends EventEmitter {
             || this.client.commands.get(this.client.aliases.get(commandName));
 
         if (!command) return this.emit(CommandHandlerEvents.INVALID_COMMAND, message);
+
+        const inhibitorResults = [];
+        for (const inhibitor of this.client.inhibitors) {
+            const inhibitorResult = await inhibitor[1].execute(message, command);
+            inhibitorResults.push(inhibitorResult);
+        }
+        if (inhibitorResults.some((i) => i)) return;
     
         if (command.ownerOnly && !this.client.isOwner(message.author)) {
             return this.emit(CommandHandlerEvents.COMMAND_BLOCK, message, command, 'owner');
