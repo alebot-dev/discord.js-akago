@@ -1,6 +1,6 @@
 ## Ping Command
 ```js
-const { Command } = require('../../src/index.js');
+const { Command } = require('discord.js-akago');
 
 module.exports = class PingCommand extends Command {
     constructor() {
