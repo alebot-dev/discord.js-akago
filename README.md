@@ -40,7 +40,7 @@
 ## Links
 - [Website](https://discord-akago.github.io)
 - [Repository](https://github.com/discord-js-akago/discord.js-akago)  
-- [Discord](https://discord.gg/arTauDY)  
+- [Discord](https://discord.gg/2jkBmzy)  
 
 ## Contributing
 Open an issue or a pull request!  
