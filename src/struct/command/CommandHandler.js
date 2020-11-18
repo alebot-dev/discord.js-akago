@@ -123,19 +123,19 @@ class CommandHandler extends EventEmitter {
      * @param {Discord.Message} message - Message to hanle. 
      */
     async handle(message) {
-        if (message.author.id === this.client.user.id && this.blockClient) return; 
+        if (message.author.id === this.client.user.id && this.blockClient) return;
         if (message.author.bot && this.blockBots) return;
-        
+
         const mentionedPrefix = RegExp(`^<@!?${this.client.user.id}> `);
-    
+
         const commandPrefix = this.allowMentionPrefix && message.content.match(mentionedPrefix) ?
-            mentionedPrefix.match[0] : Array.isArray(this.prefix) ? 
-            this.prefix.find(pre => message.content.startsWith(pre)) : this.prefix;
-    
+            message.content.match(mentionedPrefix)[0] : Array.isArray(this.prefix) ?
+                this.prefix.find(pre => message.content.startsWith(pre)) : this.prefix;
+
         if (!message.content.startsWith(commandPrefix)) return;
-        
-        const [commandName, ...args] = message.content.slice(commandPrefix.length).trim().split(/ +/g); 
-    
+
+        const [commandName, ...args] = message.content.slice(commandPrefix.length).trim().split(/ +/g);
+
         const command = this.client.commands.get(commandName)
             || this.client.commands.get(this.client.aliases.get(commandName));
 
@@ -147,7 +147,7 @@ class CommandHandler extends EventEmitter {
             inhibitorResults.push(inhibitorResult);
         }
         if (inhibitorResults.some((i) => i)) return;
-    
+
         if (command.ownerOnly && !this.client.isOwner(message.author)) {
             return this.emit(CommandHandlerEvents.COMMAND_BLOCK, message, command, 'owner');
         }
@@ -163,31 +163,31 @@ class CommandHandler extends EventEmitter {
                 throw new TypeError(`Akago: Command '${commandName}' has invalid client or member permissions.`);
             }
         };
-    
+
         const checkIgnore = (user, array) => {
             const { id } = user;
             return Array.isArray(array)
                 ? array.includes(id)
                 : id === array;
         };
-    
+
         if (!this.client.cooldowns.has(command.name)) {
             this.client.cooldowns.set(command.name, new Collection());
         }
-                            
+
         const now = Date.now();
         const timestamps = this.client.cooldowns.get(command.name);
         const cooldownAmount = (command.cooldown || this.defaultCooldown) * 1000;
-    
+
         if (timestamps.has(message.author.id)) {
             const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
-                        
+
             if (now < expirationTime) {
                 const timeLeft = expirationTime - now;
                 return this.emit(CommandHandlerEvents.COOLDOWN, message, command, timeLeft);
             }
         }
-    
+
         if (!checkIgnore(message.author, this.ignoreCooldowns)) {
             timestamps.set(message.author.id, now);
             setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
@@ -200,15 +200,15 @@ class CommandHandler extends EventEmitter {
                 return this.emit(CommandHandlerEvents.MISSING_PERMISSIONS, message, command, 'member', missingPerms);
             }
         }
-    
+
         if (command.clientPermissions && command.clientPermissions.length) {
-        checkValidPermission(command.clientPermissions);
-        if (command.clientPermissions.some(perm => !message.guild.me.hasPermission(perm))) {
-                const missingPerms = command.clientPermissions.filter(perm => !message.guild.me.hasPermission(perm));     
+            checkValidPermission(command.clientPermissions);
+            if (command.clientPermissions.some(perm => !message.guild.me.hasPermission(perm))) {
+                const missingPerms = command.clientPermissions.filter(perm => !message.guild.me.hasPermission(perm));
                 return this.emit(CommandHandlerEvents.MISSING_PERMISSIONS, message, command, 'client', missingPerms);
             }
         }
-    
+
         try {
             command.execute(message, args);
             this.emit(CommandHandlerEvents.COMMAND_USED, message, command);
@@ -265,8 +265,8 @@ module.exports = CommandHandler;
  * @param {Command} command - The command used.
  */
 
- /**
-  * Emitted when a command is invalid
-  * @event CommandHandler#invalidCommand
-  * @param {Discord.Message} message - The message sent.
-  */
+/**
+ * Emitted when a command is invalid
+ * @event CommandHandler#invalidCommand
+ * @param {Discord.Message} message - The message sent.
+ */
