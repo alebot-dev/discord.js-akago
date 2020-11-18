@@ -1,39 +1,39 @@
 {
-  "name": "discord.js-akago",
-  "version": "4.0.4",
-  "description": "Discord.js framework.",
-  "main": "./src/index.js",
-  "scripts": {
-    "test": "nodemon ./test/bot.js",
-    "doc": "docgen --source src --custom docs/index.yml --output docs/docs.json"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/iColtz/discord.js-akago.git"
-  },
-  "keywords": [
-    "discord",
-    "discord-js",
-    "discord.js",
-    "framework",
-    "bot",
-    "commands",
-    "listeners"
-  ],
-  "author": "iColtz",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/iColtz/discord.js-akago/issues"
-  },
-  "homepage": "https://github.com/iColtz/discord.js-akago#readme",
-  "devDependencies": {
-    "discord.js-docgen": "github:discordjs/docgen",
-    "eslint": "^7.12.1",
-    "nodemon": "^2.0.6",
-    "prettier": "^2.1.2"
-  },
-  "dependencies": {
-    "discord.js": "^12.4.1",
-    "readdir-recursive": "0.0.4"
-  }
+    "name": "discord.js-akago",
+    "version": "4.0.5",
+    "description": "Discord.js framework.",
+    "main": "./src/index.js",
+    "scripts": {
+        "test": "nodemon ./test/bot.js",
+        "doc": "docgen --source src --custom docs/index.yml --output docs/docs.json"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/iColtz/discord.js-akago.git"
+    },
+    "keywords": [
+        "discord",
+        "discord-js",
+        "discord.js",
+        "framework",
+        "bot",
+        "commands",
+        "listeners"
+    ],
+    "author": "iColtz",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/iColtz/discord.js-akago/issues"
+    },
+    "homepage": "https://github.com/iColtz/discord.js-akago#readme",
+    "devDependencies": {
+        "discord.js-docgen": "github:discordjs/docgen",
+        "eslint": "^7.12.1",
+        "nodemon": "^2.0.6",
+        "prettier": "^2.1.2"
+    },
+    "dependencies": {
+        "discord.js": "^12.4.1",
+        "readdir-recursive": "0.0.4"
+    }
 }
