@@ -36,7 +36,7 @@ class CommandHandler extends EventEmitter {
         this.commandDirectory = path.resolve(commandDirectory);
         /**
          * Default command prefix(es)
-         * @type {string|Array<string>}
+         * @type {string|Array<string>|Function}
          */
         this.prefix = prefix;
         /**
