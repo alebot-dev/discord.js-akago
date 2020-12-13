@@ -38,7 +38,7 @@ class CommandHandler extends EventEmitter {
          * Default command prefix(es)
          * @type {string|Array<string>}
          */
-        this.prefix = (typeof prefix === 'string' || Array.isArray(prefix)) ? prefix : '!';
+        this.prefix = prefix;
         /**
          * Allows mentioning the bot as a valid prefix.
          * @type {boolean}
@@ -125,16 +125,18 @@ class CommandHandler extends EventEmitter {
     async handle(message) {
         if (message.author.id === this.client.user.id && this.blockClient) return;
         if (message.author.bot && this.blockBots) return;
-
+        let prefix = this.prefix;
+        if (prefix instanceof Function) prefix = await this.prefix(message);
         const mentionedPrefix = RegExp(`^<@!?${this.client.user.id}> `);
+        if (prefix instanceof Array) {
+            prefix = Array.isArray(this.prefix) ? this.prefix.find(pre => message.content.startsWith(pre)) : this.prefix;
+        }
+        if (message.content.match(mentionedPrefix) && this.mentionAsPrefix) {
+            prefix = message.content.match(mentionedPrefix)[0];
+        }
+        if (!message.content.startsWith(prefix)) return;
 
-        const commandPrefix = this.allowMentionPrefix && message.content.match(mentionedPrefix) ?
-            message.content.match(mentionedPrefix)[0] : Array.isArray(this.prefix) ?
-                this.prefix.find(pre => message.content.startsWith(pre)) : this.prefix;
-
-        if (!message.content.startsWith(commandPrefix)) return;
-
-        const [commandName, ...args] = message.content.slice(commandPrefix.length).trim().split(/ +/g);
+        const [commandName, ...args] = message.content.slice(prefix.length).trim().split(/ +/g);
 
         const command = this.client.commands.get(commandName)
             || this.client.commands.get(this.client.aliases.get(commandName));
