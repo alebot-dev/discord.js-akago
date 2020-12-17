@@ -47,5 +47,5 @@ Open an issue or a pull request!
 Everyone is welcome to do so. 
 
 ## Author & Credits
-Author: iColtz
+Author: iColtz  
 Credits: 1Computer
